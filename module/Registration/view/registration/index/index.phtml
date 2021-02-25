@@ -1,0 +1,51 @@
+<?php
+/**
+ * @var Registration\Form\UserForm $form
+ */
+?>
+<script>
+$(document).ready(function() {
+  $("div.row").has("select[name='user[highSchool]'").hide();
+  $("div.row").has("select[name='user[university]'").hide();
+  $('select[name="user[study]"]').change(function() {
+    highSchool = $("div.row").has("select[name='user[highSchool]'");
+    university = $("div.row").has("select[name='user[university]'");
+    val = $(this).val();
+    if (val == 'UN') {
+        highSchool.hide();
+        university.show();
+    } else if (val == 'HS') {
+        highSchool.show();
+        university.hide();
+    } else {
+        highSchool.hide();
+        university.hide();
+    }
+  });
+});
+</script>
+<?
+$form->prepare();
+foreach($form->getElements() as $element) {
+  $element->setAttribute('class', 'form-control');
+}
+?>
+<?= $this->form()->openTag($form); ?>
+<h2><?= $this->translate('Personal information') ?></h2>
+<? foreach($form->get('user') as $element): ?>
+   <?=$this->render('registration/index/element.phtml', ['element' => $element])?>
+<? endforeach; ?>
+<h2><?= $this->translate('Permanent address') ?></h2>
+<? foreach($form->get('permanentAddress') as $element): ?>
+    <?=$this->render('registration/index/element.phtml', ['element' => $element])?>
+<? endforeach; ?>
+<h2><?= $this->translate('Contact address') ?></h2>
+<? foreach($form->get('contactAddress') as $element): ?>
+    <?=$this->render('registration/index/element.phtml', ['element' => $element])?>
+<? endforeach; ?>
+<h2><?= $this->translate('Password') ?></h2>
+<? foreach($form->get('password') as $element): ?>
+    <?=$this->render('registration/index/element.phtml', ['element' => $element])?>
+<? endforeach; ?>
+<?= $this->formSubmit($form->get('submit')); ?>
+<?= $this->form()->closeTag(); ?>

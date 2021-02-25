@@ -1,0 +1,22 @@
+<?php
+/**
+* @var \Laminas\Form\Element $element
+*/
+?>
+<? if ($element instanceof \Laminas\Form\Element) : ?>
+  <?php
+  $options = $element->getOptions();
+  $labelClass = 'col-sm-2 col-form-label';
+  if (isset($options['required']) && $options['required']) {
+    $labelClass .= ' required';
+  }
+  $element->setLabelAttributes(['class' => $labelClass]);
+  ?>
+  <div class="form-group row">
+     <?= $this->formLabel($element) ?>
+     <div class="col-sm-10">
+       <?= $this->formElement($element) ?>
+     </div>
+     <?= $this->formElementErrors()->render($element, ['class' => 'help-block']) ?>
+  </div>
+<? endif; ?>
