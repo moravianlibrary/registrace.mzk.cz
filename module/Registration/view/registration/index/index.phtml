@@ -5,9 +5,9 @@
 ?>
 <script>
 $(document).ready(function() {
-  $("div.row").has("select[name='user[highSchool]'").hide();
-  $("div.row").has("select[name='user[university]'").hide();
-  $('select[name="user[study]"]').change(function() {
+  // University/High school selection
+  studySelect = $('select[name="user[study]"]');
+  studySelect.change(function() {
     highSchool = $("div.row").has("select[name='user[highSchool]'");
     university = $("div.row").has("select[name='user[university]'");
     val = $(this).val();
@@ -22,6 +22,19 @@ $(document).ready(function() {
         university.hide();
     }
   });
+  studySelect.change();
+
+  // Input validation
+  requiredInput = $("div.required").find("input");
+  requiredInput.blur(function() {
+    value = $(this).val();
+    if (value.trim() === "") {
+      $(this).addClass('missing');
+    } else {
+      $(this).removeClass('missing');
+    }
+  });
+  requiredInput.blur();
 });
 </script>
 <?

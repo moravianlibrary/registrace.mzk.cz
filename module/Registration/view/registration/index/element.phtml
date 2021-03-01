@@ -7,14 +7,15 @@
   <?php
   $options = $element->getOptions();
   $labelClass = 'col-sm-2 col-form-label';
-  if (isset($options['required']) && $options['required']) {
+  $required = isset($options['required']) && $options['required'];
+  if ($required) {
     $labelClass .= ' required';
   }
   $element->setLabelAttributes(['class' => $labelClass]);
   ?>
   <div class="form-group row">
      <?= $this->formLabel($element) ?>
-     <div class="col-sm-10">
+     <div class="col-sm-10<?= $required ? ' required' : '' ?>">
        <?= $this->formElement($element) ?>
      </div>
      <?= $this->formElementErrors()->render($element, ['class' => 'help-block']) ?>
