@@ -43,21 +43,43 @@ $(document).ready(function() {
 $form->prepare();
 ?>
 <?= $this->form()->openTag($form); ?>
-<h2><?= $this->translate('Personal information') ?></h2>
-<? foreach($form->get('user') as $element): ?>
-   <?=$this->render('registration/index/element.phtml', ['element' => $element])?>
-<? endforeach; ?>
-<h2><?= $this->translate('Permanent address') ?></h2>
-<? foreach($form->get('permanentAddress') as $element): ?>
-    <?=$this->render('registration/index/element.phtml', ['element' => $element])?>
-<? endforeach; ?>
-<h2><?= $this->translate('Contact address') ?></h2>
-<? foreach($form->get('contactAddress') as $element): ?>
-    <?=$this->render('registration/index/element.phtml', ['element' => $element])?>
-<? endforeach; ?>
-<h2><?= $this->translate('Password') ?></h2>
-<? foreach($form->get('password') as $element): ?>
-    <?=$this->render('registration/index/element.phtml', ['element' => $element])?>
-<? endforeach; ?>
-<?= $this->formSubmit($form->get('submit')); ?>
+<div class="card">
+    <h2 class="card-header">
+        <?= $this->translate('Personal information') ?>
+    </h2>
+    <div class="card-body">
+        <? foreach($form->get('user') as $element): ?>
+            <?=$this->render('registration/index/element.phtml', ['element' => $element])?>
+        <? endforeach; ?>
+    </div>
+</div>
+
+<div class="card">
+    <h2 class="card-header"><?= $this->translate('Permanent address') ?></h2>
+    <div class="card-body">
+        <? foreach($form->get('permanentAddress') as $element): ?>
+            <?=$this->render('registration/index/element.phtml', ['element' => $element])?>
+        <? endforeach; ?>
+    </div>
+</div>
+
+<div class="card">
+    <h2 class="card-header"><?= $this->translate('Contact address') ?></h2>
+    <div class="card-body">
+        <? foreach($form->get('contactAddress') as $element): ?>
+            <?=$this->render('registration/index/element.phtml', ['element' => $element])?>
+        <? endforeach; ?>
+    </div>
+</div>
+<div class="card">
+    <h2 class="card-header"><?= $this->translate('Password') ?></h2>
+    <div class="card-body">
+        <? foreach($form->get('password') as $element): ?>
+            <?=$this->render('registration/index/element.phtml', ['element' => $element])?>
+        <? endforeach; ?>
+    </div>
+</div>
+<div class="text-center">
+    <?= $this->formSubmit($form->get('submit')); ?>
+</div>
 <?= $this->form()->closeTag(); ?>
