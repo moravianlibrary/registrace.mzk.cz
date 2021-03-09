@@ -12,12 +12,14 @@
     $labelClass .= ' required';
   }
   $element->setLabelAttributes(['class' => $labelClass]);
+  $element->setAttribute('class', 'form-control');
+  $element->setAttribute('id', $element->getName());
   ?>
   <div class="form-group row">
      <?= $this->formLabel($element) ?>
      <div class="col-sm-9<?= $required ? ' required' : '' ?>">
        <?= $this->formElement($element) ?>
      </div>
-     <?= $this->formElementErrors()->render($element, ['class' => 'help-block']) ?>
+     <?= $this->formElementErrors()->render($element, ['class' => 'form-text']) ?>
   </div>
 <? endif; ?>

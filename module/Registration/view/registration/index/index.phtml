@@ -8,8 +8,8 @@ $(document).ready(function() {
   // University/High school selection
   studySelect = $('select[name="user[study]"]');
   studySelect.change(function() {
-    highSchool = $("div.row").has("select[name='user[highSchool]'");
-    university = $("div.row").has("select[name='user[university]'");
+    highSchool = $("div.form-group").has("select[name='user[highSchool]'");
+    university = $("div.form-group").has("select[name='user[university]'");
     val = $(this).val();
     if (val == 'UN') {
         highSchool.hide();
@@ -29,9 +29,11 @@ $(document).ready(function() {
   requiredInput.blur(function() {
     value = $(this).val();
     if (value.trim() === "") {
-      $(this).addClass('missing');
+      $(this).addClass('is-invalid');
+      $(this).removeClass('is-valid');
     } else {
-      $(this).removeClass('missing');
+      $(this).removeClass('is-invalid');
+      $(this).addClass('is-valid');
     }
   });
   requiredInput.blur();
@@ -39,9 +41,6 @@ $(document).ready(function() {
 </script>
 <?
 $form->prepare();
-foreach($form->getElements() as $element) {
-  $element->setAttribute('class', 'form-control');
-}
 ?>
 <?= $this->form()->openTag($form); ?>
 <h2><?= $this->translate('Personal information') ?></h2>
