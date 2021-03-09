@@ -1,21 +1,30 @@
+html {
+    font-size: 15px
+}
+
 :root {
-    --brand-color: #013755;
+    --brand-color: #21bdc6;
 }
 
 .navbar {
-    background-color: var(--brand-color);
+    background-color: var(--brand-color) !important;
 }
 
-.btn-primary {
-    background-color: var(--brand-color);
-    border-color: var(--brand-color);
+.container-fluid{
+    max-width: 900px;
 }
 
+label.required{
+    font-weight: bold;
+}
 label.required::after {
     content: " *";
-    color: red;
 }
 
-input.missing {
-    border: 1px solid red;
+/* card */
+.card {
+    margin-bottom: 1rem;
+}
+h2.card-header {
+    font-size: 1.25rem;
 }
