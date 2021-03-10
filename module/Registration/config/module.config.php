@@ -31,6 +31,16 @@ return [
                     ],
                 ],
             ],
+            'password' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route'    => '/password',
+                    'defaults' => [
+                        'controller' => Controller\IndexController::class,
+                        'action'     => 'password',
+                    ],
+                ],
+            ],
         ],
     ],
     'controllers' => [

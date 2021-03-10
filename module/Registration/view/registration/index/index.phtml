@@ -39,6 +39,16 @@ $(document).ready(function() {
   requiredInput.blur();
 });
 </script>
+
+<ul class="nav mb-3">
+    <li class="mr-3">
+        <a class="btn btn-primary active"><?=$this->translate('Personal information')?></a>
+    </li>
+    <li class="mr-3">
+        <a class="btn btn-outline-primary" href="<?=$this->url('password')?>"><?=$this->translate('Password')?></a>
+    </li>
+</ul>
+
 <?
 $form->prepare();
 ?>
