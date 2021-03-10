@@ -2,20 +2,12 @@ html {
     font-size: 15px
 }
 
-:root {
-    --brand-color: #21bdc6;
-}
-
-.navbar {
-    background-color: var(--brand-color) !important;
-}
-
 .container-fluid{
     max-width: 900px;
 }
 
 label.required{
-    font-weight: bold;
+    /*font-weight: bolder;*/
 }
 label.required::after {
     content: " *";

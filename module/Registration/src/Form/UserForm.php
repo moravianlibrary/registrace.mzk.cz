@@ -41,7 +41,7 @@ class UserForm extends Form
             'type'  => 'Submit',
             'attributes' => [
                 'value' => 'Submit registration',
-                'class' => 'btn btn-info'
+                'class' => 'btn btn-primary'
             ],
         ]);
     }
