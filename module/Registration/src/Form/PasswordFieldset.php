@@ -53,8 +53,17 @@ class PasswordFieldset extends Fieldset implements InputFilterProviderInterface
                             'type' => 'string',
                         ],
                     ],
+                    [
+                        'name' => Validator\Callback::class,
+                        'options' => [
+                            'message' => 'userForm_passwordConfirmNoMatch',
+                            'callback' => function($value, $context=[]) {
+                                return ($value == $context['password']);
+                            },
+                        ]
+                    ],
                 ],
-            ]
+            ],
         ];
     }
 }
