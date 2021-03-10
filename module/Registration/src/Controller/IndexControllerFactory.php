@@ -1,7 +1,6 @@
 <?php
 namespace Registration\Controller;
 
-use Album\Form\AlbumForm;
 use Laminas\ServiceManager\PluginManagerInterface;
 use Psr\Container\ContainerInterface;
 use Registration\Form\UserForm;
