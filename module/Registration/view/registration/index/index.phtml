@@ -43,42 +43,95 @@ $(document).ready(function() {
 $form->prepare();
 ?>
 <?= $this->form()->openTag($form); ?>
+
 <div class="card">
     <h2 class="card-header">
         <?= $this->translate('Personal information') ?>
     </h2>
     <div class="card-body">
-        <? foreach($form->get('user') as $element): ?>
-            <?=$this->render('registration/index/element.phtml', ['element' => $element])?>
-        <? endforeach; ?>
+        <div class="row">
+            <div class="col-md-2">
+                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('degree')])?>
+            </div>
+            <div class="col-md-5">
+                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('firstName')])?>
+            </div>
+            <div class="col-md-5">
+                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('lastName')])?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('email')])?>
+            </div>
+            <div class="col-md-6">
+                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('phone')])?>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-6">
+                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('identificationType')])?>
+            </div>
+            <div class="col-md-6">
+                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('identification')])?>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-12">
+                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('birth')])?>
+            </div>
+            <div class="col-md-12">
+                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('study')])?>
+            </div>
+            <div class="col-md-12">
+                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('highSchool')])?>
+            </div>
+            <div class="col-md-12">
+                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('university')])?>
+            </div>
+            <div class="col-md-12">
+                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('discount')])?>
+            </div>
+        </div>
     </div>
 </div>
 
 <div class="card">
     <h2 class="card-header"><?= $this->translate('Permanent address') ?></h2>
     <div class="card-body">
-        <? foreach($form->get('permanentAddress') as $element): ?>
-            <?=$this->render('registration/index/element.phtml', ['element' => $element])?>
-        <? endforeach; ?>
+        <div class="row">
+            <div class="col-md-6">
+                <?=$this->render('element.phtml', ['element' => $form->get('permanentAddress')->get('street')])?>
+            </div>
+            <div class="col-md-4">
+                <?=$this->render('element.phtml', ['element' => $form->get('permanentAddress')->get('city')])?>
+            </div>
+            <div class="col-md-2">
+                <?=$this->render('element.phtml', ['element' => $form->get('permanentAddress')->get('postcode')])?>
+            </div>
+        </div>
     </div>
 </div>
 
 <div class="card">
     <h2 class="card-header"><?= $this->translate('Contact address') ?></h2>
     <div class="card-body">
-        <? foreach($form->get('contactAddress') as $element): ?>
-            <?=$this->render('registration/index/element.phtml', ['element' => $element])?>
-        <? endforeach; ?>
+        <div class="row">
+            <div class="col-md-6">
+                <?=$this->render('element.phtml', ['element' => $form->get('contactAddress')->get('street')])?>
+            </div>
+            <div class="col-md-4">
+                <?=$this->render('element.phtml', ['element' => $form->get('contactAddress')->get('city')])?>
+            </div>
+            <div class="col-md-2">
+                <?=$this->render('element.phtml', ['element' => $form->get('contactAddress')->get('postcode')])?>
+            </div>
+        </div>
     </div>
 </div>
-<div class="card">
-    <h2 class="card-header"><?= $this->translate('Password') ?></h2>
-    <div class="card-body">
-        <? foreach($form->get('password') as $element): ?>
-            <?=$this->render('registration/index/element.phtml', ['element' => $element])?>
-        <? endforeach; ?>
-    </div>
-</div>
+
 <div class="text-center">
     <?= $this->formSubmit($form->get('submit')); ?>
 </div>

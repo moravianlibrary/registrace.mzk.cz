@@ -6,7 +6,7 @@
 <? if ($element instanceof \Laminas\Form\Element) : ?>
   <?php
   $options = $element->getOptions();
-  $labelClass = 'col-sm-3 col-form-label';
+  $labelClass = 'form-label';
   $required = isset($options['required']) && $options['required'];
   if ($required) {
     $labelClass .= ' required';
@@ -15,11 +15,9 @@
   $element->setAttribute('class', 'form-control');
   $element->setAttribute('id', $element->getName());
   ?>
-  <div class="form-group row">
-     <?= $this->formLabel($element) ?>
-     <div class="col-sm-9<?= $required ? ' required' : '' ?>">
-       <?= $this->formElement($element) ?>
-     </div>
-     <?= $this->formElementErrors()->render($element, ['class' => 'form-text']) ?>
+  <div class="mb-3<?= $required ? ' required' : '' ?>">
+    <?= $this->formLabel($element) ?>
+    <?= $this->formElement($element) ?>
+    <?= $this->formElementErrors()->render($element, ['class' => 'form-text']) ?>
   </div>
 <? endif; ?>
