@@ -2,21 +2,23 @@ html {
     font-size: 15px
 }
 
-.container-fluid{
+.container-fluid {
     max-width: 900px;
-}
-
-label.required{
-    /*font-weight: bolder;*/
-}
-label.required::after {
-    content: " *";
 }
 
 /* card */
 .card {
     margin-bottom: 1rem;
 }
+
 h2.card-header {
     font-size: 1.25rem;
+}
+
+h4 {
+    font-size: 1rem;
+}
+
+.card-body {
+    padding-bottom: 0;
 }
