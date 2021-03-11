@@ -29,11 +29,11 @@ $(document).ready(function() {
   requiredInput.blur(function() {
     value = $(this).val();
     if (value.trim() === "") {
-      $(this).addClass('is-invalid');
-      $(this).removeClass('is-valid');
+      //$(this).addClass('is-invalid');
+      //$(this).removeClass('is-valid');
     } else {
-      $(this).removeClass('is-invalid');
-      $(this).addClass('is-valid');
+      //$(this).removeClass('is-invalid');
+      //$(this).addClass('is-valid');
     }
   });
   requiredInput.blur();
@@ -71,27 +71,87 @@ $form->prepare();
             </div>
         </div>
         <div class="row">
-            <div class="col-md-6">
-                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('email')])?>
+            <div class="col-md-12">
+                <?//=$this->render('element.phtml', ['element' => $form->get('user')->get('isCompany')])?>
+                <div class="form-group form-check">
+                    <label class="form-check-label" data-toggle="collapse" data-target="#collapseIsCompany">
+                        <input type="checkbox" class="form-check-input" id="user[isCompany]">
+                        <?=$this->translate('label_isCompany');?>
+                    </label>
+                </div>
             </div>
+        </div>
+        <div id="collapseIsCompany" class="panel-collapse collapse in">
+            <div class="row">
+                <div class="col-md-6">
+                    <?=$this->render('element.phtml', ['element' => $form->get('user')->get('cin')])?>
+                </div>
+                <div class="col-md-6">
+                    <?=$this->render('element.phtml', ['element' => $form->get('user')->get('tin')])?>
+                </div>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-md-6">
                 <?=$this->render('element.phtml', ['element' => $form->get('user')->get('phone')])?>
             </div>
-        </div>
-        <hr>
-        <div class="row">
             <div class="col-md-6">
-                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('identificationType')])?>
-            </div>
-            <div class="col-md-6">
-                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('identification')])?>
+                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('email')])?>
             </div>
         </div>
-        <hr>
         <div class="row">
             <div class="col-md-12">
-                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('birth')])?>
+                <div class="form-group">
+                    <label class="form-label required">
+                        <?= $this->translate('label_birth'); ?>:*
+                    </label>
+                    <div class="form-inline">
+                        [todo]
+                    </div>
+                </div>
             </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="form-label"><?= $this->translate('label_discount') ?>:</label>
+                    <div class="alert alert-primary">
+                        <?= $this->translate('option_discount_1'); ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <label class="form-label"><?= $this->translate('label_member') ?>:</label>
+            <div class="form-group">
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" id="">
+                        <?= $this->translate('option_member_student') ?>
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" id="">
+                        <?= $this->translate('option_member_ztp') ?>
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" id="">
+                        <?= $this->translate('option_member_uod') ?>
+                    </label>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" id="">
+                        <?= $this->translate('option_member_itic') ?>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <hr>
+
+        <div class="row">
             <div class="col-md-12">
                 <?=$this->render('element.phtml', ['element' => $form->get('user')->get('study')])?>
             </div>
@@ -101,16 +161,14 @@ $form->prepare();
             <div class="col-md-12">
                 <?=$this->render('element.phtml', ['element' => $form->get('user')->get('university')])?>
             </div>
-            <div class="col-md-12">
-                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('discount')])?>
-            </div>
         </div>
     </div>
 </div>
 
 <div class="card">
-    <h2 class="card-header"><?= $this->translate('Permanent address') ?></h2>
+    <h2 class="card-header"><?=$this->translate('Adresa')?></h2>
     <div class="card-body">
+        <h4><?=$this->translate('Permanent address')?></h4>
         <div class="row">
             <div class="col-md-6">
                 <?=$this->render('element.phtml', ['element' => $form->get('permanentAddress')->get('street')])?>
@@ -122,27 +180,63 @@ $form->prepare();
                 <?=$this->render('element.phtml', ['element' => $form->get('permanentAddress')->get('postcode')])?>
             </div>
         </div>
-    </div>
-</div>
-
-<div class="card">
-    <h2 class="card-header"><?= $this->translate('Contact address') ?></h2>
-    <div class="card-body">
-        <div class="row">
-            <div class="col-md-6">
-                <?=$this->render('element.phtml', ['element' => $form->get('contactAddress')->get('street')])?>
-            </div>
-            <div class="col-md-4">
-                <?=$this->render('element.phtml', ['element' => $form->get('contactAddress')->get('city')])?>
-            </div>
-            <div class="col-md-2">
-                <?=$this->render('element.phtml', ['element' => $form->get('contactAddress')->get('postcode')])?>
+        <div class="form-group form-check">
+            <label class="form-check-label" data-toggle="collapse" data-target="#collapseisContactAddress">
+                <input type="checkbox" class="form-check-input" id="user[isContactAddress]">
+                <?=$this->translate('Kontaktní adresa se liší od trvalé');?>
+            </label>
+        </div>
+        <div id="collapseisContactAddress" class="panel-collapse collapse in">
+            <h4><?=$this->translate('Contact address')?></h4>
+            <div class="row">
+                <div class="col-md-6">
+                    <?=$this->render('element.phtml', ['element' => $form->get('contactAddress')->get('street')])?>
+                </div>
+                <div class="col-md-4">
+                    <?=$this->render('element.phtml', ['element' => $form->get('contactAddress')->get('city')])?>
+                </div>
+                <div class="col-md-2">
+                    <?=$this->render('element.phtml', ['element' => $form->get('contactAddress')->get('postcode')])?>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-<div class="text-center">
-    <?= $this->formSubmit($form->get('submit')); ?>
+<div class="card">
+    <h2 class="card-header"><?=$this->translate('Doklad totožnosti')?></h2>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('identificationType')])?>
+            </div>
+            <div class="col-md-6">
+                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('identification')])?>
+            </div>
+        </div>
+    </div>
 </div>
-<?= $this->form()->closeTag(); ?>
+
+<div class="card-body">
+    <div class="form-group">
+        <label class="form-check-label">
+            <input type="checkbox" class="form-check-input" id="isSendNews">
+            <?=$this->translate('Zasílání novinek z knihovny');?>
+        </label>
+    </div>
+    <div class="form-group">
+        <label class="form-check-label">
+            <input type="checkbox" class="form-check-input" id="isGdpr">
+            <?=$this->translate('Zpracování osobních údajů');?>
+        </label>
+    </div>
+</div>
+
+<div class="alert alert-primary text-center">
+    Cena registrace je <strong>XXX,- Kč</strong>
+</div>
+<div class="text-center">
+    <?//= $this->formSubmit($form->get('submit')); ?>
+    <input type="submit" name="submit" class="btn btn-primary" value="Další krok &raquo;">
+</div>
+<?=$this->form()->closeTag();?>

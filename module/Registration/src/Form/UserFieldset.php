@@ -2,6 +2,7 @@
 namespace Registration\Form;
 
 use Laminas\Filter;
+use Laminas\Form\Element\Checkbox;
 use Laminas\Form\Element\DateSelect;
 use Laminas\Form\Element\Email;
 use Laminas\Form\Element\Select;
@@ -48,6 +49,30 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
             'type'    => Text::class,
             'options' => [
                 'label' => 'Degree',
+            ],
+        ]);
+        // Is company
+        $this->add([
+            'name'    => 'isCompany',
+            'type'    => Checkbox::class,
+            'options' => [
+                'label' => 'Is Company',
+            ],
+        ]);
+        // Ico
+        $this->add([
+            'name'    => 'cin',
+            'type'    => Text::class,
+            'options' => [
+                'label' => 'Company identification number',
+            ],
+        ]);
+        // Dic
+        $this->add([
+            'name'    => 'tin',
+            'type'    => Text::class,
+            'options' => [
+                'label' => 'Tax identification number',
             ],
         ]);
         // Email
@@ -126,17 +151,17 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
                 'value_options' => $this->codeBook->getUniversities(),
             ],
         ]);
-        $this->add([
-            'name'    => 'discount',
-            'type'    => Select::class,
-            'options' => [
-                'label' => 'Discount',
-                'value_options' => [
-                    '100' => 'Bez slevy',
-                    '50' => 'Student do 26 let',
-                ],
-            ],
-        ]);
+//        $this->add([
+//            'name'    => 'discount',
+//            'type'    => Select::class,
+//            'options' => [
+//                'label' => 'Discount',
+//                'value_options' => [
+//                    '100' => 'Bez slevy',
+//                    '50' => 'Student do 26 let',
+//                ],
+//            ],
+//        ]);
     }
 
     public function getInputFilterSpecification() : array
