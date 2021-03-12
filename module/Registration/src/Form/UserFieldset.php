@@ -8,6 +8,7 @@ use Laminas\Form\Element\Email;
 use Laminas\Form\Element\Select;
 use Laminas\Form\Element\Text;
 use Laminas\Form\Fieldset;
+use Laminas\Mvc\I18n\Translator;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Validator;
 
@@ -16,10 +17,14 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
     /** @var CodeBook */
     protected $codeBook;
 
-    public function __construct(CodeBook $codeBook)
+    /** @var Translator */
+    protected $translator;
+
+    public function __construct(CodeBook $codeBook, Translator $translator)
     {
         parent::__construct();
         $this->codeBook = $codeBook;
+        $this->translator = $translator;
     }
 
     public function init()
@@ -98,9 +103,9 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
             'options' => [
                 'label' => 'Identification type',
                 'value_options' => [
-                    'IC' => 'Identity card',
-                    'PAS' => 'Passport',
-                    'OTHER' => 'Other',
+                    'IC' => $this->translator->translate('Identity card'),
+                    'PAS' => $this->translator->translate('Passport'),
+                    'OTHER' => $this->translator->translate('Other identification'),
                 ],
             ],
         ]);
@@ -129,9 +134,9 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
             'options' => [
                 'label' => 'Study',
                 'value_options' => [
-                    'OTHER' => 'Other',
-                    'HS' => 'High school',
-                    'UN' => 'University',
+                    'OTHER' => $this->translator->translate('Other'),
+                    'HS' => $this->translator->translate('High school'),
+                    'UN' => $this->translator->translate('University'),
                 ],
             ],
         ]);

@@ -2,10 +2,11 @@
 
 namespace Registration\Form;
 
-use \Interop\Container\ContainerInterface;
-use \Laminas\ServiceManager\Factory\FactoryInterface;
-use \Laminas\ServiceManager\ServiceLocatorInterface;
-use \Registration\Form\CodeBook;
+use Interop\Container\ContainerInterface;
+use Laminas\Mvc\I18n\Translator;
+use Laminas\ServiceManager\Factory\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use Registration\Form\CodeBook;
 
 class UserFieldsetFactory implements FactoryInterface
 {
@@ -14,6 +15,7 @@ class UserFieldsetFactory implements FactoryInterface
     {
         return new UserFieldset(
             $container->get(CodeBook::class),
+            $container->get(Translator::class)
         );
     }
 
