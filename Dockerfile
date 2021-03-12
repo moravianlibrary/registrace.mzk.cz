@@ -29,6 +29,7 @@ ADD /etc /etc
 
 ADD . /var/www
 ADD init.sh /usr/local/bin/
+RUN chmod ugo+x /usr/local/bin/init.sh
 WORKDIR /var/www
 
 CMD ["/usr/local/bin/init.sh"]
