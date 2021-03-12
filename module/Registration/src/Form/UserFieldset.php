@@ -126,6 +126,22 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
                 'required' => true,
             ],
         ]);
+        // Member
+        $this->add([
+            'id'      => 'member',
+            'name'    => 'member',
+            'type'    => Select::class,
+            'options' => [
+                'label' => 'label_member',
+                'value_options' => [
+                    'none' => $this->translator->translate('option_member_none'),
+                    'student' => $this->translator->translate('option_member_student'),
+                    'ztp' => $this->translator->translate('option_member_ztp'),
+                    'uod' => $this->translator->translate('option_member_uod'),
+                    'itic' => $this->translator->translate('option_member_itic'),
+                ],
+            ],
+       ]);
         // Study
         $this->add([
             'id'      => 'study',
