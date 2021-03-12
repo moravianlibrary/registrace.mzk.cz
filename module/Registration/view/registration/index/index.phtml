@@ -6,20 +6,23 @@
 <script>
 $(document).ready(function() {
   // University/High school selection
-  studySelect = $('select[name="user[study]"]');
+  const studySelect = $('select[name="user[study]"]');
   studySelect.change(function() {
-    highSchool = $("div.form-group").has("select[name='user[highSchool]'");
-    university = $("div.form-group").has("select[name='user[university]'");
-    val = $(this).val();
-    if (val == 'UN') {
+    const highSchool = $("#groupHighSchool");
+    const university = $("#groupUniversity");
+    switch ($(this).val()) {
+      case 'UN':
         highSchool.hide();
         university.show();
-    } else if (val == 'HS') {
+        break;
+      case 'HS':
         highSchool.show();
         university.hide();
-    } else {
+        break;
+      default:
         highSchool.hide();
         university.hide();
+        break;
     }
   });
   studySelect.change();
@@ -121,10 +124,10 @@ $form->prepare();
             <div class="col-md-12">
                 <?=$this->render('element.phtml', ['element' => $form->get('user')->get('study')])?>
             </div>
-            <div class="col-md-12">
+            <div class="col-md-12" id="groupHighSchool">
                 <?=$this->render('element.phtml', ['element' => $form->get('user')->get('highSchool')])?>
             </div>
-            <div class="col-md-12">
+            <div class="col-md-12" id="groupUniversity">
                 <?=$this->render('element.phtml', ['element' => $form->get('user')->get('university')])?>
             </div>
         </div>
