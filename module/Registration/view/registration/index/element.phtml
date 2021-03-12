@@ -22,12 +22,6 @@
 
         $yearElement = $element->getYearElement()
             ->setAttribute('class', 'form-control');
-
-        // why child elements has no options?
-        $dayElement->setValueOptions([1 => '1']);
-        $monthElement->setValueOptions([1 => 'Leden']);
-        $yearElement->setValueOptions([1980 => '1980']);
-
         ?>
         <div class="form-group">
             <label class="form-label<?= $required ? ' required' : '' ?>" for="<?= $element->getName() ?>">
@@ -36,6 +30,7 @@
             <div class="form-inline">
                 <div class="form-group">
                     <div>
+                        <? $this->formElement($element) //@todo to fill elements with options ?>
                         <?=$this->formElement($dayElement) ?>
                         <?=$this->formElement($monthElement) ?>
                         <?=$this->formElement($yearElement) ?>
