@@ -101,14 +101,7 @@ $form->prepare();
         </div>
         <div class="row">
             <div class="col-md-12">
-                <div class="form-group">
-                    <label class="form-label required">
-                        <?= $this->translate('label_birth'); ?>:*
-                    </label>
-                    <div class="form-inline">
-                        [todo]
-                    </div>
-                </div>
+                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('birth')])?>
             </div>
             <div class="col-md-12">
                 <div class="form-group">
