@@ -26,10 +26,11 @@ RUN apt-get install --yes git zlib1g-dev libzip-dev libapache2-mod-shib2 libicu-
     && docker-php-ext-install mbstring
 
 ADD /etc /etc
-
 ADD . /var/www
 ADD init.sh /usr/local/bin/
-RUN chmod ugo+x /usr/local/bin/init.sh
+
 WORKDIR /var/www
+RUN composer update
+RUN chmod ugo+x /usr/local/bin/init.sh
 
 CMD ["/usr/local/bin/init.sh"]
