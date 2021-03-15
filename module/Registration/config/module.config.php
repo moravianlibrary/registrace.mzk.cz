@@ -31,6 +31,16 @@ return [
                     ],
                 ],
             ],
+            'ajax' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route'    => '/ajax[/:action]',
+                    'defaults' => [
+                        'controller' => Controller\AjaxController::class,
+                        'action'     => 'index',
+                    ],
+                ],
+            ],
             'password' => [
                 'type'    => Segment::class,
                 'options' => [
@@ -46,6 +56,7 @@ return [
     'controllers' => [
         'factories' => [
             Controller\IndexController::class => Controller\IndexControllerFactory::class,
+            Controller\AjaxController::class => Controller\AjaxControllerFactory::class,
         ],
     ],
     'service_manager' => [
