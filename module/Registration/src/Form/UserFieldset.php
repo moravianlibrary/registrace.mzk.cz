@@ -35,7 +35,7 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
             'name'    => 'firstName',
             'type'    => Text::class,
             'options' => [
-                'label' => 'First name',
+                'label' => 'label_firstName',
                 'required' => true,
             ],
         ]);
@@ -44,7 +44,7 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
             'name'    => 'lastName',
             'type'    => Text::class,
             'options' => [
-                'label' => 'Last name',
+                'label' => 'label_lastName',
                 'required' => true,
             ],
         ]);
@@ -53,7 +53,7 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
             'name'    => 'degree',
             'type'    => Text::class,
             'options' => [
-                'label' => 'Degree',
+                'label' => 'label_degree',
             ],
         ]);
         // Is company
@@ -61,7 +61,7 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
             'name'    => 'isCompany',
             'type'    => Checkbox::class,
             'options' => [
-                'label' => 'Is Company',
+                'label' => 'label_isCompany',
             ],
         ]);
         // Ico
@@ -69,7 +69,7 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
             'name'    => 'cin',
             'type'    => Text::class,
             'options' => [
-                'label' => 'Company identification number',
+                'label' => 'label_cin',
             ],
         ]);
         // Dic
@@ -77,7 +77,7 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
             'name'    => 'tin',
             'type'    => Text::class,
             'options' => [
-                'label' => 'Tax identification number',
+                'label' => 'label_tin',
             ],
         ]);
         // Email
@@ -85,7 +85,7 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
             'name'    => 'email',
             'type'    => Email::class,
             'options' => [
-                'label' => 'Email',
+                'label' => 'label_email',
             ],
         ]);
         // Phone number
@@ -93,7 +93,7 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
             'name'    => 'phone',
             'type'    => Text::class,
             'options' => [
-                'label' => 'Phone',
+                'label' => 'label_phone',
             ],
         ]);
         // Proof of identity
@@ -101,11 +101,11 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
             'name'    => 'identificationType',
             'type'    => Select::class,
             'options' => [
-                'label' => 'Identification type',
+                'label' => 'label_identificationType',
                 'value_options' => [
-                    'IC' => $this->translator->translate('Identity card'),
-                    'PAS' => $this->translator->translate('Passport'),
-                    'OTHER' => $this->translator->translate('Other identification'),
+                    'IC' => $this->translator->translate('option_identificationType_ic'),
+                    'PAS' => $this->translator->translate('option_identificationType_pas'),
+                    'OTHER' => $this->translator->translate('option_identificationType_other'),
                 ],
             ],
         ]);
@@ -113,7 +113,7 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
             'name'    => 'identification',
             'type'    => Text::class,
             'options' => [
-                'label' => 'Identification number',
+                'label' => 'label_identification',
                 'required' => true,
             ],
         ]);
@@ -122,7 +122,7 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
             'name'    => 'birth',
             'type'    => DateSelect::class,
             'options' => [
-                'label' => 'Date of birth',
+                'label' => 'label_birth',
                 'required' => true,
             ],
         ]);
@@ -148,11 +148,11 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
             'name'    => 'study',
             'type'    => Select::class,
             'options' => [
-                'label' => 'Study',
+                'label' => 'label_study',
                 'value_options' => [
-                    'OTHER' => $this->translator->translate('Other'),
-                    'HS' => $this->translator->translate('High school'),
-                    'UN' => $this->translator->translate('University'),
+                    'OTHER' => $this->translator->translate('option_study_other'),
+                    'HS' => $this->translator->translate('option_study_hs'),
+                    'UN' => $this->translator->translate('option_study_un'),
                 ],
             ],
         ]);
@@ -160,7 +160,7 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
             'name'    => 'highSchool',
             'type'    => Select::class,
             'options' => [
-                'label' => 'High school',
+                'label' => 'label_highSchool',
                 'value_options' => $this->codeBook->getHighSchools(),
             ],
         ]);
@@ -168,7 +168,7 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
             'name'    => 'university',
             'type'    => Select::class,
             'options' => [
-                'label' => 'University',
+                'label' => 'label_university',
                 'value_options' => $this->codeBook->getUniversities(),
             ],
         ]);

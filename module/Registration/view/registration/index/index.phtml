@@ -45,10 +45,10 @@ $(document).ready(function() {
 
 <ul class="nav mb-3">
     <li class="mr-3">
-        <a class="btn btn-primary active"><?=$this->translate('Personal information')?></a>
+        <a class="btn btn-primary active"><?=$this->translate('text_personal_information')?></a>
     </li>
     <li class="mr-3">
-        <a class="btn btn-outline-primary" href="<?=$this->url('password')?>"><?=$this->translate('Password')?></a>
+        <a class="btn btn-outline-primary" href="<?=$this->url('password')?>"><?=$this->translate('text_password')?></a>
     </li>
 </ul>
 
@@ -59,7 +59,7 @@ $form->prepare();
 
 <div class="card">
     <h2 class="card-header">
-        <?= $this->translate('Personal information') ?>
+        <?= $this->translate('text_personal_information') ?>
     </h2>
     <div class="card-body">
         <div class="row">
@@ -135,9 +135,9 @@ $form->prepare();
 </div>
 
 <div class="card">
-    <h2 class="card-header"><?=$this->translate('Adresa')?></h2>
+    <h2 class="card-header"><?=$this->translate('text_address')?></h2>
     <div class="card-body">
-        <h4><?=$this->translate('Permanent address')?></h4>
+        <h4><?=$this->translate('text_permanent_address')?></h4>
         <div class="row">
             <div class="col-md-6">
                 <?=$this->render('element.phtml', ['element' => $form->get('permanentAddress')->get('street')])?>
@@ -152,11 +152,11 @@ $form->prepare();
         <div class="form-group form-check">
             <label class="form-check-label" data-toggle="collapse" data-target="#collapseisContactAddress">
                 <input type="checkbox" class="form-check-input" id="user[isContactAddress]">
-                <?=$this->translate('Kontaktní adresa se liší od trvalé');?>
+                <?=$this->translate('label_isContactAddress');?>
             </label>
         </div>
         <div id="collapseisContactAddress" class="panel-collapse collapse in">
-            <h4><?=$this->translate('Contact address')?></h4>
+            <h4><?=$this->translate('text_contact_address')?></h4>
             <div class="row">
                 <div class="col-md-6">
                     <?=$this->render('element.phtml', ['element' => $form->get('contactAddress')->get('street')])?>
@@ -190,13 +190,13 @@ $form->prepare();
     <div class="form-group">
         <label class="form-check-label">
             <input type="checkbox" class="form-check-input" id="isSendNews">
-            <?=$this->translate('Zasílání novinek z knihovny');?>
+            <?=$this->translate('label_isSendNews');?>
         </label>
     </div>
     <div class="form-group">
         <label class="form-check-label">
             <input type="checkbox" class="form-check-input" id="isGdpr">
-            <?=$this->translate('Zpracování osobních údajů');?>
+            <?=$this->translate('label_isGdpr');?>
         </label>
     </div>
 </div>
@@ -206,6 +206,6 @@ $form->prepare();
 </div>
 <div class="text-center">
     <?//= $this->formSubmit($form->get('submit')); ?>
-    <input type="submit" name="submit" class="btn btn-primary" value="Další krok &raquo;">
+    <input type="submit" name="submit" class="btn btn-primary" value="<?=$this->translate('btn_next_step') ?> &raquo;">
 </div>
 <?=$this->form()->closeTag();?>

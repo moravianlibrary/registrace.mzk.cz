@@ -4,6 +4,7 @@ namespace Registration\Form;
 
 use Laminas\Filter\StringTrim;
 use Laminas\Filter\StripTags;
+use Laminas\Form\Element\Checkbox;
 use Laminas\Form\Element\Text;
 use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilterProviderInterface;
@@ -36,6 +37,13 @@ class UserForm extends Form
             'name' => 'password',
             'type' => PasswordFieldset::class,
         ]);
+        $this->add([
+            'name'    => 'isSendNews',
+            'type'    => Checkbox::class,
+            'options' => [
+                'label' => 'label_isSendNews',
+            ],
+       ]);
         $this->add([
             'name' => 'submit',
             'type'  => 'Submit',

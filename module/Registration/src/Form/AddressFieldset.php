@@ -22,7 +22,7 @@ class AddressFieldset extends Fieldset implements InputFilterProviderInterface
             'name'    => 'street',
             'type'    => Text::class,
             'options' => [
-                'label' => 'Street',
+                'label' => 'label_street',
             ],
         ]);
         // City
@@ -30,7 +30,7 @@ class AddressFieldset extends Fieldset implements InputFilterProviderInterface
             'name'    => 'city',
             'type'    => Text::class,
             'options' => [
-                'label' => 'City',
+                'label' => 'label_city',
             ],
         ]);
         // Postcode
@@ -38,7 +38,7 @@ class AddressFieldset extends Fieldset implements InputFilterProviderInterface
             'name'    => 'postcode',
             'type'    => Text::class,
             'options' => [
-                'label' => 'Postcode',
+                'label' => 'label_postcode',
             ],
         ]);
     }
