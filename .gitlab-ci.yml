@@ -1,0 +1,51 @@
+
+stages:
+  - test
+  - build
+  - deploy
+
+variables:
+  CACHE_REGISTRY: docker.app.knihovny.cz
+  TARGET_REGISTRY: registry.app.knihovny.cz
+  BUILD_IMAGE: "docker.app.knihovny.cz/ci-builds/buildah"
+  BUILDAH_LAYERS: 'true'
+  IMAGE_NAME: moravianlibrary/registrace
+
+Test the code:
+  stage: test
+  script:
+    - echo "OK"
+
+Build container:
+  stage: build
+  image: "${BUILD_IMAGE}"
+  variables:
+    IMAGE_CACHE_FILE: "${CI_PROJECT_DIR}/.cache/${CI_PROJECT_PATH_SLUG}.tar"
+  cache:
+    key: '${CI_PROJECT_NAME}'
+    paths:
+      - .cache
+    policy: pull-push
+  before_script:
+    - mkdir -p .cache
+    # try to load image from previous builds
+    #- if [ -f "${IMAGE_CACHE_FILE}" ]; then buildah pull --quiet docker-archive:${IMAGE_CACHE_FILE} ;  fi
+    # try to load image from cache registry
+    - if buildah pull --quiet docker://${CACHE_REGISTRY}/${IMAGE_NAME}:latest ; then echo Cache loaded 1>&2 ; fi
+    - if buildah pull --quiet docker://${CACHE_REGISTRY}/${IMAGE_NAME}:build ; then echo Cache loaded 1>&2 ; fi
+  script:
+    - cd ${CI_PROJECT_DIR}
+    # build the image
+    - buildah build-using-dockerfile --layers -t ${IMAGE_NAME}:${CI_COMMIT_REF_SLUG} -f .
+    # save image for the build
+    #- rm -f ${IMAGE_CACHE_FILE}; buildah push ${IMAGE_NAME}:${CI_COMMIT_REF_SLUG} docker-archive:${IMAGE_CACHE_FILE}
+    # push image to Target Registry
+    - buildah push ${IMAGE_NAME}:${CI_COMMIT_REF_SLUG} docker://${TARGET_REGISTRY}/${IMAGE_NAME}:build
+
+Deploy container:
+  only:
+    refs:
+      - /^devel/
+  stage: build
+  script:
+    - echo OK
