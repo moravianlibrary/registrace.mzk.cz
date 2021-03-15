@@ -31,4 +31,15 @@ class IndexController extends AbstractActionController
         ]);
     }
 
+    public function passwordAction()
+    {
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $this->form->setData($request->getPost())->isValid();
+        }
+        return new ViewModel([
+            'form' => $this->form
+        ]);
+    }
+
 }
