@@ -75,13 +75,7 @@ $form->prepare();
         </div>
         <div class="row">
             <div class="col-md-12">
-                <?//=$this->render('element.phtml', ['element' => $form->get('user')->get('isCompany')])?>
-                <div class="form-group form-check">
-                    <label class="form-check-label" data-toggle="collapse" data-target="#collapseIsCompany">
-                        <input type="checkbox" class="form-check-input" id="user[isCompany]">
-                        <?=$this->translate('label_isCompany');?>
-                    </label>
-                </div>
+                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('isCompany')])?>
             </div>
         </div>
         <div id="collapseIsCompany" class="panel-collapse collapse in">
@@ -149,12 +143,9 @@ $form->prepare();
                 <?=$this->render('element.phtml', ['element' => $form->get('permanentAddress')->get('postcode')])?>
             </div>
         </div>
-        <div class="form-group form-check">
-            <label class="form-check-label" data-toggle="collapse" data-target="#collapseisContactAddress">
-                <input type="checkbox" class="form-check-input" id="user[isContactAddress]">
-                <?=$this->translate('label_isContactAddress');?>
-            </label>
-        </div>
+
+        <?=$this->render('element.phtml', ['element' => $form->get('user')->get('isContactAddress')])?>
+
         <div id="collapseisContactAddress" class="panel-collapse collapse in">
             <h4><?=$this->translate('text_contact_address')?></h4>
             <div class="row">
@@ -187,18 +178,8 @@ $form->prepare();
 </div>
 
 <div class="card-body">
-    <div class="form-group">
-        <label class="form-check-label">
-            <input type="checkbox" class="form-check-input" id="isSendNews">
-            <?=$this->translate('label_isSendNews');?>
-        </label>
-    </div>
-    <div class="form-group">
-        <label class="form-check-label">
-            <input type="checkbox" class="form-check-input" id="isGdpr">
-            <?=$this->translate('label_isGdpr');?>
-        </label>
-    </div>
+    <?=$this->render('element.phtml', ['element' => $form->get('isSendNews')])?>
+    <?=$this->render('element.phtml', ['element' => $form->get('isGdpr')])?>
 </div>
 
 <div class="alert alert-primary text-center">

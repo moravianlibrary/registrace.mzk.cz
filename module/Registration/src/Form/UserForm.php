@@ -45,6 +45,13 @@ class UserForm extends Form
             ],
        ]);
         $this->add([
+            'name'    => 'isGdpr',
+            'type'    => Checkbox::class,
+            'options' => [
+                'label' => 'label_isGdpr',
+            ],
+       ]);
+        $this->add([
             'name' => 'submit',
             'type'  => 'Submit',
             'attributes' => [

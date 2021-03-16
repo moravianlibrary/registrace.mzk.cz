@@ -63,6 +63,10 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
             'options' => [
                 'label' => 'label_isCompany',
             ],
+            'attributes' => [
+                'data-toggle' => 'collapse',
+                'data-target' => '#collapseIsCompany',
+            ],
         ]);
         // Ico
         $this->add([
@@ -96,6 +100,18 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
                 'label' => 'label_phone',
             ],
         ]);
+        // Is company
+        $this->add([
+           'name'    => 'isContactAddress',
+           'type'    => Checkbox::class,
+           'options' => [
+               'label' => 'label_isContactAddress',
+           ],
+           'attributes' => [
+               'data-toggle' => 'collapse',
+               'data-target' => '#collapseisContactAddress',
+           ],
+       ]);
         // Proof of identity
         $this->add([
             'name'    => 'identificationType',

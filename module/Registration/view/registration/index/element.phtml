@@ -41,9 +41,15 @@
         </div>
 
     <? elseif ($element instanceof \Laminas\Form\Element\Checkbox): ?>
-        <div class="form-group">
-            <?= $this->formElement($element) ?>
-            <?= $this->formLabel($element) ?>
+        <?php
+        $element
+            ->setLabelAttributes(['class' => 'form-check-label'])
+            ->setAttribute('class', 'form-check-input')
+            ->setAttribute('id', $element->getName());
+        ?>
+        <div class="form-group form-check">
+            <?=$this->formElement($element)?>
+            <?=$this->formLabel($element)?>
         </div>
 
     <? else: ?>
