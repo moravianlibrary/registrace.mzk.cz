@@ -43,15 +43,6 @@ $(document).ready(function() {
 });
 </script>
 
-<ul class="nav mb-3">
-    <li class="mr-3">
-        <a class="btn btn-primary active"><?=$this->translate('text_personal_information')?></a>
-    </li>
-    <li class="mr-3">
-        <a class="btn btn-outline-primary" href="<?=$this->url('password')?>"><?=$this->translate('text_password')?></a>
-    </li>
-</ul>
-
 <?
 $form->prepare();
 ?>
@@ -172,6 +163,20 @@ $form->prepare();
             </div>
             <div class="col-md-6">
                 <?=$this->render('element.phtml', ['element' => $form->get('user')->get('identification')])?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <h2 class="card-header"><?= $this->translate('text_password') ?></h2>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <?=$this->render('element.phtml', ['element' => $form->get('password')->get('password')])?>
+            </div>
+            <div class="col-md-6">
+                <?=$this->render('element.phtml', ['element' => $form->get('password')->get('passwordConfirm')])?>
             </div>
         </div>
     </div>
