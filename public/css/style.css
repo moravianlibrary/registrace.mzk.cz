@@ -22,3 +22,17 @@ h4 {
 .card-body {
     padding-bottom: 0;
 }
+
+
+.header{
+    padding: 10px 0;
+}
+
+.header .logo {
+    display: inline-block;
+}
+
+.header .logo img {
+    width: 219px;
+    display: block;
+}
