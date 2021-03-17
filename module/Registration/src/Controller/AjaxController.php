@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Registration\Controller;
 
+use Datetime;
 
+use Laminas\Form\Element\DateSelect;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Registration\Form\UserForm;
@@ -14,19 +16,32 @@ class AjaxController extends AbstractActionController
 
     protected $translator;
 
-    public function __construct(Translator $translator)
+    protected $form;
+
+    public function __construct(Translator $translator, UserForm $form)
     {
         $this->translator = $translator;
+        $this->form = $form;
     }
 
-    public function discountAction() {
+    public function discountAction()
+    {
+        $this->form->setData($this->params()->fromPost());
+        $birth = $this->form->get('user')->get('birth')->getValue();
+        $age = DateTime::createFromFormat('Y-m-d', $birth)->diff(new DateTime('now'))->y;
         $discounts = [
             'none' => [
                 'label' => $this->translator->translate('None'),
                 'price' => '200',
             ]
         ];
-        return $this->getAjaxResponse([]);
+        if ($age <= 18) {
+            $discounts['student'] = [
+                'label' => $this->translator->translate('Student'),
+                'price' => '100',
+            ];
+        }
+        return $this->getAjaxResponse($discounts);
     }
 
     /**

@@ -13,6 +13,10 @@ class AjaxControllerFactory
     public function __invoke(ContainerInterface $container) : AjaxController
     {
         $translator = $container->get(Translator::class);
-        return new AjaxController($translator);
+        /** @var PluginManagerInterface $formElementManager */
+        $formElementManager = $container->get('FormElementManager');
+        /** @var UserForm */
+        $form = $formElementManager->get(UserForm::class);
+        return new AjaxController($translator, $form);
     }
 }
