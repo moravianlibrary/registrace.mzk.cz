@@ -11,6 +11,7 @@ use Laminas\Form\Fieldset;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Validator;
+use Registration\Service\DiscountService;
 
 class UserFieldset extends Fieldset implements InputFilterProviderInterface
 {
@@ -20,11 +21,16 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
     /** @var Translator */
     protected $translator;
 
-    public function __construct(CodeBook $codeBook, Translator $translator)
+    /** @var DiscountService */
+    protected $discountService;
+
+    public function __construct(CodeBook $codeBook, Translator $translator,
+        DiscountService $discountService)
     {
         parent::__construct();
         $this->codeBook = $codeBook;
         $this->translator = $translator;
+        $this->discountService = $discountService;
     }
 
     public function init()
@@ -149,13 +155,7 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
             'type'    => Select::class,
             'options' => [
                 'label' => 'label_member',
-                'value_options' => [
-                    'none' => $this->translator->translate('option_member_none'),
-                    'student' => $this->translator->translate('option_member_student'),
-                    'ztp' => $this->translator->translate('option_member_ztp'),
-                    'uod' => $this->translator->translate('option_member_uod'),
-                    'itic' => $this->translator->translate('option_member_itic'),
-                ],
+                'value_options' => $this->getDiscounts(),
             ],
        ]);
         // Study
@@ -188,17 +188,6 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
                 'value_options' => $this->codeBook->getUniversities(),
             ],
         ]);
-//        $this->add([
-//            'name'    => 'discount',
-//            'type'    => Select::class,
-//            'options' => [
-//                'label' => 'Discount',
-//                'value_options' => [
-//                    '100' => 'Bez slevy',
-//                    '50' => 'Student do 26 let',
-//                ],
-//            ],
-//        ]);
     }
 
     public function getInputFilterSpecification() : array
@@ -280,6 +269,15 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
                 ],
             ],
         ];
+    }
+
+    protected function getDiscounts()
+    {
+        $discounts = [];
+        foreach ($this->discountService->getAll() as $code => $discount) {
+            $discounts[$code] = $discount['label'];
+        }
+        return $discounts;
     }
 
 }

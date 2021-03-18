@@ -7,6 +7,7 @@ use Laminas\Mvc\I18n\Translator;
 use Laminas\ServiceManager\Factory\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Registration\Form\CodeBook;
+use Registration\Service\DiscountService;
 
 class UserFieldsetFactory implements FactoryInterface
 {
@@ -15,7 +16,8 @@ class UserFieldsetFactory implements FactoryInterface
     {
         return new UserFieldset(
             $container->get(CodeBook::class),
-            $container->get(Translator::class)
+            $container->get(Translator::class),
+            $container->get(DiscountService::class)
         );
     }
 

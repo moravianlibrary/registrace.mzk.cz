@@ -10,6 +10,7 @@ use Laminas\Form\Element\DateSelect;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Registration\Form\UserForm;
+use Registration\Service\DiscountService;
 
 class AjaxController extends AbstractActionController
 {
@@ -18,29 +19,19 @@ class AjaxController extends AbstractActionController
 
     protected $form;
 
-    public function __construct(Translator $translator, UserForm $form)
+    protected $discountService;
+
+    public function __construct(Translator $translator, UserForm $form, DiscountService $discountService)
     {
         $this->translator = $translator;
         $this->form = $form;
+        $this->discountService = $discountService;
     }
 
     public function discountAction()
     {
         $this->form->setData($this->params()->fromPost());
-        $birth = $this->form->get('user')->get('birth')->getValue();
-        $age = DateTime::createFromFormat('Y-m-d', $birth)->diff(new DateTime('now'))->y;
-        $discounts = [
-            'none' => [
-                'label' => $this->translator->translate('None'),
-                'price' => '200',
-            ]
-        ];
-        if ($age <= 18) {
-            $discounts['student'] = [
-                'label' => $this->translator->translate('Student'),
-                'price' => '100',
-            ];
-        }
+        $discounts = $this->discountService->getAvailable($this->form);
         return $this->getAjaxResponse($discounts);
     }
 
@@ -62,7 +53,7 @@ class AjaxController extends AbstractActionController
         if ($httpCode !== null) {
             $response->setStatusCode($httpCode);
         }
-        $response->setContent(json_encode($data));
+        $response->setContent(json_encode($data, JSON_PRETTY_PRINT));
         return $response;
     }
 

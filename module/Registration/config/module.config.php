@@ -8,7 +8,7 @@ use Laminas\Router\Http\Literal;
 use Laminas\Router\Http\Segment;
 use Laminas\ServiceManager\Factory\InvokableFactory;
 
-return [
+$config = [
     'router' => [
         'routes' => [
             'home' => [
@@ -16,7 +16,7 @@ return [
                 'options' => [
                     'route'    => '/',
                     'defaults' => [
-                        'controller' => Controller\IndexController::class,
+                        'controller' => Controller\RegistrationController::class,
                         'action'     => 'index',
                     ],
                 ],
@@ -26,7 +26,7 @@ return [
                 'options' => [
                     'route'    => '/registration[/:action]',
                     'defaults' => [
-                        'controller' => Controller\IndexController::class,
+                        'controller' => Controller\RegistrationController::class,
                         'action'     => 'index',
                     ],
                 ],
@@ -45,8 +45,12 @@ return [
     ],
     'controllers' => [
         'factories' => [
-            Controller\IndexController::class => Controller\IndexControllerFactory::class,
+            Controller\RegistrationController::class => Controller\RegistrationControllerFactory::class,
             Controller\AjaxController::class => Controller\AjaxControllerFactory::class,
+        ],
+        'aliases' => [
+            'Registration' => 'Registration\Controller\RegistrationController',
+            'Ajax' => 'Registration\Controller\AjaxController',
         ],
     ],
     'service_manager' => [
@@ -55,7 +59,8 @@ return [
             \Registration\Config\ConfigReader::class => InvokableFactory::class,
             \Registration\Form\CodeBook::class => \Registration\Form\CodeBookFactory::class,
             \Laminas\Mvc\I18n\Translator::class => \Laminas\Mvc\I18n\TranslatorFactory::class,
-        ]
+            \Registration\Service\DiscountService::class => \Registration\Service\DiscountServiceFactory::class,
+        ],
     ],
     'form_elements' => [
         'factories' => [
@@ -69,10 +74,10 @@ return [
         'not_found_template'       => 'error/404',
         'exception_template'       => 'error/index',
         'template_map' => [
-            'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
-            'registration/index/index' => __DIR__ . '/../view/registration/index/index.phtml',
-            'error/404'               => __DIR__ . '/../view/error/404.phtml',
-            'error/index'             => __DIR__ . '/../view/error/index.phtml',
+            'layout/layout'                   => __DIR__ . '/../view/layout/layout.phtml',
+            'registration/registration/index' => __DIR__ . '/../view/registration/index/userForm.phtml',
+            'error/404'                       => __DIR__ . '/../view/error/404.phtml',
+            'error/index'                     => __DIR__ . '/../view/error/index.phtml',
         ],
         'template_path_stack' => [
             __DIR__ . '/../view',
@@ -89,3 +94,24 @@ return [
         ],
     ],
 ];
+
+$routes = [
+    'Registration/index', 'Registration/userForm', 'Registration/finished'
+];
+
+foreach ($routes as $route) {
+    list($controller, $action) = explode('/', $route);
+    $routeName = str_replace('/', '-', strtolower($route));
+    $config['router']['routes'][$routeName] = [
+        'type' => 'Laminas\Router\Http\Literal',
+        'options' => [
+            'route' => '/' . $route,
+            'defaults' => [
+                'controller' => $controller,
+                'action' => $action,
+            ]
+        ]
+    ];
+}
+
+return $config;

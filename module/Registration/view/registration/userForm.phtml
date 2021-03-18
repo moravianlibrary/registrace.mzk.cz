@@ -32,16 +32,22 @@ $(document).ready(function() {
   requiredInput.blur(function() {
     value = $(this).val();
     if (value.trim() === "") {
-      //$(this).addClass('is-invalid');
-      //$(this).removeClass('is-valid');
+      $(this).addClass('is-invalid');
+      $(this).removeClass('is-valid');
     } else {
-      //$(this).removeClass('is-invalid');
-      //$(this).addClass('is-valid');
+      $(this).removeClass('is-invalid');
+      $(this).addClass('is-valid');
     }
   });
   requiredInput.blur();
 
+  $('select[name="user[member]"]').change(function() {
+      price = $(this).find(':selected').data('price');
+      $('#price').text(price);
+  });
+
   $('select[name="user[birth][day]"], select[name="user[birth][month]"], select[name="user[birth][year]"]').change(function() {
+    selected = $('select[name="user[member]"]').val();
     params = $("#userform").serialize();
     jQuery.ajax ({
       url: "/ajax/discount",
@@ -52,7 +58,12 @@ $(document).ready(function() {
       success: function(data, textStatus) {
         $options = $('select[name="user[member]"]').children().remove().end();
         $.each(data, function(key, obj) {
-          $options.append('<option selected value="' + key + '">' + obj['label'] + '</option>');
+          var option = $('<option/>');
+          if (selected == key) {
+              option.attr({'selected': ''});
+          }
+          option.attr({ 'value': key, 'data-price': obj['price'] }).text(obj['label']);
+          $options.append(option);
         });
       }
     });
@@ -111,16 +122,6 @@ $form->prepare();
             </div>
             <div class="col-md-12">
                 <?=$this->render('element.phtml', ['element' => $form->get('user')->get('member')])?>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <label class="form-label"><?= $this->translate('label_discount') ?>:</label>
-                    <div class="alert alert-primary">
-                        <?= $this->translate('option_discount_1'); ?>
-                    </div>
-                </div>
             </div>
         </div>
         <div class="row">
@@ -206,7 +207,7 @@ $form->prepare();
 </div>
 
 <div class="alert alert-primary text-center">
-    Cena registrace je <strong>XXX,- Kč</strong>
+    Cena registrace je <strong><span id="price">XXX</span>,- Kč</strong>
 </div>
 <div class="text-center">
     <?//= $this->formSubmit($form->get('submit')); ?>

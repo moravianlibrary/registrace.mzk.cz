@@ -2,6 +2,7 @@
 
 namespace Registration\Form;
 
+use DateTime;
 use Laminas\Filter\StringTrim;
 use Laminas\Filter\StripTags;
 use Laminas\Form\Element\Checkbox;
@@ -59,6 +60,12 @@ class UserForm extends Form
                 'class' => 'btn btn-primary'
             ],
         ]);
+    }
+
+    public function getAge()
+    {
+        $birth = $this->get('user')->get('birth')->getValue();
+        return DateTime::createFromFormat('Y-m-d', $birth)->diff(new DateTime('now'))->y;
     }
 
 }
