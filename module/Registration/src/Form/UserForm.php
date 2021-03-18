@@ -13,6 +13,12 @@ use Laminas\Validator\StringLength;
 
 class UserForm extends Form
 {
+
+    public function __construct()
+    {
+        parent::__construct('userForm', []);
+    }
+
     public function init() : void
     {
         parent::init();
