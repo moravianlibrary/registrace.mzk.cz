@@ -85,6 +85,8 @@ $(document).ready(function() {
           });
           input.parent().append(ul);
         });
+        // set focus on first found error
+        $('#userForm :input.is-invalid').first().focus();
       }
     });
     event.preventDefault();
