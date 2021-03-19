@@ -9,9 +9,9 @@ use Laminas\Form\Element\Checkbox;
 use Laminas\Form\Element\Text;
 use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilterProviderInterface;
-use Laminas\Validator\StringLength;
+use Laminas\Validator;
 
-class UserForm extends Form
+class UserForm extends Form implements InputFilterProviderInterface
 {
 
     public function __construct()
@@ -50,12 +50,15 @@ class UserForm extends Form
             'options' => [
                 'label' => 'label_isSendNews',
             ],
-       ]);
+        ]);
         $this->add([
             'name'    => 'isGdpr',
             'type'    => Checkbox::class,
             'options' => [
-                'label' => 'label_isGdpr',
+                'label'           => 'label_isGdpr',
+                'checked_value'   => 'true',
+                'unchecked_value' => '',
+                'required'        =>  true,
             ],
        ]);
         $this->add([
@@ -63,9 +66,27 @@ class UserForm extends Form
             'type'  => 'Submit',
             'attributes' => [
                 'value' => 'Submit registration',
-                'class' => 'btn btn-primary'
+                'class' => 'btn btn-primary',
             ],
         ]);
+    }
+
+    public function getInputFilterSpecification() : array
+    {
+        return [
+            'isGdpr' => [
+                'required' => true,
+                'validators' => [
+                    [
+                        'name' => Validator\NotEmpty::class,
+                        'options' => [
+                            'message' => 'userForm_isGdpr_required',
+                            'type' => 'string',
+                        ],
+                    ],
+                ],
+            ],
+        ];
     }
 
     public function getAge()

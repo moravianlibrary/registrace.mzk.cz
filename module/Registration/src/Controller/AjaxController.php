@@ -39,13 +39,21 @@ class AjaxController extends AbstractActionController
         if ($this->form->setData($this->params()->fromPost())->isValid()) {
             return $this->getAjaxResponse(['status' => 'ok']);
         }
-        $messages = $this->form->getMessages();
         $errors = [];
-        foreach ($messages as $fieldSet => $fields) {
-            foreach ($fields as $field => $errorList) {
-                foreach ($errorList as $type => $text) {
-                    $key = $fieldSet . '[' . $field . ']';
-                    $errors[$key][] = $text;
+        // errors in elements
+        foreach ($this->form->getElements() as $name => $element) {
+            $elementErrors = $this->form->getMessages($name);
+            if (!empty($elementErrors)) {
+                $errors[$name] = $this->form->getMessages($name);
+            }
+        }
+        // errors in field sets
+        foreach ($this->form->getFieldsets() as $fieldSetName => $fieldSet) {
+            foreach ($fieldSet->getElements() as $elementName => $element) {
+                $name = $fieldSetName . '[' . $elementName . ']';
+                $elementErrors = $fieldSet->getMessages($elementName);
+                if (!empty($elementErrors)) {
+                    $errors[$name] = $elementErrors;
                 }
             }
         }
