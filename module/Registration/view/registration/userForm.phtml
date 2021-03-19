@@ -56,7 +56,9 @@ $(document).ready(function() {
   });
 
   $("#userForm").submit(function(event) {
+    event.preventDefault();
     params = $("#userForm").serialize();
+    $('#userForm :submit').attr('disabled', 'true');
     jQuery.ajax ({
       url: "/ajax/validate",
       type: "POST",
@@ -64,14 +66,16 @@ $(document).ready(function() {
       dataType: "json",
       contentType: "application/x-www-form-urlencoded; charset=utf-8",
       success: function(data, textStatus) {
-        if (data['status'] == 'ok') {
-          $("#userForm").unbind('submit');
-          $("#userForm").submit();
-          return;
-        }
+        $('#userForm :submit').removeAttr('disabled');
         // reset previous errors
         $('#userForm :input').removeClass('is-invalid');
         $('#userForm li').parent().remove();
+        // if validation is OK, submit the form
+        if (data['status'] == 'ok') {
+          $("#userForm").unbind('submit');
+          $("#userForm :submit").click()
+          return;
+        }
         // fill new errors
         $.each(data, function(key, errors) {
           input = $('#userForm :input[name=\'' + key + '\']');
@@ -87,9 +91,11 @@ $(document).ready(function() {
         });
         // set focus on first found error
         $('#userForm :input.is-invalid').first().focus();
+      },
+      error : function(data, textStatus) {
+        $('#userForm :submit').removeAttr('disabled');
       }
     });
-    event.preventDefault();
   });
 
 });
