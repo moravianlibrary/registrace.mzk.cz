@@ -106,7 +106,7 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
                 'label' => 'label_phone',
             ],
         ]);
-        // Is company
+        // Is contact address
         $this->add([
            'name'    => 'isContactAddress',
            'type'    => Checkbox::class,

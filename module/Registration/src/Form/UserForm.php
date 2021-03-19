@@ -71,6 +71,16 @@ class UserForm extends Form implements InputFilterProviderInterface
         ]);
     }
 
+    public function isValid() {
+        $isContactAddress = $this->getFieldsets()['user']
+            ->getElements()['isContactAddress']->getValue();
+        if ($isContactAddress) {
+            $contactAddress = $this->getFieldsets()['contactAddress']
+                ->setOptions(['required' => true]);;
+        }
+        return parent::isValid();
+    }
+
     public function getInputFilterSpecification() : array
     {
         return [
