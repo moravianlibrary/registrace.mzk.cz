@@ -27,20 +27,6 @@ $(document).ready(function() {
   });
   studySelect.change();
 
-  // Input validation
-  requiredInput = $("div.required").find("input");
-  requiredInput.blur(function() {
-    value = $(this).val();
-    if (value.trim() === "") {
-      $(this).addClass('is-invalid');
-      $(this).removeClass('is-valid');
-    } else {
-      $(this).removeClass('is-invalid');
-      $(this).addClass('is-valid');
-    }
-  });
-  requiredInput.blur();
-
   $('select[name="user[member]"]').change(function() {
       price = $(this).find(':selected').data('price');
       $('#price').text(price);
@@ -58,7 +44,7 @@ $(document).ready(function() {
       success: function(data, textStatus) {
         $options = $('select[name="user[member]"]').children().remove().end();
         $.each(data, function(key, obj) {
-          var option = $('<option/>');
+          option = $('<option/>');
           if (selected == key) {
               option.attr({'selected': ''});
           }
@@ -67,6 +53,41 @@ $(document).ready(function() {
         });
       }
     });
+  });
+
+  $("#userForm").submit(function(event) {
+    params = $("#userForm").serialize();
+    jQuery.ajax ({
+      url: "/ajax/validate",
+      type: "POST",
+      data: params,
+      dataType: "json",
+      contentType: "application/x-www-form-urlencoded; charset=utf-8",
+      success: function(data, textStatus) {
+        if (data['status'] == 'ok') {
+          $("#userForm").unbind('submit');
+          $("#userForm").submit();
+          return;
+        }
+        // reset previous errors
+        $('#userForm :input').removeClass('is-invalid');
+        $('#userForm li').parent().remove();
+        // fill new errors
+        $.each(data, function(key, errors) {
+          input = $('#userForm :input[name=\'' + key + '\']');
+          input.addClass('is-invalid');
+          ul = $('<ul/>');
+          ul.attr({'class': 'form-text'});
+          $.each(errors, function(index, error) {
+            li = $('<li/>');
+            li.text(error);
+            ul.append(li);
+          });
+          input.parent().append(ul);
+        });
+      }
+    });
+    event.preventDefault();
   });
 
 });

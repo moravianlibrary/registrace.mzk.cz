@@ -35,6 +35,23 @@ class AjaxController extends AbstractActionController
         return $this->getAjaxResponse($discounts);
     }
 
+    public function validateAction() {
+        if ($this->form->setData($this->params()->fromPost())->isValid()) {
+            return $this->getAjaxResponse(['status' => 'ok']);
+        }
+        $messages = $this->form->getMessages();
+        $errors = [];
+        foreach ($messages as $fieldSet => $fields) {
+            foreach ($fields as $field => $errorList) {
+                foreach ($errorList as $type => $text) {
+                    $key = $fieldSet . '[' . $field . ']';
+                    $errors[$key][] = $text;
+                }
+            }
+        }
+        return $this->getAjaxResponse($errors);
+    }
+
     /**
      * Send output data and exit.
      *
