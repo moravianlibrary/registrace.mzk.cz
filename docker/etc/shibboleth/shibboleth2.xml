@@ -140,6 +140,8 @@
             <!-- Metadata -->
             <Handler type="MetadataGenerator" Location="/Metadata" signing="false" template="/etc/shibboleth/template.xml"/>
 
+            <Handler type="MetadataGenerator" Location="/MojeIDMetadata" signing="false" template="/etc/shibboleth/template-mojeid.xml"/>
+
         </Sessions>
 
         <!--
@@ -187,7 +189,7 @@
             <ContactPerson id="technicalContact" contactType="technical" formatter="$EmailAddress"/>
         </AttributeExtractor>
 
-        <CredentialResolver type="File" key="/data/shibboleth/sp-key.pem" certificate="/data/shibboleth/sp-cert.pem"/>
+        <CredentialResolver type="File" key="/etc/shibboleth/sp-key.pem" certificate="/etc/shibboleth/sp-cert.pem"/>
 
     </ApplicationDefaults>
 

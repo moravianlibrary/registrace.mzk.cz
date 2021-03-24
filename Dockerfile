@@ -25,9 +25,9 @@ RUN apt-get install --yes git zlib1g-dev libzip-dev libapache2-mod-shib2 libicu-
     && docker-php-ext-install intl \
     && docker-php-ext-install mbstring
 
-ADD /etc /etc
-ADD . /var/www
-ADD init.sh /usr/local/bin/
+ADD docker/etc /etc
+ADD docker/bin/ /usr/local/bin/
+ADD web/ /var/www/
 
 WORKDIR /var/www
 RUN composer update
