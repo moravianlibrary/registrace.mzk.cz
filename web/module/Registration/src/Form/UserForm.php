@@ -76,7 +76,7 @@ class UserForm extends Form implements InputFilterProviderInterface
             ->getElements()['isContactAddress']->getValue();
         if ($isContactAddress) {
             $contactAddress = $this->getFieldsets()['contactAddress']
-                ->setOptions(['required' => true]);;
+                ->setOptions(['required' => true]);
         }
         return parent::isValid();
     }

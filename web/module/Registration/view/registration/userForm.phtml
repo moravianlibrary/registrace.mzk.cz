@@ -22,6 +22,16 @@ $(document).ready(function() {
     $('#price').text(price);
   });
 
+  $('select[name="permanentAddress[country]"]').change(function() {
+    country = $(this).val();
+    if (country == 'CZ') {
+      $("select[name='user[identificationType]'] option[value='PAS']").attr('disabled', 'disabled');
+      $("select[name='user[identificationType]'] option[value='IC']").attr('selected', '');
+    } else {
+      $("select[name='user[identificationType]'] option[value='PAS']").removeAttr('disabled');
+    }
+  });
+
   $('select[name="user[birth][day]"], select[name="user[birth][month]"], select[name="user[birth][year]"]').change(function() {
     selected = $('select[name="user[member]"]').val();
     params = $("#userForm").serialize();
