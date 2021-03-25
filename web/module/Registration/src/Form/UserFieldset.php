@@ -125,7 +125,7 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
                 'label' => 'label_birth',
                 'required' => true,
                 'min_year'  => '1900',
-                'max_year'  => date("Y") - 15,
+                'max_year'  => date("Y") - 26,
             ],
         ]);
         // Member
