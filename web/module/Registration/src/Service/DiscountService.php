@@ -61,10 +61,6 @@ class DiscountService
                 'label' => $this->translator->translate('option_member_uod'),
                 'price' => '0',
             ],
-            'itic' => [
-                'label' => $this->translator->translate('option_member_itic'),
-                'price' => '300',
-            ]
         ];
         $this->validators = [
             'hss' => function(UserForm $user) {
