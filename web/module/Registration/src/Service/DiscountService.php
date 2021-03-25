@@ -41,17 +41,17 @@ class DiscountService
     protected function init()
     {
         $this->discounts = [
+            'none' => [
+                'label' => $this->translator->translate('option_member_none'),
+                'price' => '200',
+            ],
             'hss' => [
                 'label' => $this->translator->translate('option_member_hss'),
                 'price' => '100',
             ],
             'us' => [
                 'label' => $this->translator->translate('option_member_us'),
-                'price' => '100',
-            ],
-            'none' => [
-                'label' => $this->translator->translate('option_member_none'),
-                'price' => '200',
+                'price' => '0',
             ],
             'ztp' => [
                 'label' => $this->translator->translate('option_member_ztp'),
