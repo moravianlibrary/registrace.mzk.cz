@@ -28,7 +28,7 @@ class UserForm extends Form implements InputFilterProviderInterface
         ]);
         $this->add([
             'name' => 'permanentAddress',
-            'type' => AddressFieldset::class,
+            'type' => FullAddressFieldset::class,
             'options' => [
                 'required' => true,
             ],
@@ -103,6 +103,14 @@ class UserForm extends Form implements InputFilterProviderInterface
     {
         $birth = $this->get('user')->get('birth')->getValue();
         return DateTime::createFromFormat('Y-m-d', $birth)->diff(new DateTime('now'))->y;
+    }
+
+    public function getCountries()
+    {
+        return [
+            'Czech republic',
+            'Slovakia',
+        ];
     }
 
 }
