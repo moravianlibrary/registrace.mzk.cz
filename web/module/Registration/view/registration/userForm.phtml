@@ -154,11 +154,6 @@ $form->prepare();
             </div>
             <div class="col-md-2">
                 <?=$this->render('element.phtml', ['element' => $form->get('permanentAddress')->get('country')])?>
-                <datalist id="countries">
-                    <?php foreach($form->getCountries() as $country): ?>
-                    <option value="<?=$this->escapeHtmlAttr($country)?>">
-                        <?php endforeach; ?>
-                </datalist>
             </div>
         </div>
 

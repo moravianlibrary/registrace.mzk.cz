@@ -105,12 +105,4 @@ class UserForm extends Form implements InputFilterProviderInterface
         return DateTime::createFromFormat('Y-m-d', $birth)->diff(new DateTime('now'))->y;
     }
 
-    public function getCountries()
-    {
-        return [
-            'Czech republic',
-            'Slovakia',
-        ];
-    }
-
 }

@@ -65,6 +65,7 @@ $config = [
     'form_elements' => [
         'factories' => [
             \Registration\Form\UserFieldset::class => \Registration\Form\UserFieldsetFactory::class,
+            \Registration\Form\FullAddressFieldset::class => \Registration\Form\FullAddressFieldsetFactory::class,
         ],
     ],
     'view_manager' => [

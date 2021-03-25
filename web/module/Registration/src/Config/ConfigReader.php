@@ -11,6 +11,7 @@ class ConfigReader
     {
         $file = APPLICATION_PATH . '/data/registration/' . $filename;
         $reader = new \Laminas\Config\Reader\Ini();
+        $reader->setTypedMode(false);
         return $reader->fromFile($file);
     }
 
