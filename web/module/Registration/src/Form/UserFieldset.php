@@ -119,13 +119,13 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
             'name'    => 'birth',
             'type'    => DateSelect::class,
             'attributes' => [
-                'value' => (date("Y") - 20) . '-01-01',
+                'value' => (date("Y") - 26) . '-01-01',
             ],
             'options' => [
                 'label' => 'label_birth',
                 'required' => true,
                 'min_year'  => '1900',
-                'max_year'  => date("Y") - 26,
+                'max_year'  => date("Y") - 15,
             ],
         ]);
         // Member
