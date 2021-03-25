@@ -118,9 +118,14 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
         $this->add([
             'name'    => 'birth',
             'type'    => DateSelect::class,
+            'attributes' => [
+                'value' => (date("Y") - 20) . '-01-01',
+            ],
             'options' => [
                 'label' => 'label_birth',
                 'required' => true,
+                'min_year'  => '1900',
+                'max_year'  => date("Y") - 15,
             ],
         ]);
         // Member
@@ -240,6 +245,18 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
                             'message' => 'userForm_missing_birth',
                             'type' => 'string',
                         ],
+                    ],
+                    [
+                        'name' => Validator\Callback::class,
+                        'options' => [
+                            'message' => 'userForm_ageNotValid',
+                            'callback' => function($value, $context=[]) {
+                                $now = new \DateTime(date("d-m-Y"));
+                                $birth = new \DateTime($value['day'] . '-' . $value['month'] . '-' . $value['year']);
+                                $age = $birth->diff($now)->y;
+                                return ($age >= 15);
+                            },
+                        ]
                     ],
                 ],
             ],

@@ -78,6 +78,9 @@ $(document).ready(function() {
         }
         // fill new errors
         $.each(data, function(key, errors) {
+          if (key == 'user[birth]') {
+            key = 'user[birth][year]';
+          }
           input = $('#userForm :input[name=\'' + key + '\']');
           input.addClass('is-invalid');
           ul = $('<ul/>');
