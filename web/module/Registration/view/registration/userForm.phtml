@@ -6,26 +6,16 @@
 <script>
 $(document).ready(function() {
   // University/High school selection
-  const studySelect = $('select[name="user[study]"]');
-  studySelect.change(function() {
-    const highSchool = $("#groupHighSchool");
+  const memberSelect = $('select[name="user[member]"]');
+  memberSelect.change(function() {
     const university = $("#groupUniversity");
-    switch ($(this).val()) {
-      case 'UN':
-        highSchool.hide();
-        university.show();
-        break;
-      case 'HS':
-        highSchool.show();
-        university.hide();
-        break;
-      default:
-        highSchool.hide();
-        university.hide();
-        break;
+    if ($(this).val() == 'us') {
+      university.show();
+    } else {
+      university.hide();
     }
   });
-  studySelect.change();
+  memberSelect.change();
 
   $('select[name="user[member]"]').change(function() {
     price = $(this).find(':selected').data('price');
@@ -142,12 +132,6 @@ $form->prepare();
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12">
-                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('study')])?>
-            </div>
-            <div class="col-md-12" id="groupHighSchool">
-                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('highSchool')])?>
-            </div>
             <div class="col-md-12" id="groupUniversity">
                 <?=$this->render('element.phtml', ['element' => $form->get('user')->get('university')])?>
             </div>

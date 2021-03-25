@@ -137,28 +137,6 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
                 'label' => 'label_member',
                 'value_options' => $this->getDiscounts(),
             ],
-       ]);
-        // Study
-        $this->add([
-            'id'      => 'study',
-            'name'    => 'study',
-            'type'    => Select::class,
-            'options' => [
-                'label' => 'label_study',
-                'value_options' => [
-                    'OTHER' => $this->translator->translate('option_study_other'),
-                    'HS' => $this->translator->translate('option_study_hs'),
-                    'UN' => $this->translator->translate('option_study_un'),
-                ],
-            ],
-        ]);
-        $this->add([
-            'name'    => 'highSchool',
-            'type'    => Select::class,
-            'options' => [
-                'label' => 'label_highSchool',
-                'value_options' => $this->codeBook->getHighSchools(),
-            ],
         ]);
         $this->add([
             'name'    => 'university',

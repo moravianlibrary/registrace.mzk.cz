@@ -14,11 +14,6 @@ class CodeBook
         $this->reader = $reader;
     }
 
-    public function getHighSchools()
-    {
-        return $this->parse('highSchools.ini');
-    }
-
     public function getUniversities()
     {
         return $this->parse('universities.ini');
