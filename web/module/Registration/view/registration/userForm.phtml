@@ -123,21 +123,6 @@ $form->prepare();
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12">
-                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('isCompany')])?>
-            </div>
-        </div>
-        <div id="collapseIsCompany" class="panel-collapse collapse in">
-            <div class="row">
-                <div class="col-md-6">
-                    <?=$this->render('element.phtml', ['element' => $form->get('user')->get('cin')])?>
-                </div>
-                <div class="col-md-6">
-                    <?=$this->render('element.phtml', ['element' => $form->get('user')->get('tin')])?>
-                </div>
-            </div>
-        </div>
-        <div class="row">
             <div class="col-md-6">
                 <?=$this->render('element.phtml', ['element' => $form->get('user')->get('phone')])?>
             </div>

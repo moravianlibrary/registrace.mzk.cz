@@ -62,34 +62,6 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
                 'label' => 'label_degree',
             ],
         ]);
-        // Is company
-        $this->add([
-            'name'    => 'isCompany',
-            'type'    => Checkbox::class,
-            'options' => [
-                'label' => 'label_isCompany',
-            ],
-            'attributes' => [
-                'data-toggle' => 'collapse',
-                'data-target' => '#collapseIsCompany',
-            ],
-        ]);
-        // Ico
-        $this->add([
-            'name'    => 'cin',
-            'type'    => Text::class,
-            'options' => [
-                'label' => 'label_cin',
-            ],
-        ]);
-        // Dic
-        $this->add([
-            'name'    => 'tin',
-            'type'    => Text::class,
-            'options' => [
-                'label' => 'label_tin',
-            ],
-        ]);
         // Email
         $this->add([
             'name'    => 'email',
