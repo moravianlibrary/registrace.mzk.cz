@@ -28,8 +28,8 @@ $(document).ready(function() {
   studySelect.change();
 
   $('select[name="user[member]"]').change(function() {
-      price = $(this).find(':selected').data('price');
-      $('#price').text(price);
+    price = $(this).find(':selected').data('price');
+    $('#price').text(price);
   });
 
   $('select[name="user[birth][day]"], select[name="user[birth][month]"], select[name="user[birth][year]"]').change(function() {

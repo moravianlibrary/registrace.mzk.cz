@@ -77,6 +77,9 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
             'options' => [
                 'label' => 'label_phone',
             ],
+            'attributes' => [
+                'value' => '+420 ',
+            ],
         ]);
         // Is contact address
         $this->add([
