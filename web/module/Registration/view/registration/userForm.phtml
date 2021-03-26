@@ -6,18 +6,18 @@
 <script>
 $(document).ready(function() {
   // University/High school selection
-  const memberSelect = $('select[name="user[member]"]');
-  memberSelect.change(function() {
+  const discountSelect = $('select[name="user[discount]"]');
+    discountSelect.change(function() {
     const university = $("#groupUniversity");
-    if ($(this).val() == 'us') {
+    if ($(this).val() == 'UNIVERSITY_STUDENT') {
       university.show();
     } else {
       university.hide();
     }
   });
-  memberSelect.change();
+  discountSelect.change();
 
-  $('select[name="user[member]"]').change(function() {
+  $('select[name="user[discount]"]').change(function() {
     price = $(this).find(':selected').data('price');
     $('#price').text(price);
   });
@@ -34,7 +34,7 @@ $(document).ready(function() {
   $('select[name="permanentAddress[country]"]').change();
 
   $('select[name="user[birth][day]"], select[name="user[birth][month]"], select[name="user[birth][year]"]').change(function() {
-    selected = $('select[name="user[member]"]').val();
+    selected = $('select[name="user[discount]"]').val();
     params = $("#userForm").serialize();
     jQuery.ajax ({
       url: "/ajax/discount",
@@ -43,7 +43,7 @@ $(document).ready(function() {
       dataType: "json",
       contentType: "application/x-www-form-urlencoded; charset=utf-8",
       success: function(data, textStatus) {
-        $options = $('select[name="user[member]"]').children().remove().end();
+        $options = $('select[name="user[discount]"]').children().remove().end();
         $.each(data, function(key, obj) {
           option = $('<option/>');
           if (selected == key) {
@@ -139,7 +139,7 @@ $form->prepare();
                 <?=$this->render('element.phtml', ['element' => $form->get('user')->get('birth')])?>
             </div>
             <div class="col-md-12">
-                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('member')])?>
+                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('discount')])?>
             </div>
         </div>
         <div class="row">

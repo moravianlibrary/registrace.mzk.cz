@@ -127,13 +127,13 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
                 'max_year'  => date("Y") - 15,
             ],
         ]);
-        // Member
+        // Discount
         $this->add([
-            'id'      => 'member',
-            'name'    => 'member',
+            'id'      => 'discount',
+            'name'    => 'discount',
             'type'    => Select::class,
             'options' => [
-                'label' => 'label_member',
+                'label' => 'label_discount',
                 'value_options' => $this->getDiscounts(),
             ],
         ]);

@@ -37,11 +37,10 @@ class DiscountService
             return [];
         }
         $discounts = [];
-        // try to find free discount by age
+        // try to find discount by age
         foreach ($this->discounts as $code => $discount) {
             $onlyAge = $discount['only_age'] || false;
-            $free = $discount['price'] == 0;
-            if ($free && $onlyAge && $this->validate($discount, $user)) {
+            if ($onlyAge && $this->validate($discount, $user)) {
                 $discounts[$code] = $discount;
                 break;
             }
@@ -109,7 +108,7 @@ class DiscountService
     {
         $age = $user->getAge();
         $minAge = $discount['min_age'] ?? 0;
-        $maxAge = $discount['max_age'] ?? 200;
+        $maxAge = $discount['max_age'] ?? self::MAX_AGE;
         return ($age >= $minAge && $age < ($maxAge + 1));
     }
 
