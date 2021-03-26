@@ -9,6 +9,10 @@ use Registration\Form\UserForm;
 class DiscountService
 {
 
+    protected const MIN_AGE = 15;
+
+    protected const MAX_AGE = 200;
+
     protected $translator;
 
     protected $discounts;
@@ -28,6 +32,10 @@ class DiscountService
 
     public function getAvailable(UserForm $user)
     {
+        $age = $user->getAge();
+        if ($age < self::MIN_AGE) {
+            return [];
+        }
         $discounts = [];
         // try to find free discount by age
         foreach ($this->discounts as $code => $discount) {
@@ -61,7 +69,7 @@ class DiscountService
             'TEENAGER' => [
                 'label'    => $this->translator->translate('discount_teenager'),
                 'price'    => 0,
-                'min_age'  => 15,
+                'min_age'  => self::MIN_AGE,
                 'max_age'  => 19,
                 'only_age' => true,
             ],
@@ -82,7 +90,7 @@ class DiscountService
                 'label'    => $this->translator->translate('discount_old_senior'),
                 'price'    => 0,
                 'min_age'  => 70,
-                'max_age'  => 200,
+                'max_age'  => self::MAX_AGE,
                 'only_age' => true,
             ],
             // free
