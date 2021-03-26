@@ -36,24 +36,28 @@ class DiscountService
         if ($age < self::MIN_AGE) {
             return [];
         }
-        $discounts = [];
         // try to find discount by age
+        $preferred = $this->findDiscountByAge($user);
+        // only add cheaper discounts
+        $discounts = [];
         foreach ($this->discounts as $code => $discount) {
-            $onlyAge = $discount['only_age'] || false;
-            if ($onlyAge && $this->validate($discount, $user)) {
-                $discounts[$code] = $discount;
-                break;
-            }
-        }
-        if (!empty($discounts)) {
-            return $discounts;
-        }
-        foreach ($this->discounts as $code => $discount) {
-            if ($this->validate($discount, $user)) {
+            if ($this->validate($discount, $user) &&
+                ($preferred == null || $preferred['price'] >= $discount['price'])) {
                 $discounts[$code] = $discount;
             }
         }
         return $discounts;
+    }
+
+    protected function findDiscountByAge(UserForm $user)
+    {
+        foreach ($this->discounts as $code => $discount) {
+            $onlyAge = $discount['only_age'] || false;
+            if ($onlyAge && $this->validate($discount, $user)) {
+                return $discount;
+            }
+        }
+        return null;
     }
 
     protected function init()
@@ -96,10 +100,12 @@ class DiscountService
             'UNOB' => [
                 'label'    => $this->translator->translate('discount_unob'),
                 'price'    => 0,
+                'min_age'  => 19,
             ],
             'ZTP' => [
                 'label'    => $this->translator->translate('discount_ztp'),
                 'price'    => 0,
+                'min_age'  => 19,
             ],
         ];
     }
