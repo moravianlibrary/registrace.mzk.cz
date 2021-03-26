@@ -42,7 +42,9 @@ class DiscountService
         $discounts = [];
         foreach ($this->discounts as $code => $discount) {
             if ($this->validate($discount, $user) &&
-                ($preferred == null || $preferred['price'] >= $discount['price'])) {
+                ($preferred == null
+                    || $preferred['price'] > $discount['price']
+                    || $preferred == $discount)) {
                 $discounts[$code] = $discount;
             }
         }
