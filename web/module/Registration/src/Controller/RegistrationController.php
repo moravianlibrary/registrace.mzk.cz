@@ -15,9 +15,12 @@ class RegistrationController extends AbstractController
     /** @var UserForm */
     private $form;
 
-    public function __construct(UserForm $form)
+    private $config;
+
+    public function __construct(UserForm $form, $config)
     {
         $this->form = $form;
+        $this->config = $config;
     }
 
     public function indexAction()
@@ -34,6 +37,7 @@ class RegistrationController extends AbstractController
             return $this->redirect()->toRoute('registration-finished');
         }
         $view = new ViewModel([
+            'config' => $this->config,
             'form' => $this->form
         ]);
         $view->setTemplate('registration/userForm');

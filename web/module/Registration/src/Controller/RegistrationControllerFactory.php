@@ -13,7 +13,8 @@ class RegistrationControllerFactory
         $formElementManager = $container->get('FormElementManager');
         /** @var UserForm */
         $form = $formElementManager->get(UserForm::class);
-        return new RegistrationController($form);
+        $configReader = $container->get(\Registration\Config\ConfigReader::class);
+        return new RegistrationController($form, $configReader->getConfig('config.ini'));
     }
 
 }

@@ -4,6 +4,8 @@
  */
 ?>
 <script>
+config = <?= json_encode($this->config, JSON_PRETTY_PRINT); ?>;
+
 $(document).ready(function() {
   // University/High school selection
   const discountSelect = $('select[name="user[discount]"]');
@@ -24,11 +26,17 @@ $(document).ready(function() {
 
   $('select[name="permanentAddress[country]"]').change(function() {
     country = $(this).val();
+    icOption = $("select[name='user[identificationType]'] option[value='IC']");
+    passportOption = $("select[name='user[identificationType]'] option[value='PAS']");
     if (country == 'CZ') {
-      $("select[name='user[identificationType]'] option[value='PAS']").attr('disabled', 'disabled');
-      $("select[name='user[identificationType]'] option[value='IC']").prop('selected', true);
+      icOption.removeAttr('disabled').prop('selected', true);
+      passportOption.attr('disabled', 'disabled');
+    } else if (config.countries.EU.includes(country)) {
+      icOption.removeAttr('disabled').prop('selected', true);
+      passportOption.removeAttr('disabled');
     } else {
-      $("select[name='user[identificationType]'] option[value='PAS']").removeAttr('disabled');
+      icOption.attr('disabled', 'disabled');
+      passportOption.removeAttr('disabled').prop('selected', true);
     }
   });
   $('select[name="permanentAddress[country]"]').change();
