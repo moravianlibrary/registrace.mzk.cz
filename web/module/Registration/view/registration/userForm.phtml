@@ -41,7 +41,8 @@ $(document).ready(function() {
   });
   $('select[name="permanentAddress[country]"]').change();
 
-  $('select[name="user[birth][day]"], select[name="user[birth][month]"], select[name="user[birth][year]"]').change(function() {
+  $(':input[name="user[birth][day]"], :input[name="user[birth][month]"], :input[name="user[birth][year]"], ' +
+    ':input[name="user[idsJmk]"]').change(function() {
     selected = $('select[name="user[discount]"]').val();
     params = $("#userForm").serialize();
     jQuery.ajax ({
@@ -145,6 +146,9 @@ $form->prepare();
         <div class="row">
             <div class="col-md-12">
                 <?=$this->render('element.phtml', ['element' => $form->get('user')->get('birth')])?>
+            </div>
+            <div class="col-md-12">
+                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('idsJmk')])?>
             </div>
             <div class="col-md-12">
                 <?=$this->render('element.phtml', ['element' => $form->get('user')->get('discount')])?>

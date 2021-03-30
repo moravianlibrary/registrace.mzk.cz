@@ -9,6 +9,8 @@ use Registration\Form\UserForm;
 class DiscountService
 {
 
+    protected const DEFAULT_AGE = 26;
+
     protected const MIN_AGE = 15;
 
     protected const MAX_AGE = 200;
@@ -25,14 +27,14 @@ class DiscountService
         $this->init();
     }
 
-    public function getAll()
+    public function getDefault()
     {
-        return $this->discounts;
+        return $this->getAvailable(null);
     }
 
-    public function getAvailable(UserForm $user)
+    public function getAvailable(?UserForm $user)
     {
-        $age = $user->getAge();
+        $age = ($user != null)? $user->getAge() : self::DEFAULT_AGE;
         if ($age < self::MIN_AGE) {
             return [];
         }
@@ -45,13 +47,21 @@ class DiscountService
                 ($preferred == null
                     || $preferred['price'] > $discount['price']
                     || $preferred == $discount)) {
+                $price = $discount['price'];
+                if ($price > 0 && $user != null && $user->get('user')
+                        ->get('idsJmk')->getValue()) {
+                    $price = $price * 0.9;
+                }
+                $label = $discount['label'];
+                $label = str_replace('$price', $price, $label);
+                $discount['label'] = $label;
                 $discounts[$code] = $discount;
             }
         }
         return $discounts;
     }
 
-    protected function findDiscountByAge(UserForm $user)
+    protected function findDiscountByAge(?UserForm $user)
     {
         foreach ($this->discounts as $code => $discount) {
             $onlyAge = $discount['only_age'] || false;
@@ -112,9 +122,12 @@ class DiscountService
         ];
     }
 
-    protected function validate($discount, $user)
+    protected function validate($discount, ?UserForm $user)
     {
-        $age = $user->getAge();
+        $age = self::DEFAULT_AGE;
+        if ($user != null) {
+            $age = $user->getAge() ?? self::DEFAULT_AGE;
+        }
         $minAge = $discount['min_age'] ?? 0;
         $maxAge = $discount['max_age'] ?? self::MAX_AGE;
         return ($age >= $minAge && $age < ($maxAge + 1));

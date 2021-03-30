@@ -137,6 +137,15 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
                 'value_options' => $this->getDiscounts(),
             ],
         ]);
+        // IDS JMK
+        $this->add([
+            'id'      => 'idsJmk',
+            'name'    => 'idsJmk',
+            'type'    => Checkbox::class,
+            'options' => [
+                'label' => 'label_idsJmk',
+            ],
+        ]);
         $this->add([
             'name'    => 'university',
             'type'    => Select::class,
@@ -243,7 +252,7 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
     protected function getDiscounts()
     {
         $discounts = [];
-        foreach ($this->discountService->getAll() as $code => $discount) {
+        foreach ($this->discountService->getDefault() as $code => $discount) {
             $discounts[$code] = $discount['label'];
         }
         return $discounts;
