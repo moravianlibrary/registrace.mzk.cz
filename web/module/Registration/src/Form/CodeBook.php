@@ -54,6 +54,9 @@ class CodeBook
         foreach ($values as $category => $elements) {
             $options = [];
             foreach ($elements as $key => $value) {
+                if ($key == 'category') {
+                    continue;
+                }
                 $options[$key] = $value;
             }
             $result[$category] = [
