@@ -55,6 +55,7 @@ class DiscountService
                 $label = $discount['label'];
                 $label = str_replace('$price', $price, $label);
                 $discount['label'] = $label;
+                $discount['price'] = $price;
                 $discounts[$code] = $discount;
             }
         }

@@ -61,6 +61,7 @@ $(document).ready(function() {
           option.attr({ 'value': key, 'data-price': obj['price'] }).text(obj['label']);
           $options.append(option);
         });
+        $('select[name="user[discount]"]').change();
       }
     });
   });
