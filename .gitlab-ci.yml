@@ -1,6 +1,7 @@
 
 stages:
   - test
+  - build_base
   - build
   - deploy
 
@@ -9,12 +10,44 @@ variables:
   TARGET_REGISTRY: registry.app.knihovny.cz
   BUILD_IMAGE: "docker.app.knihovny.cz/ci-builds/buildah"
   BUILDAH_LAYERS: 'true'
+  BASE_IMAGE_NAME: moravianlibrary/registrace-php
   IMAGE_NAME: moravianlibrary/registrace
 
 Test the code:
   stage: test
   script:
     - echo "OK"
+
+Build base image:
+  stage: build_base
+  image: "${BUILD_IMAGE}"
+  only:
+    changes:
+      - .gitlab-ci.yml
+      - build/php-image/*
+      - build/php-image/**/*
+  variables:
+    IMAGE_CACHE_FILE: "${CI_PROJECT_DIR}/.cache/${CI_PROJECT_PATH_SLUG}.tar"
+  cache:
+    key: '${CI_PROJECT_NAME}'
+    paths:
+      - .cache
+    policy: pull-push
+  before_script:
+    - mkdir -p .cache
+    # try to load image from previous builds
+    #- if [ -f "${IMAGE_CACHE_FILE}" ]; then buildah pull --quiet docker-archive:${IMAGE_CACHE_FILE} ;  fi
+    # try to load image from cache registry
+    - if buildah pull --quiet docker://${CACHE_REGISTRY}/${BASE_IMAGE_NAME}:latest ; then echo Cache loaded 1>&2 ; fi
+    - if buildah pull --quiet docker://${CACHE_REGISTRY}/${BASE_IMAGE_NAME}:build ; then echo Cache loaded 1>&2 ; fi
+  script:
+    - cd ${CI_PROJECT_DIR}
+    # build the image
+    - buildah build-using-dockerfile --layers -t ${BASE_IMAGE_NAME}:${CI_COMMIT_REF_SLUG} -f- build/php-image < build/php-image/Dockerfile
+    # save image for the build
+    #- rm -f ${IMAGE_CACHE_FILE}; buildah push ${IMAGE_NAME}:${CI_COMMIT_REF_SLUG} docker-archive:${IMAGE_CACHE_FILE}
+    # push image to Target Registry
+    - buildah push --format v2s2 ${BASE_IMAGE_NAME}:${CI_COMMIT_REF_SLUG} docker://${TARGET_REGISTRY}/${BASE_IMAGE_NAME}:build
 
 Build container:
   stage: build
@@ -31,16 +64,16 @@ Build container:
     # try to load image from previous builds
     #- if [ -f "${IMAGE_CACHE_FILE}" ]; then buildah pull --quiet docker-archive:${IMAGE_CACHE_FILE} ;  fi
     # try to load image from cache registry
-    - if buildah pull --quiet docker://${CACHE_REGISTRY}/${IMAGE_NAME}:latest ; then echo Cache loaded 1>&2 ; fi
-    - if buildah pull --quiet docker://${CACHE_REGISTRY}/${IMAGE_NAME}:build ; then echo Cache loaded 1>&2 ; fi
+    - if buildah pull --quiet docker://${CACHE_REGISTRY}/${BASE_IMAGE_NAME}:latest ; then echo Cache loaded 1>&2 ; fi
+    - if buildah pull --quiet docker://${CACHE_REGISTRY}/${BASE_IMAGE_NAME}:build ; then echo Cache loaded 1>&2 ; fi
   script:
     - cd ${CI_PROJECT_DIR}
     # build the image
-    - buildah build-using-dockerfile --layers -t ${IMAGE_NAME}:${CI_COMMIT_REF_SLUG} -f .
+    - buildah build-using-dockerfile --layers -t ${IMAGE_NAME}:${CI_COMMIT_REF_SLUG} -f- . < build/app/Dockerfile
     # save image for the build
     #- rm -f ${IMAGE_CACHE_FILE}; buildah push ${IMAGE_NAME}:${CI_COMMIT_REF_SLUG} docker-archive:${IMAGE_CACHE_FILE}
     # push image to Target Registry
-    - buildah push --format v2s2 ${IMAGE_NAME}:${CI_COMMIT_REF_SLUG} docker://${TARGET_REGISTRY}/${IMAGE_NAME}:build 
+    - buildah push --format v2s2 ${IMAGE_NAME}:${CI_COMMIT_REF_SLUG} docker://${TARGET_REGISTRY}/${IMAGE_NAME}:build
 
 Deploy container:
   only:
