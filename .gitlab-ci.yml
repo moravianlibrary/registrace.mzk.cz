@@ -118,7 +118,7 @@ Build app image:
        if [ "$CI_PIPELINE_SOURCE" == "push" ] ; then
             buildah push --format v2s2 ${IMAGE_NAME}:build docker://${TARGET_REGISTRY}/${IMAGE_NAME}:env-${CI_COMMIT_REF_SLUG} ;
             buildah push --format v2s2 ${IMAGE_NAME}:build docker://${TARGET_REGISTRY}/${IMAGE_NAME}:${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA} ;
-            buildah push --format v2s2 ${IMAGE_NAME}:build docker://${TARGET_REGISTRY}/${IMAGE_NAME}:${CI_COMMIT_REF_SLUG}-${CI_PIPELINE_IID} ;
+            # buildah push --format v2s2 ${IMAGE_NAME}:build docker://${TARGET_REGISTRY}/${IMAGE_NAME}:${CI_COMMIT_REF_SLUG}-${CI_PIPELINE_IID} ;
        fi
     - echo "Create deploy.env";
     - cd ${CI_PROJECT_DIR}; mkdir -p .artifacts; touch .artifacts/image_deploy.env
