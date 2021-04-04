@@ -118,7 +118,6 @@ Build app image:
        if [ "$CI_PIPELINE_SOURCE" == "push" ] ; then
             buildah push --format v2s2 ${IMAGE_NAME}:build docker://${TARGET_REGISTRY}/${IMAGE_NAME}:env-${CI_COMMIT_REF_SLUG} ;
             buildah push --format v2s2 ${IMAGE_NAME}:build docker://${TARGET_REGISTRY}/${IMAGE_NAME}:${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA} ;
-            # buildah push --format v2s2 ${IMAGE_NAME}:build docker://${TARGET_REGISTRY}/${IMAGE_NAME}:${CI_COMMIT_REF_SLUG}-${CI_PIPELINE_IID} ;
        fi
     - echo "Create deploy.env";
     - cd ${CI_PROJECT_DIR}; mkdir -p .artifacts; touch .artifacts/image_deploy.env
@@ -150,7 +149,7 @@ Deploy devel image:
     - git clone git@gitlab.mzk.cz:knihovny.cz/deploy/registration.git registration
     - cd registration/devel;
     - kustomize edit set image registration=${APP_IMAGE_NAME}:${APP_IMAGE_TAG}
-    - git config user.name "CI Robot - for ${GITLAB_USER_NAME}"
+    - git config user.name "${GITLAB_USER_NAME} by Gitlab Robot"
     - git config user.email "<gitlab-cpk@knihovny.cz>"
     - git add .
     - |
@@ -166,4 +165,5 @@ Deploy master image:
   environment:
     name: production
   script:
-    - echo OK
+    - |
+      echo "TODO: Add some deploy code here"
