@@ -117,7 +117,7 @@ Build app image:
     - |
        if [ "$CI_PIPELINE_SOURCE" == "push" ] ; then
             buildah push --format v2s2 ${IMAGE_NAME}:build docker://${TARGET_REGISTRY}/${IMAGE_NAME}:env-${CI_COMMIT_REF_SLUG} ;
-            buildah push --format v2s2 ${IMAGE_NAME}:build docker://${TARGET_REGISTRY}/${IMAGE_NAME}:${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SORT_SHA} ;
+            buildah push --format v2s2 ${IMAGE_NAME}:build docker://${TARGET_REGISTRY}/${IMAGE_NAME}:${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA} ;
             buildah push --format v2s2 ${IMAGE_NAME}:build docker://${TARGET_REGISTRY}/${IMAGE_NAME}:${CI_COMMIT_REF_SLUG}-${CI_PIPELINE_IID} ;
        fi
     - echo "Create deploy.env";
@@ -125,7 +125,7 @@ Build app image:
     - |
        if [ "$CI_PIPELINE_SOURCE" == 'push' ]; then
           echo "APP_IMAGE_NAME=${CACHE_REGISTRY}/${IMAGE_NAME}" >> .artifacts/image_deploy.env;
-          echo "APP_IMAGE_TAG=${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SORT_SHA}" >> .artifacts/image_deploy.env;
+          echo "APP_IMAGE_TAG=${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}" >> .artifacts/image_deploy.env;
        fi
 
 Deploy devel image:
