@@ -70,7 +70,7 @@ Build app image:
   artifacts:
     reports:
       dotenv:
-        - ~/.artifacts/image_deploy.env
+        - .artifacts/image_deploy.env
   before_script:
     - mkdir -p .artifacts
     # try to load image from cache registry
@@ -136,6 +136,7 @@ Deploy devel image:
       - /^devel/
   needs:
     - Build app image
+
   environment:
     name: devel
   variables:
