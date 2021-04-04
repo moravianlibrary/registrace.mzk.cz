@@ -1,4 +1,4 @@
-FROM docker.app.knihovny.cz/moravianlibrary/registrace-php:build
+FROM registry.app.knihovny.cz/moravianlibrary/registrace/php:build
 
 ADD web/ /var/www/
 

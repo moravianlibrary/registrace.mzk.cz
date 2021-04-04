@@ -9,8 +9,8 @@ variables:
   CACHE_REGISTRY: docker.app.knihovny.cz
   TARGET_REGISTRY: registry.app.knihovny.cz
   BUILD_IMAGE: "docker.app.knihovny.cz/ci-builds/buildah"
-  BASE_IMAGE_NAME: moravianlibrary/registrace-php
-  IMAGE_NAME: moravianlibrary/registrace
+  PHP_IMAGE_NAME: moravianlibrary/registrace/php
+  IMAGE_NAME: moravianlibrary/registrace/app
   BUILDAH_LAYERS: 'true'
 
 Test the code:
@@ -35,30 +35,32 @@ Build base image:
       - .gitlab-ci.yml
       - build/php-image/*
       - build/php-image/**/*
-  cache:
-    key: '${CI_PROJECT_NAME}'
-    paths:
-      - .cache
-    policy: pull-push
   before_script:
-    - mkdir -p .cache
     # try to load image from cache registry
-    - if buildah pull --quiet docker://${CACHE_REGISTRY}/${BASE_IMAGE_NAME}:latest ; then echo Cache loaded 1>&2 ; fi
-    - if buildah pull --quiet docker://${CACHE_REGISTRY}/${BASE_IMAGE_NAME}:build ; then echo Cache loaded 1>&2 ; fi
+    - if buildah pull --quiet docker://${CACHE_REGISTRY}/${PHP_IMAGE_NAME}:build ; then echo Cache loaded 1>&2 ; fi
   script:
     - cd ${CI_PROJECT_DIR}
     # build the image
-    - buildah build-using-dockerfile --layers -t ${BASE_IMAGE_NAME}:${CI_COMMIT_REF_SLUG} -f- build/php-image < build/php-image/Dockerfile
+    - buildah build-using-dockerfile
+          -t ${PHP_IMAGE_NAME}:build
+          -f build/php-image/Dockerfile
+          --squash
+          --label cz.knihovny.commit_id=${CI_COMMIT_SHORT_SHA}
+          build/php-image
+    # if on merge request, store the image
+    - if [ "$CI_MERGE_REQUEST_IID" != "" ]; then
+        buildah push --format v2s2 ${PHP_IMAGE_NAME}:build docker://${TARGET_REGISTRY}/${PHP_IMAGE_NAME}:mr-${CI_MERGE_REQUEST_IID};
+      fi
     # push image to Target Registry (on push)
-    - if ( $CI_PIPELINE_SOURCE == 'push' ); then
-            buildah push --format v2s2 ${BASE_IMAGE_NAME}:${CI_COMMIT_REF_SLUG} docker://${TARGET_REGISTRY}/${BASE_IMAGE_NAME}:${CI_COMMIT_REF_SLUG};
+    - if [ $CI_PIPELINE_SOURCE == 'push' ]; then
+            buildah push --format v2s2 ${PHP_IMAGE_NAME}:build docker://${TARGET_REGISTRY}/${PHP_IMAGE_NAME}:build;
+            buildah push --format v2s2 ${PHP_IMAGE_NAME}:build docker://${TARGET_REGISTRY}/${PHP_IMAGE_NAME}:branch-${CI_COMMIT_REF_SLUG};
+            buildah push --format v2s2 ${PHP_IMAGE_NAME}:build docker://${TARGET_REGISTRY}/${PHP_IMAGE_NAME}:r-${CI_COMMIT_SHORT_SHA};
       fi
 
 Build app image:
   stage: build
   image: "${BUILD_IMAGE}"
-  variables:
-    IMAGE_CACHE_FILE: "${CI_PROJECT_DIR}/.cache/${CI_PROJECT_PATH_SLUG}.tar"
   only:
     refs:
       - master
@@ -67,14 +69,43 @@ Build app image:
   before_script:
     - mkdir -p .cache
     # try to load image from cache registry
-    - if buildah pull --quiet docker://${CACHE_REGISTRY}/${BASE_IMAGE_NAME}:latest ; then echo Cache loaded 1>&2 ; fi
-    - if buildah pull --quiet docker://${CACHE_REGISTRY}/${BASE_IMAGE_NAME}:build ; then echo Cache loaded 1>&2 ; fi
+    # try to load image build in some merge-reqeest
+    - HAVE_CACHE_IMAGE=0
+    - echo "Loading PHP base image from mr- image "
+    - |
+      if [ "$CI_MERGE_REQUEST_IID" != "" ]; then
+        if buildah pull --quiet  docker://${CACHE_REGISTRY}/${PHP_IMAGE_NAME}:mr-${CI_MERGE_REQUEST_IID}; then
+             buildah tag ${CACHE_REGISTRY}/${PHP_IMAGE_NAME}:mr-${CI_MERGE_REQUEST_IID} localhost/${PHP_IMAGE_NAME}:build ;
+             HAVE_CACHE_IMAGE=1
+        fi
+      fi
+    - echo "Loading PHP base image from branch- image"
+    - |
+      if [ "$HAVE_CACHE_IMAGE" == 0 ]; then
+        if buildah pull docker://${CACHE_REGISTRY}/${PHP_IMAGE_NAME}:branch-${CI_COMMIT_REF_SLUG}; then
+          buildah tag ${CACHE_REGISTRY}/${PHP_IMAGE_NAME}:branch-${CI_COMMIT_REF_SLUG} localhost/${PHP_IMAGE_NAME}:build ;
+          HAVE_CACHE_IMAGE=1
+        fi
+      fi
+    - echo "Loading PHP base image from default image";
+    - |
+        if [ "$HAVE_CACHE_IMAGE" ==  ]; then
+            buildah pull --quiet docker://${CACHE_REGISTRY}/${PHP_IMAGE_NAME}:build
+        fi
   script:
     - cd ${CI_PROJECT_DIR}
+    # change basic image
+    - sed -i "/^FROM/ s@.*@FROM localhost/${PHP_IMAGE_NAME}:build@" build/app/Dockerfile
     # build the image
-    - buildah build-using-dockerfile --layers -t ${IMAGE_NAME}:${CI_COMMIT_REF_SLUG} -f- . < build/app/Dockerfile
-    # push image to Target Registry (on git push or merge)
+    - buildah build-using-dockerfile
+            --pull-never
+            -t ${IMAGE_NAME}:${CI_COMMIT_REF_SLUG}
+            -f build/app/Dockerfile
+            --label cz.knihovny.commit_id=${CI_COMMIT_SHORT_SHA}
+            .
+    # push image to Target Registry for future reuse
     - buildah push --format v2s2 ${IMAGE_NAME}:${CI_COMMIT_REF_SLUG} docker://${TARGET_REGISTRY}/${IMAGE_NAME}:build
+    # push image to Target Registry (on git push or merge)
     - if [ $CI_PIPELINE_SOURCE == 'push' ]; then
             buildah push --format v2s2 ${IMAGE_NAME}:${CI_COMMIT_REF_SLUG} docker://${TARGET_REGISTRY}/${IMAGE_NAME}:env-${CI_COMMIT_REF_SLUG} ;
             buildah push --format v2s2 ${IMAGE_NAME}:${CI_COMMIT_REF_SLUG} docker://${TARGET_REGISTRY}/${IMAGE_NAME}:${CI_COMMIT_REF_SLUG}-${CI_PIPELINE_IID} ;
@@ -85,8 +116,9 @@ Deploy devel image:
   only:
     refs:
       - /^devel/
+
   script:
-    - echo OK
+    - git clone
 
 Deploy master image:
   stage: build
