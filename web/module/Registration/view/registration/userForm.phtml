@@ -1,0 +1,244 @@
+<?php
+/**
+ * @var Registration\Form\UserForm $form
+ */
+?>
+<script>
+config = <?= json_encode($this->config, JSON_PRETTY_PRINT); ?>;
+
+$(document).ready(function() {
+  // University/High school selection
+  const discountSelect = $('select[name="user[discount]"]');
+    discountSelect.change(function() {
+    const university = $("#groupUniversity");
+    if ($(this).val() == 'UNIVERSITY_STUDENT') {
+      university.show();
+    } else {
+      university.hide();
+    }
+  });
+  discountSelect.change();
+
+  $('select[name="user[discount]"]').change(function() {
+    price = $(this).find(':selected').data('price');
+    $('#price').text(price);
+  });
+
+  $('select[name="permanentAddress[country]"]').change(function() {
+    country = $(this).val();
+    icOption = $("select[name='user[identificationType]'] option[value='IC']");
+    passportOption = $("select[name='user[identificationType]'] option[value='PAS']");
+    if (country == 'CZ') {
+      icOption.removeAttr('disabled').prop('selected', true);
+      passportOption.attr('disabled', 'disabled');
+    } else if (config.countries.EU.includes(country)) {
+      icOption.removeAttr('disabled').prop('selected', true);
+      passportOption.removeAttr('disabled');
+    } else {
+      icOption.attr('disabled', 'disabled');
+      passportOption.removeAttr('disabled').prop('selected', true);
+    }
+  });
+  $('select[name="permanentAddress[country]"]').change();
+
+  $(':input[name="user[birth][day]"], :input[name="user[birth][month]"], :input[name="user[birth][year]"], ' +
+    ':input[name="user[idsJmk]"]').change(function() {
+    selected = $('select[name="user[discount]"]').val();
+    params = $("#userForm").serialize();
+    jQuery.ajax ({
+      url: "/ajax/discount",
+      type: "POST",
+      data: params,
+      dataType: "json",
+      contentType: "application/x-www-form-urlencoded; charset=utf-8",
+      success: function(data, textStatus) {
+        $options = $('select[name="user[discount]"]').children().remove().end();
+        $.each(data, function(key, obj) {
+          option = $('<option/>');
+          if (selected == key) {
+              option.attr({'selected': ''});
+          }
+          option.attr({ 'value': key, 'data-price': obj['price'] }).text(obj['label']);
+          $options.append(option);
+        });
+        $('select[name="user[discount]"]').change();
+      }
+    });
+  });
+  $('select[name="user[birth][day]"]').change();
+
+  $("#userForm").submit(function(event) {
+    event.preventDefault();
+    params = $("#userForm").serialize();
+    $('#userForm :submit').attr('disabled', 'true');
+    jQuery.ajax ({
+      url: "/ajax/validate",
+      type: "POST",
+      data: params,
+      dataType: "json",
+      contentType: "application/x-www-form-urlencoded; charset=utf-8",
+      success: function(data, textStatus) {
+        $('#userForm :submit').removeAttr('disabled');
+        // reset previous errors
+        $('#userForm :input').removeClass('is-invalid');
+        $('#userForm li').parent().remove();
+        // if validation is OK, submit the form
+        if (data['status'] == 'ok') {
+          $("#userForm").unbind('submit');
+          $("#userForm :submit").click()
+          return;
+        }
+        // fill new errors
+        $.each(data, function(key, errors) {
+          if (key == 'user[birth]') {
+            key = 'user[birth][year]';
+          }
+          input = $('#userForm :input[name=\'' + key + '\']');
+          input.addClass('is-invalid');
+          ul = $('<ul/>');
+          ul.attr({'class': 'form-text'});
+          $.each(errors, function(index, error) {
+            li = $('<li/>');
+            li.text(error);
+            ul.append(li);
+          });
+          input.parent().append(ul);
+        });
+        // set focus on first found error
+        $('#userForm :input.is-invalid').first().focus();
+      },
+      error : function(data, textStatus) {
+        $('#userForm :submit').removeAttr('disabled');
+      }
+    });
+  });
+
+});
+</script>
+
+<?
+$form->prepare();
+?>
+<?= $this->form()->openTag($form); ?>
+<div class="card">
+    <h2 class="card-header">
+        <?= $this->translate('text_personal_information') ?>
+    </h2>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-2">
+                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('degree')])?>
+            </div>
+            <div class="col-md-5">
+                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('firstName')])?>
+            </div>
+            <div class="col-md-5">
+                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('lastName')])?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('phone')])?>
+            </div>
+            <div class="col-md-6">
+                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('email')])?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('birth')])?>
+            </div>
+            <div class="col-md-12">
+                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('idsJmk')])?>
+            </div>
+            <div class="col-md-12">
+                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('discount')])?>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" id="groupUniversity">
+                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('university')])?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <h2 class="card-header"><?=$this->translate('text_address')?></h2>
+    <div class="card-body">
+        <h4><?=$this->translate('text_permanent_address')?></h4>
+        <div class="row">
+            <div class="col-md-5">
+                <?=$this->render('element.phtml', ['element' => $form->get('permanentAddress')->get('street')])?>
+            </div>
+            <div class="col-md-3">
+                <?=$this->render('element.phtml', ['element' => $form->get('permanentAddress')->get('city')])?>
+            </div>
+            <div class="col-md-2">
+                <?=$this->render('element.phtml', ['element' => $form->get('permanentAddress')->get('postcode')])?>
+            </div>
+            <div class="col-md-2">
+                <?=$this->render('element.phtml', ['element' => $form->get('permanentAddress')->get('country')])?>
+            </div>
+        </div>
+
+        <?=$this->render('element.phtml', ['element' => $form->get('user')->get('isContactAddress')])?>
+
+        <div id="collapseisContactAddress" class="panel-collapse collapse in">
+            <h4><?=$this->translate('text_contact_address')?></h4>
+            <div class="row">
+                <div class="col-md-5">
+                    <?=$this->render('element.phtml', ['element' => $form->get('contactAddress')->get('street')])?>
+                </div>
+                <div class="col-md-3">
+                    <?=$this->render('element.phtml', ['element' => $form->get('contactAddress')->get('city')])?>
+                </div>
+                <div class="col-md-2">
+                    <?=$this->render('element.phtml', ['element' => $form->get('contactAddress')->get('postcode')])?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <h2 class="card-header"><?=$this->translate('Doklad totožnosti')?></h2>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('identificationType')])?>
+            </div>
+            <div class="col-md-6">
+                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('identification')])?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <h2 class="card-header"><?= $this->translate('text_password') ?></h2>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <?=$this->render('element.phtml', ['element' => $form->get('password')->get('password')])?>
+            </div>
+            <div class="col-md-6">
+                <?=$this->render('element.phtml', ['element' => $form->get('password')->get('passwordConfirm')])?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card-body">
+    <?=$this->render('element.phtml', ['element' => $form->get('isSendNews')])?>
+    <?=$this->render('element.phtml', ['element' => $form->get('isGdpr')])?>
+</div>
+
+<div class="alert alert-primary text-center">
+    Cena registrace je <strong><span id="price">XXX</span>,- Kč</strong>
+</div>
+<div class="text-center">
+    <?//= $this->formSubmit($form->get('submit')); ?>
+    <input type="submit" name="submit" class="btn btn-primary" value="<?=$this->translate('btn_next_step') ?> &raquo;">
+</div>
+<?=$this->form()->closeTag();?>

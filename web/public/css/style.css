@@ -1,0 +1,45 @@
+html {
+    font-size: 15px
+}
+
+.container-fluid {
+    max-width: 900px;
+}
+
+/* card */
+.card {
+    margin-bottom: 1rem;
+}
+
+h2.card-header {
+    font-size: 1.25rem;
+}
+
+h4 {
+    font-size: 1rem;
+}
+
+.card-body {
+    padding-bottom: 0;
+}
+
+
+.header{
+    padding: 10px 0;
+}
+
+.header .logo {
+    display: inline-block;
+}
+
+.header .logo img {
+    width: 219px;
+    display: block;
+}
+
+footer{
+    margin-top: 20px;
+    background: #333333;
+    color: #cccccc;
+    padding: 10px 0;
+}
