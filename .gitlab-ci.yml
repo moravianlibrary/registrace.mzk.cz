@@ -134,6 +134,8 @@ Deploy devel image:
   only:
     refs:
       - /^devel/
+  needs:
+    - Build app image
   environment:
     name: devel
   variables:
@@ -141,6 +143,7 @@ Deploy devel image:
     APP_IMAGE_TAG: build
     GIT_STRATEGY: none # no need to checkout the image
   script:
+    - echo "Deploying ${APP_IMAGE_NAME}:${APP_IMAGE_TAG}"
     - mkdir ${HOME}/.ssh; install -m 0600 ${K8S_DEPLOY_KEY} ${HOME}/.ssh/id_rsa
     - ssh-keyscan gitlab.mzk.cz >> ${HOME}/.ssh/known_hosts
     - git clone git@gitlab.mzk.cz:knihovny.cz/deploy/registration.git registration
