@@ -2,15 +2,26 @@
 stages:
   - test
   - build_base
+<<<<<<< HEAD
   - build
+=======
+  - build_app
+>>>>>>> origin/master
   - deploy
 
 variables:
   CACHE_REGISTRY: docker.app.knihovny.cz
   TARGET_REGISTRY: registry.app.knihovny.cz
+<<<<<<< HEAD
   BUILD_IMAGE: "docker.app.knihovny.cz/ci-builds/buildah"
   PHP_IMAGE_NAME: moravianlibrary/registrace/php
   IMAGE_NAME: moravianlibrary/registrace/app
+=======
+  BUILD_JOB_IMAGE: "docker.app.knihovny.cz/ci-builds/buildah"
+  PHP_IMAGE_NAME: moravianlibrary/registrace/php
+  IMAGE_NAME: moravianlibrary/registrace/app
+  DEPLOY_JOB_IMAGE: "docker.app.knihovny.cz/ci-builds/kustomize:latest"
+>>>>>>> origin/master
   BUILDAH_LAYERS: 'true'
 
 Test the code:
@@ -23,15 +34,22 @@ Test the code:
   script:
     - echo "OK"
 
+<<<<<<< HEAD
 Build base image:
   stage: build_base
   image: "${BUILD_IMAGE}"
+=======
+Build PHP image:
+  stage: build_base
+  image: "${BUILD_JOB_IMAGE}"
+>>>>>>> origin/master
   only:
     refs:
       - master
       - /^devel/
       - merge_requests
     changes:
+<<<<<<< HEAD
       - .gitlab-ci.yml
       - build/php-image/*
       - build/php-image/**/*
@@ -92,12 +110,21 @@ Build app image:
         if [ "$HAVE_CACHE_IMAGE" ==  ]; then
             buildah pull --quiet docker://${CACHE_REGISTRY}/${PHP_IMAGE_NAME}:build
         fi
+=======
+      - build/php-image/*
+      - build/php-image/**/*
+
+  before_script:
+    # try to load image from cache registry
+    - if buildah pull --quiet docker://${CACHE_REGISTRY}/${PHP_IMAGE_NAME}:build ; then echo Cache loaded 1>&2 ; fi
+>>>>>>> origin/master
   script:
     - cd ${CI_PROJECT_DIR}
     # change basic image
     - sed -i "/^FROM/ s@.*@FROM localhost/${PHP_IMAGE_NAME}:build@" build/app/Dockerfile
     # build the image
     - buildah build-using-dockerfile
+<<<<<<< HEAD
             --pull-never
             -t ${IMAGE_NAME}:${CI_COMMIT_REF_SLUG}
             -f build/app/Dockerfile
@@ -113,18 +140,129 @@ Build app image:
 
 Deploy devel image:
   stage: build
+=======
+          -t ${PHP_IMAGE_NAME}:build
+          -f build/php-image/Dockerfile
+          --squash
+          --label cz.knihovny.commit_id=${CI_COMMIT_SHORT_SHA}
+          build/php-image
+    # if on merge request, store the image
+    - if [ "$CI_MERGE_REQUEST_IID" != "" ]; then
+        buildah push --format v2s2 ${PHP_IMAGE_NAME}:build docker://${TARGET_REGISTRY}/${PHP_IMAGE_NAME}:mr-${CI_MERGE_REQUEST_IID};
+      fi
+    # push image to Target Registry (on push)
+    - if [ $CI_PIPELINE_SOURCE == 'push' ]; then
+            buildah push --format v2s2 ${PHP_IMAGE_NAME}:build docker://${TARGET_REGISTRY}/${PHP_IMAGE_NAME}:build;
+            buildah push --format v2s2 ${PHP_IMAGE_NAME}:build docker://${TARGET_REGISTRY}/${PHP_IMAGE_NAME}:branch-${CI_COMMIT_REF_SLUG};
+            buildah push --format v2s2 ${PHP_IMAGE_NAME}:build docker://${TARGET_REGISTRY}/${PHP_IMAGE_NAME}:r-${CI_COMMIT_SHORT_SHA};
+      fi
+
+Build app image:
+  stage: build_app
+  image: "${BUILD_JOB_IMAGE}"
+>>>>>>> origin/master
   only:
     refs:
+      - master
       - /^devel/
+<<<<<<< HEAD
 
   script:
     - git clone
 
 Deploy master image:
   stage: build
+=======
+      - merge_requests
+  artifacts:
+    reports:
+      dotenv:
+        - ~/.artifacts/image_deploy.env
+  before_script:
+    - mkdir -p .artifacts
+    # try to load image from cache registry
+    # try to load image build in some merge-reqeest
+    - HAVE_CACHE_IMAGE=0
+    - echo "Loading PHP base image from mr-${CI_MERGE_REQUEST_IID} image "
+    - |
+      if [ "$CI_MERGE_REQUEST_IID" != "" ]; then
+        if buildah pull --quiet  docker://${CACHE_REGISTRY}/${PHP_IMAGE_NAME}:mr-${CI_MERGE_REQUEST_IID}; then
+             buildah tag ${CACHE_REGISTRY}/${PHP_IMAGE_NAME}:mr-${CI_MERGE_REQUEST_IID} localhost/${PHP_IMAGE_NAME}:build ;
+             HAVE_CACHE_IMAGE=1
+        fi
+      fi
+    - echo "Loading PHP base image from branch-${CI_COMMIT_REF_SLUG} image"
+    - |
+      if [ "$HAVE_CACHE_IMAGE" == 0 ]; then
+        if buildah pull docker://${CACHE_REGISTRY}/${PHP_IMAGE_NAME}:branch-${CI_COMMIT_REF_SLUG}; then
+          buildah tag ${CACHE_REGISTRY}/${PHP_IMAGE_NAME}:branch-${CI_COMMIT_REF_SLUG} localhost/${PHP_IMAGE_NAME}:build ;
+          HAVE_CACHE_IMAGE=1
+        fi
+      fi
+    - echo "Loading PHP base image from default image";
+    - |
+        if [ "$HAVE_CACHE_IMAGE" == 0 ]; then
+            buildah pull --quiet docker://${CACHE_REGISTRY}/${PHP_IMAGE_NAME}:build
+            buildah tag ${CACHE_REGISTRY}/${PHP_IMAGE_NAME}:build localhost/${PHP_IMAGE_NAME}:build ;
+        fi
+
+  script:
+    - cd ${CI_PROJECT_DIR}
+    # change basic image
+    - sed -i "/^FROM/ s@.*@FROM localhost/${PHP_IMAGE_NAME}:build@" build/app/Dockerfile
+    # build the image
+    - buildah build-using-dockerfile
+            --pull-never
+            -t ${IMAGE_NAME}:build
+            -f build/app/Dockerfile
+            --label cz.knihovny.commit_id=${CI_COMMIT_SHORT_SHA}
+            .
+    # push image to Target Registry for future reuse
+    - buildah push --format v2s2 ${IMAGE_NAME}:build docker://${TARGET_REGISTRY}/${IMAGE_NAME}:build
+    # push image to Target Registry (on git push or merge)
+    - echo "Push to repository when required"
+    - |
+       if [ "$CI_PIPELINE_SOURCE" == "push" ] ; then
+            buildah push --format v2s2 ${IMAGE_NAME}:build docker://${TARGET_REGISTRY}/${IMAGE_NAME}:env-${CI_COMMIT_REF_SLUG} ;
+            buildah push --format v2s2 ${IMAGE_NAME}:build docker://${TARGET_REGISTRY}/${IMAGE_NAME}:${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SORT_SHA} ;
+            buildah push --format v2s2 ${IMAGE_NAME}:build docker://${TARGET_REGISTRY}/${IMAGE_NAME}:${CI_COMMIT_REF_SLUG}-${CI_PIPELINE_IID} ;
+       fi
+    - echo "Create deploy.env";
+    - mkdir -p ~/.artifacts; touch ~/.artifacts/image_deploy.env
+    - |
+       if [ "$CI_PIPELINE_SOURCE" == 'push' ]; then
+          echo "APP_IMAGE_NAME=${CACHE_REGISTRY}/${IMAGE_NAME}" >> ~/.artifacts/image_deploy.env;
+          echo "APP_IMAGE_TAG=${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SORT_SHA}" >> ~/.artifacts/image_deploy.env;
+       fi
+
+Deploy devel image:
+  stage: deploy
+  image: "${DEPLOY_JOB_IMAGE}"
   only:
     refs:
-      - master
-      - main
+      - /^devel/
+  environment:
+    name: devel
+  variables:
+    APP_IMAGE_NAME: docker.app.knihovny.cz/${IMAGE_NAME}
+    APP_IMAGE_TAG: build
+    GIT_STRATEGY: none # no need to checkout the image
+  script:
+    - mkdir ${HOME}/.ssh; install -m 0600 ${K8S_DEPLOY_KEY} ${HOME}/.ssh/id_rsa
+    - ssh-keyscan gitlab.mzk.cz >> ${HOME}/.ssh/known_hosts
+    - git clone git@gitlab.mzk.cz:knihovny.cz/deploy/registration.git registration
+    - cd registration/devel;
+    - kustomize edit set image registration=${APP_IMAGE_NAME}:${APP_IMAGE_TAG}
+    - git config user.name "CI Robot - for ${GITLAB_USER_NAME}"
+    - git config user.email "<gitlab-cpk@knihovny.cz>"
+    - git add .
+    - |
+        git commit -m "${CI_COMMIT_SHORT_SHA}: Upgrade image version to '${APP_IMAGE_TAG}'"
+    - git push
+
+Deploy master image:
+  stage: deploy
+  environment:
+    name: production
   script:
     - echo OK
