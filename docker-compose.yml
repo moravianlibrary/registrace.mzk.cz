@@ -1,6 +1,7 @@
 registration:
-  image: moravianlibrary/registration
+  image: moravianlibrary/registrace:build
   ports:
    - "8080:80"
+   - "8117:8117"
   volumes:
    - ./web/:/var/www/
