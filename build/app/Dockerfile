@@ -9,4 +9,5 @@ USER www-data
 WORKDIR /var/www
 RUN composer update
 
+USER root
 CMD ["/usr/local/bin/init.sh"]
