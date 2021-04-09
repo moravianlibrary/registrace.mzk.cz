@@ -17,4 +17,12 @@
     <Attribute name="http://specs.nic.cz/attr/contact/ident/valid" id="mojeIdValid" />
     <Attribute name="http://specs.nic.cz/attr/contact/ident/status" id="mojeIdStatus" />
 
+    <!-- MojeId attributes - permanent address -->
+    <Attribute name="http://specs.nic.cz/attr/addr/main/street" id="mojeIdStreet" />
+    <Attribute name="http://specs.nic.cz/attr/addr/main/street1" id="mojeIdStreet1" />
+    <Attribute name="http://specs.nic.cz/attr/addr/main/street2" id="mojeIdStreet2" />
+    <Attribute name="http://specs.nic.cz/attr/addr/main/city" id="mojeIdCity" />
+    <Attribute name="http://specs.nic.cz/attr/addr/main/pc" id="mojeIdPostcode" />
+    <Attribute name="http://specs.nic.cz/attr/addr/main/sp" id="mojeIdCountry" />
+
 </Attributes>

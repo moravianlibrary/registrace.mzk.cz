@@ -11,12 +11,24 @@ class MojeId implements IdentityProviderInterface
     {
         return [
             'user' => [
-                'firstName' => $request->getEnv('firstName'),
-                'lastName' => $request->getEnv('lastName'),
-                'email' => $request->getEnv('mail'),
-                'phone' => $request->getEnv('phone'),
-            ]
+                'firstName' => $this->get($request, 'firstName'),
+                'lastName' => $this->get($request, 'lastName'),
+                'email' => $this->get($request, 'mail'),
+                'phone' => str_replace('.', ' ', $this->get($request, 'phone')),
+                'identificationType' => 'IC',
+                'identification' => $this->get($request, 'mojeIdIdentityCardNumber'),
+            ],
+            'permanentAddress' => [
+                'street' => $this->get($request, 'mojeIdStreet'),
+                'city' => $this->get($request, 'mojeIdCity'),
+                'postcode' => $this->get($request, 'mojeIdPostcode'),
+            ],
         ];
+    }
+
+    public function get(Request $request, $variable)
+    {
+        return $request->getServer($variable);
     }
 
 }
