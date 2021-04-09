@@ -60,6 +60,7 @@ $config = [
             \Registration\Form\CodeBook::class => \Registration\Form\CodeBookFactory::class,
             \Laminas\Mvc\I18n\Translator::class => \Laminas\Mvc\I18n\TranslatorFactory::class,
             \Registration\Service\DiscountService::class => \Registration\Service\DiscountServiceFactory::class,
+            \Registration\IdentityProvider\IdentityProviderFactory::class => InvokableFactory::class,
         ],
     ],
     'form_elements' => [

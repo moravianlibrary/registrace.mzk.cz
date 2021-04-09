@@ -8,6 +8,7 @@ use Laminas\InputFilter\InputFilter;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
 use Registration\Form\UserForm;
+use Registration\IdentityProvider\IdentityProviderFactory;
 
 class RegistrationController extends AbstractController
 {
@@ -17,10 +18,13 @@ class RegistrationController extends AbstractController
 
     private $config;
 
-    public function __construct(UserForm $form, $config)
+    private $identityProviderFactory;
+
+    public function __construct(UserForm $form, $config, IdentityProviderFactory $identityProviderFactory)
     {
         $this->form = $form;
         $this->config = $config;
+        $this->identityProviderFactory = $identityProviderFactory;
     }
 
     public function indexAction()
@@ -35,6 +39,13 @@ class RegistrationController extends AbstractController
         $request = $this->getRequest();
         if ($request->isPost() && $this->form->setData($request->getPost())->isValid()) {
             return $this->redirect()->toRoute('registration-finished');
+        }
+        $auth = $request->getQuery('idp');
+        if ($auth != null) {
+            $idp = $this->identityProviderFactory->get($auth);
+            if ($idp != null && ($identity = $idp->identify($request)) != null) {
+                $this->form->setData($identity);
+            }
         }
         $view = new ViewModel([
             'config' => $this->config,
