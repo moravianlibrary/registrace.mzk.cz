@@ -15,6 +15,7 @@ class MojeId implements IdentityProviderInterface
                 'lastName' => $this->get($request, 'lastName'),
                 'email' => $this->get($request, 'mail'),
                 'phone' => str_replace('.', ' ', $this->get($request, 'phone')),
+                'birth' => $this->get($request, 'birth'),
                 'identificationType' => 'IC',
                 'identification' => $this->get($request, 'mojeIdIdentityCardNumber'),
             ],
