@@ -174,6 +174,14 @@
                               backingFilePath="/etc/shibboleth/eduid-extern-metadata.xml"
                               reloadInterval="7200"/>
 
+            <MetadataProvider type="XML" uri="https://mojeid.regtest.nic.cz/saml/idp.xml"
+                              backingFilePath="/etc/shibboleth/mojeid-test-metadata.xml"
+                              reloadInterval="7200"/>
+
+            <MetadataProvider type="XML" uri="https://mojeid.cz/saml/idp.xml"
+                              backingFilePath="/etc/shibboleth/mojeid-production-metadata.xml"
+                              reloadInterval="7200"/>
+
         </MetadataProvider>
 
         <!-- Chain the two built-in trust engines together. -->

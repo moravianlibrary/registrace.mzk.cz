@@ -39,7 +39,6 @@
       <md:RequestedAttribute FriendlyName="mojeIdContactCity" Name="http://specs.nic.cz/attr/addr/mail/city" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
       <md:RequestedAttribute FriendlyName="mojeIdContactPostcode" Name="http://specs.nic.cz/attr/addr/mail/pc" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
       <md:RequestedAttribute FriendlyName="mojeIdContactCountry" Name="http://specs.nic.cz/attr/addr/mail/sp" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
-      <md:RequestedAttribute FriendlyName="mojeIdCountry" Name="http://specs.nic.cz/attr/addr/mail/verified" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
       <!-- MojeId attributes -->
       <md:RequestedAttribute FriendlyName="mojeIdIdentityCardNumber" Name="http://specs.nic.cz/attr/contact/ident/card" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/>
       <md:RequestedAttribute FriendlyName="mojeIdValid" Name="http://specs.nic.cz/attr/contact/valid" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/>
