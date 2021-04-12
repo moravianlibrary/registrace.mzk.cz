@@ -150,7 +150,7 @@ Deploy devel image:
     - cd registration/devel;
     - kustomize edit set image registration=${APP_IMAGE_NAME}:${APP_IMAGE_TAG}
     - git config user.name "${GITLAB_USER_NAME} by Gitlab Robot"
-    - git config user.email "<gitlab-cpk@knihovny.cz>"
+    - git config user.email "${GITLAB_USER_EMAIL}"
     - |
         cat >> ${TMP_DIR}/commit-message <<EOF
         ${CI_COMMIT_SHORT_SHA}: ${CI_COMMIT_TITLE}
