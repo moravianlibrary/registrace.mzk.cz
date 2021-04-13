@@ -23,6 +23,16 @@
     <Attribute name="http://specs.nic.cz/attr/addr/main/street2" id="mojeIdStreet2" />
     <Attribute name="http://specs.nic.cz/attr/addr/main/city" id="mojeIdCity" />
     <Attribute name="http://specs.nic.cz/attr/addr/main/pc" id="mojeIdPostcode" />
-    <Attribute name="http://specs.nic.cz/attr/addr/main/sp" id="mojeIdCountry" />
+    <Attribute name="http://specs.nic.cz/attr/addr/main/sp" id="mojeIdState" />
+    <Attribute name="http://specs.nic.cz/attr/addr/main/cc" id="mojeIdCountry" />
+
+    <!-- MojeId attributes - contact address -->
+    <Attribute name="http://specs.nic.cz/attr/addr/mail/street" id="mojeIdContactStreet" />
+    <Attribute name="http://specs.nic.cz/attr/addr/mail/street1" id="mojeIdContactStreet1" />
+    <Attribute name="http://specs.nic.cz/attr/addr/mail/street2" id="mojeIdContactStreet2" />
+    <Attribute name="http://specs.nic.cz/attr/addr/mail/city" id="mojeIdContactCity" />
+    <Attribute name="http://specs.nic.cz/attr/addr/mail/pc" id="mojeIdContactPostcode" />
+    <Attribute name="http://specs.nic.cz/attr/addr/mail/sp" id="mojeIdContactState" />
+    <Attribute name="http://specs.nic.cz/attr/addr/mail/cc" id="mojeIdContactCountry" />
 
 </Attributes>
