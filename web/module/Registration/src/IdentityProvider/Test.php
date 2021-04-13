@@ -14,7 +14,8 @@ class Test implements IdentityProviderInterface
         return [
             'user' => [
                 'firstName' => 'test',
-            ]
+            ],
+            'valid' => true,
         ];
     }
 

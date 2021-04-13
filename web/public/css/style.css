@@ -43,3 +43,8 @@ footer{
     color: #cccccc;
     padding: 10px 0;
 }
+
+select.readonly  {
+    pointer-events: none;
+    background-color: #e9ecef;
+}

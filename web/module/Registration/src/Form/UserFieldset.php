@@ -43,6 +43,7 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
             'options' => [
                 'label' => 'label_firstName',
                 'required' => true,
+                'protected' => true,
             ],
         ]);
         // Last name
@@ -52,6 +53,7 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
             'options' => [
                 'label' => 'label_lastName',
                 'required' => true,
+                'protected' => true,
             ],
         ]);
         // Degree
@@ -68,6 +70,7 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
             'type'    => Email::class,
             'options' => [
                 'label' => 'label_email',
+                'protected' => true,
             ],
         ]);
         // Phone number
@@ -76,6 +79,7 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
             'type'    => Text::class,
             'options' => [
                 'label' => 'label_phone',
+                'protected' => true,
             ],
             'attributes' => [
                 'value' => '+420 ',
@@ -103,6 +107,7 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
                     'IC' => $this->translator->translate('option_identificationType_ic'),
                     'PAS' => $this->translator->translate('option_identificationType_pas'),
                 ],
+                'protected' => true,
             ],
         ]);
         $this->add([
@@ -111,6 +116,7 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
             'options' => [
                 'label' => 'label_identification',
                 'required' => true,
+                'protected' => true,
             ],
         ]);
         // Date of birth
@@ -125,6 +131,7 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
                 'required' => true,
                 'min_year'  => '1900',
                 'max_year'  => date("Y") - 15,
+                'protected' => true,
             ],
         ]);
         // Discount

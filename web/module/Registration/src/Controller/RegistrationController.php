@@ -45,6 +45,9 @@ class RegistrationController extends AbstractController
             $idp = $this->identityProviderFactory->get($auth);
             if ($idp != null && ($identity = $idp->identify($request)) != null) {
                 $this->form->setData($identity);
+                if ($identity['valid']) {
+                    $this->form->protect();
+                }
             }
         }
         $view = new ViewModel([

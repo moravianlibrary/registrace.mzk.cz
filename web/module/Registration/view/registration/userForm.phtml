@@ -234,6 +234,10 @@ $form->prepare();
     <?=$this->render('element.phtml', ['element' => $form->get('isGdpr')])?>
 </div>
 
+<?php if($hmac = $form->has('hmac')): ?>
+    <?=$this->formElement($form->get('hmac'))?>
+<?php endif; ?>
+
 <div class="alert alert-primary text-center">
     Cena registrace je <strong><span id="price">XXX</span>,- Kč</strong>
 </div>

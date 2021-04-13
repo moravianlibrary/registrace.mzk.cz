@@ -9,6 +9,7 @@
         $options = $element->getOptions();
         $labelClass = 'form-label';
         $required = isset($options['required']) && $options['required'];
+        $readonly = $element->getAttribute('readonly');
         if ($required) {
             $labelClass .= ' required';
         }
@@ -24,7 +25,7 @@
             ->setAttribute('class', 'form-control');
         ?>
         <div class="form-group">
-            <label class="form-label<?= $required ? ' required' : '' ?>" for="<?= $element->getName() ?>">
+            <label class="form-label<?= $required ? ' required' : '' ?><?= $readonly ? ' readonly' : '' ?>" for="<?= $element->getName() ?>">
                 <?=$this->translate($element->getLabel()); ?>:<?= $required ? '*' : null ?>
             </label>
             <div class="form-inline">
@@ -57,11 +58,12 @@
         $options = $element->getOptions();
         $labelClass = 'form-label';
         $required = isset($options['required']) && $options['required'];
-        if ($required) {
-            $labelClass .= ' required';
-        }
         $element->setLabelAttributes(['class' => $labelClass]);
-        $element->setAttribute('class', 'form-control');
+        $class = 'form-control';
+        if ($element->getAttribute('readonly')) {
+            $class .= ' readonly';
+        }
+        $element->setAttribute('class', $class);
         $element->setAttribute('id', $element->getName());
         ?>
         <div class="form-group<?= $required ? ' required' : '' ?>">

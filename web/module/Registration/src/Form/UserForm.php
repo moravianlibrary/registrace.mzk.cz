@@ -6,10 +6,15 @@ use DateTime;
 use Laminas\Filter\StringTrim;
 use Laminas\Filter\StripTags;
 use Laminas\Form\Element\Checkbox;
+use Laminas\Form\Element\DateSelect;
+use Laminas\Form\Element\Select;
 use Laminas\Form\Element\Text;
+use Laminas\Form\Element\Csfr;
+use Laminas\Form\Element\Hidden;
 use Laminas\Form\Form;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Validator;
+use Registration\Utils\HmacCalculator;
 
 class UserForm extends Form implements InputFilterProviderInterface
 {
@@ -103,6 +108,39 @@ class UserForm extends Form implements InputFilterProviderInterface
     {
         $birth = $this->get('user')->get('birth')->getValue();
         return DateTime::createFromFormat('Y-m-d', $birth)->diff(new DateTime('now'))->y;
+    }
+
+    public function protect()
+    {
+        foreach ($this->getProtectedElements() as $name => $element) {
+            $element->setAttribute('readonly', true);
+        }
+        $hmac = new Hidden('hmac');
+        $hmac->setValue($this->getHmacHash());
+        $this->add($hmac);
+    }
+
+    public function getHmacHash()
+    {
+        $hash = new HmacCalculator();
+        foreach ($this->getProtectedElements() as $name => $element) {
+            $hash->add($name, $element->getValue());
+        }
+        return $hash->toHash();
+    }
+
+    private function getProtectedElements()
+    {
+        $elements = [];
+        foreach ($this->get('user')->getElements() as $element) {
+            if ($element->getOption('protected')) {
+                $elements['user[' . $element->getName() . ']'] = $element;
+            }
+        }
+        foreach ($this->get('permanentAddress')->getElements() as $element) {
+            $elements['user[' . $element->getName() . ']'] = $element;
+        }
+        return $elements;
     }
 
 }
