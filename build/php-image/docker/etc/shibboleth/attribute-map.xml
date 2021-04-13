@@ -14,8 +14,8 @@
 
     <!-- MojeId attributes -->
     <Attribute name="http://specs.nic.cz/attr/contact/ident/card" id="mojeIdIdentityCardNumber" />
-    <Attribute name="http://specs.nic.cz/attr/contact/ident/valid" id="mojeIdValid" />
-    <Attribute name="http://specs.nic.cz/attr/contact/ident/status" id="mojeIdStatus" />
+    <Attribute name="http://specs.nic.cz/attr/contact/valid" id="mojeIdValid" />
+    <Attribute name="http://specs.nic.cz/attr/contact/status" id="mojeIdStatus" />
 
     <!-- MojeId attributes - permanent address -->
     <Attribute name="http://specs.nic.cz/attr/addr/main/street" id="mojeIdStreet" />
