@@ -13,6 +13,13 @@ do
     -e "s#\${PARAM_REGISTRATION_URL}#${PARAM_REGISTRATION_URL:-https:\/\/registrace.mzk.cz}#g" \
     "$file"
 done
-# start Shibboleth and Apache
-/etc/init.d/shibd restart
-apache2-foreground
+
+# start Shibboleth or Apache
+if [ "$1" = "shibboleth" ]; then
+    shibd -f -F
+elif [ "$1" = "apache" ]; then
+    apache2-foreground
+else
+    echo "Wrong agument given. Only apache or shibboleth is possible."
+    exit 1
+fi
