@@ -107,7 +107,6 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
                     'IC' => $this->translator->translate('option_identificationType_ic'),
                     'PAS' => $this->translator->translate('option_identificationType_pas'),
                 ],
-                'protected' => true,
             ],
         ]);
         $this->add([
@@ -116,7 +115,6 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
             'options' => [
                 'label' => 'label_identification',
                 'required' => true,
-                'protected' => true,
             ],
         ]);
         // Date of birth

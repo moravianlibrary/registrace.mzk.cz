@@ -7,22 +7,22 @@
     <? if ($element instanceof \Laminas\Form\Element\DateSelect): ?>
         <?php
         $options = $element->getOptions();
-        $labelClass = 'form-label';
         $required = isset($options['required']) && $options['required'];
-        $readonly = $element->getAttribute('readonly');
-        if ($required) {
-            $labelClass .= ' required';
-        }
-        $element->setLabelAttributes(['class' => $labelClass]);
+        $element->setLabelAttributes(['class' => 'form-label']);
 
+        $elementClass = 'form-control';
+        $readonly = $element->getAttribute('readonly');
+        if ($readonly) {
+            $elementClass .= ' readonly';
+        }
         $dayElement = $element->getDayElement()
-            ->setAttribute('class', 'form-control');
+            ->setAttribute('class', $elementClass);
 
         $monthElement = $element->getMonthElement()
-            ->setAttribute('class', 'form-control');
+            ->setAttribute('class', $elementClass);
 
         $yearElement = $element->getYearElement()
-            ->setAttribute('class', 'form-control');
+            ->setAttribute('class', $elementClass);
         ?>
         <div class="form-group">
             <label class="form-label<?= $required ? ' required' : '' ?><?= $readonly ? ' readonly' : '' ?>" for="<?= $element->getName() ?>">

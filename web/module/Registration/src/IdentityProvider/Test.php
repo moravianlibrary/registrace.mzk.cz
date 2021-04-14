@@ -13,7 +13,19 @@ class Test implements IdentityProviderInterface
     {
         return [
             'user' => [
-                'firstName' => 'test',
+                'firstName' => 'Tester',
+                'lastName' => 'Testovič',
+                'email' => 'tester@mzk.cz',
+                'phone' => '+420 800 123 456',
+                'birth' => '26-04-1986',
+                'identificationType' => 'IC',
+                'identification' => '123456789',
+            ],
+            'permanentAddress' => [
+                'street' => 'Kounicova 65a',
+                'city' => 'Brno',
+                'postcode' => '602 00',
+                'country' => 'CZ',
             ],
             'valid' => true,
         ];
