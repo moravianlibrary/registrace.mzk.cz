@@ -7,6 +7,7 @@ namespace Registration;
 use Laminas\Router\Http\Literal;
 use Laminas\Router\Http\Segment;
 use Laminas\ServiceManager\Factory\InvokableFactory;
+use Registration\Controller\PaymentController;
 
 $config = [
     'router' => [
@@ -31,6 +32,16 @@ $config = [
                     ],
                 ],
             ],
+            'payment' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route'    => '/payment[/:action]',
+                    'defaults' => [
+                        'controller' => Controller\PaymentController::class,
+                        'action'     => 'index',
+                    ],
+                ],
+            ],
             'ajax' => [
                 'type'    => Segment::class,
                 'options' => [
@@ -46,11 +57,13 @@ $config = [
     'controllers' => [
         'factories' => [
             Controller\RegistrationController::class => Controller\RegistrationControllerFactory::class,
+            Controller\PaymentController::class => Controller\PaymentControllerFactory::class,
             Controller\AjaxController::class => Controller\AjaxControllerFactory::class,
         ],
         'aliases' => [
             'Registration' => 'Registration\Controller\RegistrationController',
             'Ajax' => 'Registration\Controller\AjaxController',
+            'Payment' => 'Registration\Controller\PaymentController'
         ],
     ],
     'service_manager' => [
@@ -98,7 +111,12 @@ $config = [
 ];
 
 $routes = [
-    'Registration/index', 'Registration/userForm', 'Registration/finished'
+    'Registration/index',
+    'Registration/userForm',
+    'Registration/finished',
+    'Payment/init',
+    'Payment/finished',
+    'Payment/error'
 ];
 
 foreach ($routes as $route) {

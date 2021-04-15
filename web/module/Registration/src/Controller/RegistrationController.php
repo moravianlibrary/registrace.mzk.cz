@@ -67,11 +67,4 @@ class RegistrationController extends AbstractController
         return $view;
     }
 
-    public function paymentAction()
-    {
-        $view = new ViewModel();
-        $view->setTemplate('registration/payment');
-        return $view;
-    }
-
 }
