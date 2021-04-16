@@ -96,7 +96,7 @@ $(document).ready(function() {
           input = $('#userForm :input[name=\'' + key + '\']');
           input.addClass('is-invalid');
           ul = $('<ul/>');
-          ul.attr({'class': 'form-text'});
+          ul.attr({'class': 'form-text error'});
           $.each(errors, function(index, error) {
             li = $('<li/>');
             li.text(error);

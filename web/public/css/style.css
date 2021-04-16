@@ -48,3 +48,8 @@ select.readonly  {
     pointer-events: none;
     background-color: #e9ecef;
 }
+
+ul.error {
+    color: #dc3545;
+    font-weight: bold;
+}
