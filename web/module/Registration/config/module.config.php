@@ -6,6 +6,7 @@ namespace Registration;
 
 use Laminas\Router\Http\Literal;
 use Laminas\Router\Http\Segment;
+use Laminas\Session;
 use Laminas\ServiceManager\Factory\InvokableFactory;
 use Registration\Controller\PaymentController;
 
@@ -73,6 +74,7 @@ $config = [
             \Registration\Form\CodeBook::class => \Registration\Form\CodeBookFactory::class,
             \Laminas\Mvc\I18n\Translator::class => \Laminas\Mvc\I18n\TranslatorFactory::class,
             \Registration\Service\DiscountService::class => \Registration\Service\DiscountServiceFactory::class,
+            \Registration\Service\RegistrationService::class => \Registration\Service\RegistrationServiceFactory::class,
             \Registration\IdentityProvider\IdentityProviderFactory::class => InvokableFactory::class,
         ],
     ],
@@ -106,6 +108,19 @@ $config = [
                 'base_dir' => __DIR__ . '/../../../data/language/',
                 'pattern'  => '%s.ini',
             ],
+        ],
+    ],
+    'session_manager' => [
+        'config' => [
+            'class' => Session\Config\SessionConfig::class,
+            'options' => [
+                'name' => 'registration',
+            ],
+        ],
+        'storage' => Session\Storage\SessionArrayStorage::class,
+        'validators' => [
+            Session\Validator\RemoteAddr::class,
+            Session\Validator\HttpUserAgent::class,
         ],
     ],
 ];

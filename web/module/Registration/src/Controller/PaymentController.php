@@ -11,13 +11,14 @@ class PaymentController extends AbstractController
 
     public function __construct(array $config)
     {
+        parent::__construct();
         $this->url = $config['payment']['url'];
     }
 
     public function initAction()
     {
         $params = [
-            'id' => '700',
+            'id' => $this->session->id,
             'adm' => 'MZK50',
             'amount' => 200,
             'time' => time(),

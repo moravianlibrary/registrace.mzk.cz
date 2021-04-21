@@ -257,7 +257,7 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
     protected function getDiscounts()
     {
         $discounts = [];
-        foreach ($this->discountService->getDefault() as $code => $discount) {
+        foreach ($this->discountService->getAll() as $code => $discount) {
             $discounts[$code] = $discount['label'];
         }
         return $discounts;

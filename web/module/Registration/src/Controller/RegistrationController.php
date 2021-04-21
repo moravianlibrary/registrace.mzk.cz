@@ -7,8 +7,11 @@ namespace Registration\Controller;
 use Laminas\InputFilter\InputFilter;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
+use Laminas\Session\SessionManager;
 use Registration\Form\UserForm;
+use Registration\Service\RegistrationService;
 use Registration\IdentityProvider\IdentityProviderFactory;
+use Registration\Model\User;
 
 class RegistrationController extends AbstractController
 {
@@ -18,13 +21,20 @@ class RegistrationController extends AbstractController
 
     private $config;
 
+    /** @var IdentityProviderFactory */
     private $identityProviderFactory;
 
-    public function __construct(UserForm $form, $config, IdentityProviderFactory $identityProviderFactory)
+    /** @var RegistrationService */
+    private $registrationService;
+
+    public function __construct(UserForm $form, $config, IdentityProviderFactory $identityProviderFactory,
+                                RegistrationService $registrationService)
     {
+        parent::__construct();
         $this->form = $form;
         $this->config = $config;
         $this->identityProviderFactory = $identityProviderFactory;
+        $this->registrationService = $registrationService;
     }
 
     public function indexAction()
@@ -38,6 +48,8 @@ class RegistrationController extends AbstractController
     {
         $request = $this->getRequest();
         if ($request->isPost() && $this->form->setData($request->getPost())->isValid()) {
+            $id = $this->registrationService->register(new User($request->getPost()));
+            $this->session->id = $id;
             return $this->redirect()->toRoute('registration-finished');
         }
         $auth = $request->getQuery('idp');
@@ -61,7 +73,7 @@ class RegistrationController extends AbstractController
     public function finishedAction()
     {
         $view = new ViewModel([
-            'login' => '123456789',
+            'login' => $this->session->id,
         ]);
         $view->setTemplate('registration/finished');
         return $view;

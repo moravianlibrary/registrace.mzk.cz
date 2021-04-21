@@ -27,9 +27,15 @@ class DiscountService
         $this->init();
     }
 
-    public function getDefault()
+    public function getAll()
     {
-        return $this->getAvailable(null);
+        $discounts = [];
+        foreach ($this->discounts as $code => $discount) {
+            $discount['label'] = str_replace('$price',
+                $discount['price'], $discount['label']);
+            $discounts[$code] = $discount;
+        }
+        return $discounts;
     }
 
     public function getAvailable(?UserForm $user)

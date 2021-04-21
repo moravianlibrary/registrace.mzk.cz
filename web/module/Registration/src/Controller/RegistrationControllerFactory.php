@@ -15,7 +15,9 @@ class RegistrationControllerFactory
         $form = $formElementManager->get(UserForm::class);
         $configReader = $container->get(\Registration\Config\ConfigReader::class);
         $identityProvider = $container->get(\Registration\IdentityProvider\IdentityProviderFactory::class);
-        return new RegistrationController($form, $configReader->getConfig('config.ini'), $identityProvider);
+        $registrationService = $container->get(\Registration\Service\RegistrationService::class);
+        return new RegistrationController($form, $configReader->getConfig('config.ini'),
+            $identityProvider, $registrationService);
     }
 
 }
