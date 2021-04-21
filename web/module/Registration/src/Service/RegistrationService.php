@@ -111,6 +111,11 @@ class RegistrationService
             throw new \Exception("Operation update_bor returned invalid XML: "
                 . $response->getBody());
         }
+        $patronId = $xml->{'patron-id'} ?? null;
+        if ($patronId == null) {
+            throw new \Exception("Operation update_bor returned invalid XML: "
+                . $response->getBody());
+        }
         return $id;
     }
 
