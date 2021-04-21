@@ -3,10 +3,12 @@
 namespace Registration\Service;
 
 use Laminas\Http\Client;
+use Registration\Log\LoggerAwareTrait;
 use Registration\Model\User;
 
 class RegistrationService
 {
+    use LoggerAwareTrait;
 
     const XML_TEMPLATE = __DIR__. '/../../resources/registration.xml';
 
@@ -106,15 +108,15 @@ class RegistrationService
         if ($response->getStatusCode() != '200') {
             throw new \Exception("Operation update_bor failed");
         }
+        $this->getLogger()->info("User $id registered, response XML: "
+            . $response->getBody());
         $xml = simplexml_load_string($response->getBody());
         if (!$xml) {
-            throw new \Exception("Operation update_bor returned invalid XML: "
-                . $response->getBody());
+            throw new \Exception("Operation update_bor returned invalid XML");
         }
         $patronId = $xml->{'patron-id'} ?? null;
         if ($patronId == null) {
-            throw new \Exception("Operation update_bor returned invalid XML: "
-                . $response->getBody());
+            throw new \Exception("Operation update_bor returned invalid XML");
         }
         return $id;
     }
