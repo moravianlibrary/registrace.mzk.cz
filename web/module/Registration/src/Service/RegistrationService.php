@@ -102,10 +102,14 @@ class RegistrationService
         }
         $client->setParameterPost($parameters);
         $client->setMethod('POST');
-        $response = null;
         $response = $client->send();
         if ($response->getStatusCode() != '200') {
             throw new \Exception("Operation update_bor failed");
+        }
+        $xml = simplexml_load_string($response->getBody());
+        if (!$xml) {
+            throw new \Exception("Operation update_bor returned invalid XML: "
+                . $response->getBody());
         }
         return $id;
     }
