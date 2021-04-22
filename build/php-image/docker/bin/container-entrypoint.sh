@@ -16,9 +16,9 @@ done
 
 # start Shibboleth or Apache
 if [ "$1" = "shibboleth" ]; then
-    shibd -f -F
+    exec shibd -f -F
 elif [ "$1" = "apache" ]; then
-    apache2-foreground
+    exec apache2-foreground
 else
     echo "Wrong agument given. Only apache or shibboleth is possible."
     exit 1
