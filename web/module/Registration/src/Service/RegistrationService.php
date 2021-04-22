@@ -50,19 +50,29 @@ class RegistrationService
         $z303->{'z303-delinq-n-2'} = 'Testovací registrace';
         $z303->{'z303-delinq-2-update-date'} = $now;
         // z304
-        $z304 = $patron->{'z304'}[0];
-        $z304->{'z304-id'} = $id;
-        $z304->{'z304-date-from'} = $now;
-        $z304->{'email-address'} = $user->getEmail();
-        $z304->{'z304-email-address'} = $user->getEmail();
-        $z304->{'z304-telephone'} = $user->getPhone();
-        $z304->{'z304-address-1'} = $cn;
-        $address = $user->getPermanentAddress();
-        $z304->{'z304-address-2'} = $address->getStreet();
-        $z304->{'z304-address-3'} = $address->getPostcode()
-            . ' ' . $address->getCity();
-        $z304->{'z304-telephone-2'}[1] = $user->getIdentificationType()
-            . ' ' . $user->getIdentification();
+        $index = 0;
+        foreach ($patron->{'z304'} as $z304) {
+            $address = ($index == 0) ? $user->getPermanentAddress() :
+                $user->getContactAddress();
+            if ($index == 1 && $user->getContactAddress() == null) {
+                unset($patron->{'z304'}[1]);
+                break;
+            }
+            $z304->{'record-action'} = 'U'; // for testing
+            $z304->{'z304-id'} = $id;
+            $z304->{'z304-date-from'} = $now;
+            $z304->{'email-address'} = $user->getEmail();
+            $z304->{'z304-email-address'} = $user->getEmail();
+            $z304->{'z304-telephone'} = $user->getPhone();
+            $z304->{'z304-address-1'} = $cn;
+            $z304->{'z304-address-2'} = $address->getStreet();
+            $z304->{'z304-address-3'} = $address->getPostcode()
+                . ' ' . $address->getCity();
+            $z304->{'z304-telephone-2'} = $user->getIdentificationType()
+                . ' ' . $user->getIdentification();
+            $z304->{'z304-telephone-3'} = $user->isSendNewsLetter() ? '' : 'NE';
+            $index++;
+        }
         // z305
         $z305 = $patron->{'z305'};
         $z305->{'z305-id'} = $id;
@@ -87,9 +97,9 @@ class RegistrationService
         }
         // for testing
         $z303->{'record-action'} = 'U';
-        $z304->{'record-action'} = 'U';
         $z305->{'record-action'} = 'U';
         $result = $xml->asXML();
+        $this->getLogger()->info("XML for registration:\n" . $result);
         $client = new Client();
         $client->setUri($this->url);
         $parameters = [
@@ -108,7 +118,7 @@ class RegistrationService
         if ($response->getStatusCode() != '200') {
             throw new \Exception("Operation update_bor failed");
         }
-        $this->getLogger()->info("User $id registered, response XML: "
+        $this->getLogger()->info("User $id registered, response XML:\n"
             . $response->getBody());
         $xml = simplexml_load_string($response->getBody());
         if (!$xml) {

@@ -68,9 +68,28 @@
             <z304-date-from>{$date}</z304-date-from>
             <z304-date-to>20991231</z304-date-to>
             <z304-address-type>01</z304-address-type>
-            <z304-telephone-2/>
-            <z304-telephone-3/>
+            <z304-telephone-2>{$type_of_identification} {$id_number}</z304-telephone-2>
+            <z304-telephone-3>{$newsletter}</z304-telephone-3>
             <z304-telephone-4/>
+            <z304-sms-number/>
+            <z304-update-date/>
+            <z304-cat-name>WWW-OPAC</z304-cat-name>
+        </z304>
+        <z304>
+            <record-action>I</record-action>
+            <email-address>{$email}</email-address>
+            <z304-id>{$id}</z304-id>
+            <z304-sequence>02</z304-sequence>
+            <z304-address-0>CARAK--</z304-address-0>
+            <z304-address-1>{$cn}</z304-address-1>
+            <z304-address-2>{$home_street}</z304-address-2>
+            <z304-address-3>{$home_postcode} {$home_city}</z304-address-3>
+            <z304-zip/>
+            <z304-email-address>{$email}</z304-email-address>
+            <z304-telephone>{$phone}</z304-telephone>
+            <z304-date-from>{$date}</z304-date-from>
+            <z304-date-to>20991231</z304-date-to>
+            <z304-address-type>01</z304-address-type>
             <z304-telephone-2>{$type_of_identification} {$id_number}</z304-telephone-2>
             <z304-telephone-3>{$newsletter}</z304-telephone-3>
             <z304-telephone-4/>

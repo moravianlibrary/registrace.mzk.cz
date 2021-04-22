@@ -5,31 +5,34 @@ namespace Registration\Model;
 class User
 {
 
-    protected $firstName;
+    protected $firstName = null;
 
-    protected $lastName;
+    protected $lastName = null;
 
-    protected $title;
+    protected $title = null;
 
-    protected $birth;
+    protected $birth = null;
 
-    protected $university;
+    protected $university = null;
 
-    protected $email;
+    protected $email = null;
 
-    protected $phone;
+    protected $phone = null;
 
-    protected $identificationType;
+    protected $identificationType = null;
 
-    protected $identification;
+    protected $identification = null;
 
-    protected $password;
+    protected $password = null;
 
-    /*@var FullAddress */
-    protected $permanentAddress;
+    // var FullAddress
+    protected $permanentAddress = null;
 
-    /*@var Address */
-    protected $contactAddress;
+    // var Address
+    protected $contactAddress = null;
+
+    // @var bool
+    protected $sendNewsLetter = false;
 
     public function __construct($data)
     {
@@ -47,7 +50,10 @@ class User
         $this->identification = $user['identification'];
         $this->password = $data['password']['password'];
         $this->permanentAddress = new FullAddress($data['permanentAddress']);
-        $this->contactAddress = new Address($data['contactAddress']);
+        if ($user['isContactAddress'] == 1) {
+            $this->contactAddress = new Address($data['contactAddress']);
+        }
+        $this->sendNewsLetter = $data['isSendNews'] == 1;
     }
 
     /**
@@ -229,7 +235,7 @@ class User
     /**
      * @return Address
      */
-    public function getContactAddress(): Address
+    public function getContactAddress(): ?Address
     {
         return $this->contactAddress;
     }
@@ -240,6 +246,22 @@ class User
     public function setContactAddress(Address $contactAddress): void
     {
         $this->contactAddress = $contactAddress;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSendNewsLetter(): bool
+    {
+        return $this->sendNewsLetter;
+    }
+
+    /**
+     * @param bool $sendNewsLetter
+     */
+    public function setSendNewsLetter(bool $sendNewsLetter): void
+    {
+        $this->sendNewsLetter = $sendNewsLetter;
     }
 
 }

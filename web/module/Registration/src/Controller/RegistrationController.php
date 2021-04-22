@@ -9,12 +9,14 @@ use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
 use Laminas\Session\SessionManager;
 use Registration\Form\UserForm;
+use Registration\Log\LoggerAwareTrait;
 use Registration\Service\RegistrationService;
 use Registration\IdentityProvider\IdentityProviderFactory;
 use Registration\Model\User;
 
 class RegistrationController extends AbstractController
 {
+    use LoggerAwareTrait;
 
     /** @var UserForm */
     private $form;
@@ -48,6 +50,7 @@ class RegistrationController extends AbstractController
     {
         $request = $this->getRequest();
         if ($request->isPost() && $this->form->setData($request->getPost())->isValid()) {
+            $this->getLogger()->info("Data from post:\n" . print_r($request->getPost()->toArray(), true));
             $id = $this->registrationService->register(new User($request->getPost()));
             $this->session->id = $id;
             return $this->redirect()->toRoute('registration-finished');
