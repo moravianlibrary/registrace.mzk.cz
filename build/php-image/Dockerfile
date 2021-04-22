@@ -26,4 +26,7 @@ RUN apt-get install --yes git zlib1g-dev libzip-dev libapache2-mod-shib2 libicu-
     && docker-php-ext-install mbstring
 
 ADD docker/etc /etc
-ADD docker/bin/ /usr/local/bin/
+ADD docker/bin/container-entrypoint.sh /container-entrypoint.sh
+RUN chmod ugo+x /container-entrypoint.sh
+
+ENTRYPOINT [ "/container-entrypoint.sh" ]

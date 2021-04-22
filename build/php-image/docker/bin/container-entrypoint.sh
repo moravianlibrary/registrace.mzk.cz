@@ -13,6 +13,21 @@ do
     -e "s#\${PARAM_REGISTRATION_URL}#${PARAM_REGISTRATION_URL:-https:\/\/registrace.mzk.cz}#g" \
     "$file"
 done
-# start Shibboleth and Apache
-/etc/init.d/shibd restart
-apache2-foreground
+
+if [ "${MEMCACHED_SERVICE}" = "" ]; then
+  export MEMCACHED_SERVICE=memcached:11211
+fi
+
+sed -i~ \
+    -e "s#\${MEMCACHED_SERVICE}#${MEMCACHED_SERVICE}#g" \
+    "/etc/shibboleth/shibboleth2.xml"
+
+# start Shibboleth or Apache
+if [ "$1" = "shibboleth" ]; then
+    exec shibd -f -F
+elif [ "$1" = "apache" ]; then
+    exec apache2-foreground
+else
+    echo "Wrong agument given. Only apache or shibboleth is possible."
+    exit 1
+fi

@@ -1,7 +1,30 @@
-registration:
-  image: moravianlibrary/registrace:build
-  ports:
-   - "8080:80"
-   - "8117:8117"
-  volumes:
-   - ./web/:/var/www/
+version: "2"
+
+services:
+  registration:
+    image: moravianlibrary/registrace/app:build
+    command: "apache"
+    ports:
+      - "8080:80"
+      - "8117:8117"
+    volumes:
+      - ./web/:/var/www/
+    environment:
+      SHIBSP_LISTENER_ADDRESS: 'shibboleth'
+      SHIBSP_LISTENER_PORT: '1600'
+
+  shibboleth:
+    image: moravianlibrary/registrace/app:build
+    command: "shibboleth"
+    ports:
+      - "127.0.0.1:1600:1600"
+    environment:
+      MEMCACHED_SERVICE: "memcached:11211"
+    depends_on:
+      - memcached
+
+  memcached:
+    image: docker.io/library/memcached:1.6.9
+    mem_limit: 64M
+    ports:
+      - "127.0.0.1:11211:11211"
