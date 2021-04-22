@@ -14,6 +14,14 @@ do
     "$file"
 done
 
+if [ "${MEMCACHED_SERVICE}" = "" ]; then
+  export MEMCACHED_SERVICE=memcached:11211
+fi
+
+sed -i~ \
+    -e "s#\${MEMCACHED_SERVICE}#${MEMCACHED_SERVICE}#g" \
+    "/etc/shibboleth/shibboleth2.xml"
+
 # start Shibboleth or Apache
 if [ "$1" = "shibboleth" ]; then
     exec shibd -f -F
