@@ -29,14 +29,14 @@ $(document).ready(function() {
     icOption = $("select[name='user[identificationType]'] option[value='IC']");
     passportOption = $("select[name='user[identificationType]'] option[value='PAS']");
     if (country == 'CZ') {
-      icOption.removeAttr('disabled').prop('selected', true);
-      passportOption.attr('disabled', 'disabled');
+      icOption.show().prop('selected', true);
+      passportOption.hide();
     } else if (config.countries.EU.includes(country)) {
-      icOption.removeAttr('disabled').prop('selected', true);
-      passportOption.removeAttr('disabled');
+      icOption.show().prop('selected', true);
+      passportOption.show();
     } else {
-      icOption.attr('disabled', 'disabled');
-      passportOption.removeAttr('disabled').prop('selected', true);
+      icOption.hide();
+      passportOption.show().prop('selected', true);
     }
   });
   $('select[name="permanentAddress[country]"]').change();
