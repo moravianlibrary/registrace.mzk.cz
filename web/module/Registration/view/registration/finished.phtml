@@ -1,10 +1,30 @@
 <?php
+    $discount = $this->discount;
+    $online = $discount['online'];
+    $price = $discount['price'];
+    $paymentLink = ($online && $price > 0);
 ?>
 <div>
+    <? if (!$this->verified): ?>
+        <p>
+            <?= $this->translate('preregistration_finished') ?>
+        </p>
+    <? else: ?>
+        <p>
+            <?= $this->translate('registration_finished') ?>
+        </p>
+    <? endif; ?>
     <p>
-        <?= $this->translate('registration_finished_text') ?> <?= $this->escapeHtml($this->login); ?>
+        <?= $this->translate('registration_login_text') ?> <?= $this->escapeHtml($this->login); ?>
     </p>
-    <p>
-        <a href="/payment/init"><?= $this->translate('registration_online_payment_text') ?> </a>
-    </p>
+    <? if ($paymentLink): ?>
+        <p>
+            <?= $this->translate('payment_amount_text') ?>
+            <?= $this->escapeHtml($price) ?>
+            <?= $this->translate('payment_amount_currency') ?>
+        </p>
+        <p>
+            <a href="/payment/init"><?= $this->translate('registration_online_payment_text') ?> </a>
+        </p>
+    <? endif; ?>
 </div>

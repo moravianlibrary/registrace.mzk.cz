@@ -120,6 +120,11 @@ class UserForm extends Form implements InputFilterProviderInterface
         $this->add($hmac);
     }
 
+    public function isProtected()
+    {
+        return $this->has('hmac');
+    }
+
     public function getHmacHash()
     {
         $hash = new HmacCalculator();
@@ -127,6 +132,15 @@ class UserForm extends Form implements InputFilterProviderInterface
             $hash->add($name, $element->getValue());
         }
         return $hash->toHash();
+    }
+
+    public function setData($data)
+    {
+        parent::setData($data);
+        if (isset($data['hmac'])) {
+            $this->protect();
+        }
+        return $this;
     }
 
     private function getProtectedElements()

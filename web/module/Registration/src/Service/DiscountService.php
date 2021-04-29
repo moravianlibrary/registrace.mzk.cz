@@ -66,6 +66,11 @@ class DiscountService
         return $discounts;
     }
 
+    public function getByCode($code)
+    {
+        return $this->discounts[$code];
+    }
+
     protected function findDiscountByAge(?UserForm $user)
     {
         foreach ($this->discounts as $code => $discount) {
@@ -84,12 +89,14 @@ class DiscountService
             'NONE' => [
                 'label'   => $this->translator->translate('discount_none'),
                 'price'   => 200,
+                'online'  => true,
                 'ids_jmk' => self::IDS_JMK_NO_DISCOUNT,
                 'group'   => 'NONE',
             ],
             'NONE_IDS_JMK' => [
                 'label'   => $this->translator->translate('discount_none_ids_jmk'),
                 'price'   => 180,
+                'online'  => false,
                 'ids_jmk' => self::IDS_JMK_DISCOUNT,
                 'group'   => 'NONE',
             ],
@@ -97,6 +104,7 @@ class DiscountService
             'TEENAGER' => [
                 'label'    => $this->translator->translate('discount_teenager'),
                 'price'    => 0,
+                'online'   => false,
                 'min_age'  => self::MIN_AGE,
                 'max_age'  => 19,
                 'only_age' => true,
@@ -106,6 +114,7 @@ class DiscountService
             'UNIVERSITY_STUDENT' => [
                 'label'    => $this->translator->translate('discount_university_student'),
                 'price'    => 100,
+                'online'   => false,
                 'min_age'  => 19,
                 'max_age'  => 25,
                 'ids_jmk'  => self::IDS_JMK_NO_DISCOUNT,
@@ -114,6 +123,7 @@ class DiscountService
             'UNIVERSITY_STUDENT_IDS_JMK' => [
                 'label'    => $this->translator->translate('discount_university_student_ids_jmk'),
                 'price'    => 90,
+                'online'   => false,
                 'min_age'  => 19,
                 'max_age'  => 25,
                 'ids_jmk'  => self::IDS_JMK_DISCOUNT,
@@ -122,6 +132,7 @@ class DiscountService
             'SENIOR' => [
                 'label'    => $this->translator->translate('discount_senior'),
                 'price'    => 100,
+                'online'   => false,
                 'min_age'  => 65,
                 'max_age'  => 69,
                 'only_age' => true,
@@ -131,6 +142,7 @@ class DiscountService
             'OLD_SENIOR' => [
                 'label'    => $this->translator->translate('discount_old_senior'),
                 'price'    => 0,
+                'online'   => false,
                 'min_age'  => 70,
                 'max_age'  => self::MAX_AGE,
                 'only_age' => true,
@@ -141,6 +153,7 @@ class DiscountService
             'UNOB' => [
                 'label'    => $this->translator->translate('discount_unob'),
                 'price'    => 0,
+                'online'   => false,
                 'min_age'  => 19,
                 'ids_jmk'  => self::IDS_JMK_NOT_APPLICABLE,
                 'group'    => 'UNOB',
@@ -148,6 +161,7 @@ class DiscountService
             'ZTP' => [
                 'label'    => $this->translator->translate('discount_ztp'),
                 'price'    => 0,
+                'online'   => false,
                 'min_age'  => 19,
                 'ids_jmk'  => self::IDS_JMK_NOT_APPLICABLE,
                 'group'    => 'ZTP',

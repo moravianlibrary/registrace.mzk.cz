@@ -17,8 +17,9 @@ class PaymentController extends AbstractController
 
     public function initAction()
     {
+        $session = $this->session;
         $params = [
-            'id' => $this->session->id,
+            'id' => $session->id,
             'adm' => 'MZK50',
             'amount' => 200,
             'time' => time(),

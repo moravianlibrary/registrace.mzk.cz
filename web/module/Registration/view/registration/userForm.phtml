@@ -20,8 +20,21 @@ $(document).ready(function() {
   discountSelect.change();
 
   $('select[name="user[discount]"]').change(function() {
-    price = $(this).find(':selected').data('price');
+    selected = $(this).find(':selected');
+    price = selected.data('price');
     $('#price').text(price);
+    online = selected.data('online');
+    price = selected.data('price');
+    $('#online_discount').hide();
+    $('#not_online_discount').hide();
+    $('#not_online_for_free').hide();
+    if (online) {
+      $('#online_discount').show();
+    } else if (price == 0) {
+      $('#not_online_for_free').show();
+    } else {
+      $('#not_online_discount').show();
+    }
   });
 
   $('select[name="permanentAddress[country]"]').change(function() {
@@ -60,7 +73,8 @@ $(document).ready(function() {
           if (selectedOption == null || selected == key || selectedGroup == obj['group']) {
               selectedOption = option;
           }
-          option.attr({ 'value': key, 'data-price': obj['price'], 'data-group' : obj['group'] }).text(obj['label']);
+          option.attr({ 'value': key, 'data-price': obj['price'], 'data-group' : obj['group'],
+            'data-online': obj['online'] }).text(obj['label']);
           $options.append(option);
         });
         selectedOption.attr({'selected': ''});
@@ -151,11 +165,22 @@ $form->prepare();
             <div class="col-md-12">
                 <?=$this->render('element.phtml', ['element' => $form->get('user')->get('birth')])?>
             </div>
-            <div class="col-md-12">
+            <div class="col-md-12" style="display: none">
                 <?=$this->render('element.phtml', ['element' => $form->get('user')->get('idsJmk')])?>
             </div>
             <div class="col-md-12">
                 <?=$this->render('element.phtml', ['element' => $form->get('user')->get('discount')])?>
+            </div>
+            <div class="col-md-12">
+                <div id="online_discount" class="alert alert-success">
+                    <?=$this->translate('online_discount')?>
+                </div>
+                <div id="not_online_discount" class="alert alert-warning">
+                    <?=$this->translate('not_online_discount')?>
+                </div>
+                <div id="not_online_for_free" class="alert alert-warning">
+                    <?=$this->translate('not_online_for_free')?>
+                </div>
             </div>
         </div>
         <div class="row">

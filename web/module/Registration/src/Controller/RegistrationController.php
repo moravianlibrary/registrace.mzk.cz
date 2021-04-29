@@ -10,6 +10,7 @@ use Laminas\View\Model\ViewModel;
 use Laminas\Session\SessionManager;
 use Registration\Form\UserForm;
 use Registration\Log\LoggerAwareTrait;
+use Registration\Service\DiscountService;
 use Registration\Service\RegistrationService;
 use Registration\IdentityProvider\IdentityProviderFactory;
 use Registration\Model\User;
@@ -52,7 +53,11 @@ class RegistrationController extends AbstractController
         if ($request->isPost() && $this->form->setData($request->getPost())->isValid()) {
             $this->getLogger()->info("Data from post:\n" . print_r($request->getPost()->toArray(), true));
             $id = $this->registrationService->register(new User($request->getPost()));
-            $this->session->id = $id;
+            $this->session->registration = [
+                'id' => $id,
+                'verified' => $this->form->isProtected(),
+                'discount' => $this->form->get('user')->getDiscount(),
+            ];
             return $this->redirect()->toRoute('registration-finished');
         }
         $auth = $request->getQuery('idp');
@@ -75,8 +80,11 @@ class RegistrationController extends AbstractController
 
     public function finishedAction()
     {
+        $registration = $this->session->registration;
         $view = new ViewModel([
-            'login' => $this->session->id,
+            'login' => $registration['id'],
+            'verified' => $registration['verified'],
+            'discount' => $registration['discount'],
         ]);
         $view->setTemplate('registration/finished');
         return $view;
