@@ -228,7 +228,7 @@ class RegistrationService
         $count = strlen(self::CHARACTERS);
         while (true) {
             $suffix = '';
-            for ($i = 1; $i <= 10; $i++) {
+            for ($i = 1; $i <= 4; $i++) {
                 $suffix .= self::CHARACTERS[mt_rand(0, $count - 1)];
             }
             $userId = $user->getBirth()->format("Ymd") . $suffix;
