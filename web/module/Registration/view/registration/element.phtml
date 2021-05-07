@@ -28,6 +28,11 @@
             <label class="form-label<?= $required ? ' required' : '' ?><?= $readonly ? ' readonly' : '' ?>" for="<?= $element->getName() ?>">
                 <?=$this->translate($element->getLabel()); ?>:<?= $required ? '*' : null ?>
             </label>
+            <?php if($element->hasAttribute('data-help')): ?>
+                <span class="help-context" data-toggle="popover" data-placement="top" data-content="<?= $this->translate($element->getAttribute('data-help'))?>">
+                    <i class="bi bi-question-circle-fill text-muted"></i>
+                </span>
+            <?php endif ?>
             <div class="form-inline">
                 <div class="form-group">
                     <div>
@@ -71,6 +76,11 @@
             <label class="form-label<?= $required ? ' required' : '' ?>" for="<?= $element->getName() ?>">
                 <?=$this->translate($element->getLabel()); ?>:<?= $required ? '*' : null ?>
             </label>
+            <?php if($element->hasAttribute('data-help')): ?>
+                <span class="help-context" data-toggle="popover" data-placement="top" data-content="<?= $this->translate($element->getAttribute('data-help'))?>">
+                    <i class="bi bi-question-circle-fill text-muted"></i>
+                </span>
+            <?php endif ?>
             <?= $this->formElement($element) ?>
             <?=$this->formElementErrors()->render($element, ['class' => 'form-text error']) ?>
         </div>

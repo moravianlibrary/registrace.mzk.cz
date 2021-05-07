@@ -72,6 +72,9 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
                 'label' => 'label_email',
                 'protected' => true,
             ],
+            'attributes' => [
+                'data-help' => 'help_email',
+            ]
         ]);
         // Phone number
         $this->add([
@@ -83,6 +86,7 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
             ],
             'attributes' => [
                 'value' => '+420 ',
+                'data-help' => 'help_phone',
             ],
         ]);
         // Is contact address
@@ -108,6 +112,9 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
                     'PAS' => $this->translator->translate('option_identificationType_pas'),
                 ],
             ],
+            'attributes' => [
+                'data-help' => 'help_id',
+            ]
         ]);
         $this->add([
             'name'    => 'identification',
@@ -123,6 +130,7 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
             'type'    => DateSelect::class,
             'attributes' => [
                 'value' => (date("Y") - 26) . '-01-01',
+                'data-help' => 'help_birth',
             ],
             'options' => [
                 'label' => 'label_birth',
