@@ -54,6 +54,11 @@ class UserForm extends Form implements InputFilterProviderInterface
             'type'    => Checkbox::class,
             'options' => [
                 'label' => 'label_isSendNews',
+                'checked_value'   => 'true',
+                'unchecked_value' => '',
+            ],
+            'attributes' => [
+                'value' => 'true',
             ],
         ]);
         $this->add([
