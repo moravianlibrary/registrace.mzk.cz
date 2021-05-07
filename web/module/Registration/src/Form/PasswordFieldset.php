@@ -41,6 +41,9 @@ class PasswordFieldset extends Fieldset implements InputFilterProviderInterface
                             'type' => 'string',
                         ],
                     ],
+                    [
+                        'name' => \Registration\Form\Validator\PasswordValidator::class,
+                    ],
                 ],
             ],
             'passwordConfirm' => [
