@@ -12,7 +12,7 @@ html {
 }
 
 h2.card-header {
-    font-size: 1.25rem;
+    font-size: 1rem;
 }
 
 h4 {
@@ -52,4 +52,13 @@ select.readonly  {
 ul.error {
     color: #dc3545;
     font-weight: bold;
+}
+
+
+.small, small{
+    font-size: 90%;
+}
+
+.form-text{
+    margin-top: 0;
 }
