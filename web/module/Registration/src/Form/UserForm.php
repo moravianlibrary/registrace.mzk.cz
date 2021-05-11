@@ -59,6 +59,7 @@ class UserForm extends Form implements InputFilterProviderInterface
             ],
             'attributes' => [
                 'value' => 'true',
+                'data-help-icon' => 'help_isSendNews',
             ],
         ]);
         $this->add([
@@ -69,6 +70,9 @@ class UserForm extends Form implements InputFilterProviderInterface
                 'checked_value'   => 'true',
                 'unchecked_value' => '',
                 'required'        =>  true,
+            ],
+            'attributes' => [
+                'data-help' => 'help_isGdpr',
             ],
        ]);
         $this->add([

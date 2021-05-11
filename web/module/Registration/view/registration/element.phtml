@@ -56,6 +56,14 @@
         <div class="form-group form-check">
             <?=$this->formElement($element)?>
             <?=$this->formLabel($element)?>
+            <?php if($element->hasAttribute('data-help-icon')): ?>
+                <span class="help-context" data-toggle="popover" data-placement="top" data-content="<?= $this->translate($element->getAttribute('data-help-icon'))?>">
+                    <i class="bi bi-question-circle-fill text-muted"></i>
+                </span>
+            <?php endif ?>
+            <?php if($element->hasAttribute('data-help')): ?>
+                <small class="form-text text-muted"><?= $this->translate($element->getAttribute('data-help'))?></small>
+            <?php endif; ?>
         </div>
 
     <? else: ?>
