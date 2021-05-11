@@ -17,6 +17,9 @@ class PasswordFieldset extends Fieldset implements InputFilterProviderInterface
                 'label' => 'Password',
                 'required' => true,
             ],
+           'attributes' => [
+               'data-help-icon' => 'help_password',
+           ]
         ]);
         $this->add([
             'name'    => 'passwordConfirm',
