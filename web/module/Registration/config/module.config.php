@@ -131,6 +131,7 @@ $routes = [
     'Registration/finished',
     'Payment/init',
     'Payment/finished',
+    'Payment/finishedCash',
     'Payment/error'
 ];
 

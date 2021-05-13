@@ -35,6 +35,13 @@ class PaymentController extends AbstractController
         return $view;
     }
 
+    public function finishedCashAction()
+    {
+        $view = new ViewModel();
+        $view->setTemplate('payment/finishedCash');
+        return $view;
+    }
+
     public function errorAction()
     {
         $view = new ViewModel();
