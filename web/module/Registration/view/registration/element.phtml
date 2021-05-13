@@ -30,7 +30,7 @@
             </label>
             <?php if($element->hasAttribute('data-help-icon')): ?>
                 <span class="help-context" data-toggle="popover" data-placement="top" data-content="<?= $this->translate($element->getAttribute('data-help-icon'))?>">
-                    <i class="bi bi-question-circle-fill text-muted"></i>
+                    <i class="fa fa-question-circle text-muted" aria-hidden="true"></i>
                 </span>
             <?php endif ?>
             <div class="form-inline">
@@ -58,7 +58,7 @@
             <?=$this->formLabel($element)?>
             <?php if($element->hasAttribute('data-help-icon')): ?>
                 <span class="help-context" data-toggle="popover" data-placement="top" data-content="<?= $this->translate($element->getAttribute('data-help-icon'))?>">
-                    <i class="bi bi-question-circle-fill text-muted"></i>
+                    <i class="fa fa-question-circle text-muted" aria-hidden="true"></i>
                 </span>
             <?php endif ?>
             <?php if($element->hasAttribute('data-help')): ?>
@@ -86,7 +86,7 @@
             </label>
             <?php if($element->hasAttribute('data-help-icon')): ?>
                 <span class="help-context" data-toggle="popover" data-placement="top" data-content="<?= $this->translate($element->getAttribute('data-help-icon'))?>">
-                    <i class="bi bi-question-circle-fill text-muted"></i>
+                    <i class="fa fa-question-circle text-muted" aria-hidden="true"></i>
                 </span>
             <?php endif ?>
             <?= $this->formElement($element) ?>
