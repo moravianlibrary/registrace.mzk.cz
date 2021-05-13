@@ -39,10 +39,11 @@
         Právě jste si založili čtenářský účet v Moravské zemské knihovně.
     </p>
     <div class="alert alert-primary">
-        Dočasný login pro vaše přihlášení do účtu je <strong>XVNPUHO</strong>, po vydání průkazky se login změní.
+        Dočasný login pro vaše přihlášení do účtu je <strong><?= $this->escapeHtml($this->login); ?></strong>, po vydání průkazky se login změní.
     </div>
     <p>
-        Na základě vámi vyplněných údajů činí roční registrační poplatek: <strong>xxx&nbsp;Kč</strong>
+        Na základě vámi vyplněných údajů činí roční registrační poplatek:
+        <strong><?= $this->escapeHtml($price) ?>&nbsp;<?= $this->translate('payment_amount_currency') ?></strong>
     </p>
 
     <div class="row my-4">
