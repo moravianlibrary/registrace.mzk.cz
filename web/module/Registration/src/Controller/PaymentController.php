@@ -42,6 +42,20 @@ class PaymentController extends AbstractController
         return $view;
     }
 
+    public function finishedOnlineVerifiedAction()
+    {
+        $view = new ViewModel();
+        $view->setTemplate('payment/finishedOnlineVerified');
+        return $view;
+    }
+
+    public function finishedOnlineVerifiedNotAction()
+    {
+        $view = new ViewModel();
+        $view->setTemplate('payment/finishedOnlineVerifiedNot');
+        return $view;
+    }
+
     public function errorAction()
     {
         $view = new ViewModel();
