@@ -3,28 +3,32 @@
 namespace Registration\Controller;
 
 use Laminas\View\Model\ViewModel;
+use Registration\Log\LoggerAwareTrait;
+use Registration\Service\PaymentService;
 
 class PaymentController extends AbstractController
 {
+    use LoggerAwareTrait;
 
     private $url;
 
-    public function __construct(array $config)
+    /** @var PaymentService */
+    private $paymentService;
+
+    public function __construct(array $config, PaymentService $paymentService)
     {
         parent::__construct();
         $this->url = $config['payment']['url'];
+        $this->paymentService = $paymentService;
     }
 
     public function initAction()
     {
-        $session = $this->session;
-        $params = [
-            'id' => $session->id,
-            'adm' => 'MZK50',
-            'amount' => 200,
-            'time' => time(),
-        ];
-        $paymentUrl = $this->url . '?' . http_build_query($params);
+        $registration = $this->session->registration ?? null;
+        if ($registration == null) {
+            //
+        }
+        $paymentUrl = $this->paymentService->prepareAndReturnPaymentUrl($registration);
         return $this->redirect()->toUrl($paymentUrl);
     }
 

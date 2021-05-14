@@ -21,27 +21,31 @@ class RegistrationService
     ];
 
     /** @var string */
-    protected $url;
+    protected $xServerUrl;
 
     /** @var string */
-    protected $user;
+    protected $xServerUser;
 
     /** @var string */
-    protected $password;
+    protected $xServerPassword;
 
     /** @var string */
     protected $library;
 
-    /** @var string */
+    /** @var boolean */
     protected $demo;
+
+    /** @var boolean */
+    protected $test;
 
     public function __construct($config)
     {
-        $this->url = $config['aleph']['url'];
-        $this->user = $config['aleph']['user'] ?? null;
-        $this->password = $config['aleph']['password'] ?? null;
+        $this->xServerUrl = $config['alephXServer']['url'];
+        $this->xServerUser = $config['alephXServer']['user'] ?? null;
+        $this->xServerPassword = $config['alephXServer']['password'] ?? null;
         $this->library = $config['aleph']['library'] ?? 'MZK50';
         $this->demo = $config['aleph']['demo'] ?? false;
+        $this->test = $config['aleph']['test'] ?? false;
     }
 
     public function register(User $user)
@@ -66,7 +70,7 @@ class RegistrationService
         $z303->{'z303-delinq-n-1'} = 'Online předregistrace';
         $z303->{'z303-delinq-1-update-date'} = $now;
         // test
-        if ($this->demo) {
+        if ($this->demo || $this->test) {
             $z303->{'z303-delinq-2'} = '88';
             $z303->{'z303-delinq-n-2'} = 'Testovací registrace';
             $z303->{'z303-delinq-2-update-date'} = $now;
@@ -93,6 +97,7 @@ class RegistrationService
             $z304->{'z304-telephone-2'} = $user->getIdentificationType()
                 . ' ' . $user->getIdentification();
             $z304->{'z304-telephone-3'} = $user->isSendNewsLetter() ? '' : 'NE';
+            $z304->{'z304-telephone-4'} = $user->isSendNewsLetter() ? '' : 'NE';
             $index++;
         }
         // z305
@@ -164,8 +169,8 @@ class RegistrationService
             'xml_full_req' => $xml,
         ];
         if ($this->user && $this->password) {
-            $parameters['user_name'] = $this->user;
-            $parameters['user_password'] = $this->password;
+            $parameters['user_name'] = $this->xServerUser;
+            $parameters['user_password'] = $this->xServerPassword;
         }
         $xml = $this->callXServer($parameters, 'POST');
         return $xml;
@@ -175,7 +180,7 @@ class RegistrationService
         $operation = $parameters['op'];
         $this->logUrl($parameters);
         $client = new Client();
-        $client->setUri($this->url);
+        $client->setUri($this->xServerUrl);
         if ($method == 'POST') {
             $client->setParameterPost($parameters);
         } else {

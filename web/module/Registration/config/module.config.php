@@ -75,6 +75,7 @@ $config = [
             \Laminas\Mvc\I18n\Translator::class => \Laminas\Mvc\I18n\TranslatorFactory::class,
             \Registration\Service\DiscountService::class => \Registration\Service\DiscountServiceFactory::class,
             \Registration\Service\RegistrationService::class => \Registration\Service\RegistrationServiceFactory::class,
+            \Registration\Service\PaymentService::class => \Registration\Service\PaymentServiceFactory::class,
             \Registration\IdentityProvider\IdentityProviderFactory::class => InvokableFactory::class,
         ],
     ],

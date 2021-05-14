@@ -11,7 +11,8 @@ class PaymentControllerFactory
     public function __invoke(ContainerInterface $container) : PaymentController
     {
         $configReader = $container->get(\Registration\Config\ConfigReader::class);
-        return new PaymentController($configReader->getConfig('config/config.ini'));
+        $paymentService = $container->get(\Registration\Service\PaymentService::class);
+        return new PaymentController($configReader->getConfig('config/config.ini'), $paymentService);
     }
 
 }
