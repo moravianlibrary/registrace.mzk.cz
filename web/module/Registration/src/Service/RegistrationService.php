@@ -52,7 +52,7 @@ class RegistrationService
     {
         $id = $this->getId($user);
         $now = date('Ymd');
-        $expiry = date('Ymd', strtotime('+1 year'));
+        $expiry = date('Ymd', strtotime('+14 days'));
         $xml = simplexml_load_file(self::XML_TEMPLATE);
         $patron = $xml->{'patron-record'}[0];
         $recordAction = ($this->demo) ? 'U' : 'I';
@@ -134,9 +134,11 @@ class RegistrationService
         return $id;
     }
 
-    public function updateUserAfterRegistration($patronId)
+    public function updateExpiration($patronId, $newExpiration)
     {
         $patron = $this->findUser($patronId);
+        $update = new \SimpleXMLElement("<p-file-20><patron-record></patron-record></p-file-20>");
+        // z303
         $z303 = $patron->{'z303'};
         $update = new \SimpleXMLElement("<p-file-20><patron-record></patron-record></p-file-20>");
         $z303Update = $update->{'patron-record'}->addChild('z303');
@@ -146,6 +148,19 @@ class RegistrationService
         foreach ($z303->children() as $child) {
             $z303Update->addChild($child->getName(), (string) $child);
         }
+        $z303Update->{'z305-expiry-date'} = date('Ymd', $newExpiration);
+        $z303Update->{'z303-birth-date'} = $this->convertDate($z303Update->{'z303-birth-date'});
+        $z303Update->{'z303-open-date'} = $this->convertDate($z303Update->{'z303-open-date'});
+        $z303Update->{'z303-update-date'} = $this->convertDate($z303Update->{'z303-update-date'});
+        $z303Update->{'z303-home-library'} = $this->library;
+        // z305
+        $z305 = $patron->{'z305'};
+        $z305Update = $update->{'patron-record'}->addChild('z305');
+        $z305Update->addChild('record-action', 'U');
+        foreach ($z305->children() as $child) {
+            $z305Update->addChild($child->getName(), (string) $child);
+        }
+        $z305Update->{'z305-expiry-date'} = date('Ymd', $newExpiration);
         $xml = $update->asXml();
         $this->getLogger()->info("XML after update:\n" . $xml);
         return $this->updateUser($xml);
@@ -245,6 +260,12 @@ class RegistrationService
                 }
             }
         }
+    }
+
+    protected function convertDate($date)
+    {
+        return \DateTime::createFromFormat('d/M/Y', $date)
+            ->format('Ymd');
     }
 
 }

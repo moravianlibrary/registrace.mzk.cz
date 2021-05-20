@@ -35,7 +35,7 @@ class PaymentService
         return $this->getPaymentUrl($login, $discount);
     }
 
-    protected function hasRegistrationPayment($login)
+    public function hasRegistrationPayment($login)
     {
         $url = $this->restUrl . '/rest-dlf/patron/' . $login . '/circulationActions/cash?view=full';
         $this->getLogger()->info("URL: " . $url);

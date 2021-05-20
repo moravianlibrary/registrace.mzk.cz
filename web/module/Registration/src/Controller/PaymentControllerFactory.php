@@ -12,7 +12,9 @@ class PaymentControllerFactory
     {
         $configReader = $container->get(\Registration\Config\ConfigReader::class);
         $paymentService = $container->get(\Registration\Service\PaymentService::class);
-        return new PaymentController($configReader->getConfig('config/config.ini'), $paymentService);
+        $registrationService = $container->get(\Registration\Service\RegistrationService::class);
+        return new PaymentController($configReader->getConfig('config/config.ini'),
+            $paymentService, $registrationService);
     }
 
 }

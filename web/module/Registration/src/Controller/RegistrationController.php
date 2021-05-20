@@ -54,9 +54,12 @@ class RegistrationController extends AbstractController
             $this->getLogger()->info("Data from post:\n" . print_r($request->getPost()->toArray(), true));
             $id = $this->registrationService->register(new User($request->getPost()));
             $this->session->registration = [
-                'id' => $id,
+                'id'       => $id,
                 'verified' => $this->form->isProtected(),
                 'discount' => $this->form->get('user')->getDiscount(),
+                'expiry'   => strtotime("+1 year, + 10 days"),
+                'finished' => false,
+                'payment'  => false,
             ];
             return $this->redirect()->toRoute('registration-finished');
         }
