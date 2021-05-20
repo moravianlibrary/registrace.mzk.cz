@@ -32,7 +32,8 @@ class PaymentController extends AbstractController
     {
         $registration = &$this->session->registration;
         if ($registration == null) {
-            // error handling
+            $this->flashMessenger()->addMessage('You are not registered.');
+            return $this->redirect()->toRoute('registration-index');
         }
         if ($registration['finished']) {
             return $this->redirect()->toRoute('payment-finished');
@@ -45,6 +46,10 @@ class PaymentController extends AbstractController
     public function finishedAction()
     {
         $registration = &$this->session->registration;
+        if ($registration == null) {
+            $this->flashMessenger()->addMessage('You are not registered.');
+            return $this->redirect()->toRoute('registration-index');
+        }
         $this->getLogger()->info($registration);
         $login = $registration['id'];
         $expiry = $registration['expiry'];

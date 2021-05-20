@@ -83,11 +83,16 @@ class RegistrationController extends AbstractController
 
     public function finishedAction()
     {
-        $registration = $this->session->registration;
+        $registration = &$this->session->registration;
+        if ($registration == null) {
+            $this->flashMessenger()->addMessage('You are not registered.');
+            return $this->redirect()->toRoute('registration-index');
+        }
         $view = new ViewModel([
-            'login' => $registration['id'],
+            'login'    => $registration['id'],
             'verified' => $registration['verified'],
             'discount' => $registration['discount'],
+            'finished' => $registration['finished'],
         ]);
         $view->setTemplate('registration/finished');
         return $view;

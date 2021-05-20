@@ -18,7 +18,8 @@
         "laminas/laminas-i18n": "^2.11",
         "laminas/laminas-mvc-i18n": "^1.1",
         "laminas/laminas-session": "^2.10",
-        "laminas/laminas-log": "^2.13"
+        "laminas/laminas-log": "^2.13",
+        "laminas/laminas-mvc-plugin-flashmessenger": "^1.3"
     },
     "autoload": {
         "psr-4": {

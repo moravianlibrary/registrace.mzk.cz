@@ -23,9 +23,6 @@
             <?= $this->escapeHtml($price) ?>
             <?= $this->translate('payment_amount_currency') ?>
         </p>
-        <p>
-            <a href="/payment/init"><?= $this->translate('registration_online_payment_text') ?> </a>
-        </p>
     <? endif; ?>
 </div>
 
@@ -46,20 +43,22 @@
         <strong><?= $this->escapeHtml($price) ?>&nbsp;<?= $this->translate('payment_amount_currency') ?></strong>
     </p>
 
-    <div class="row my-4">
-        <div class="col-md-6 text-center">
-            <a class="btn btn-info" href="/Payment/init" title="Platba kartou">
-                <i class="fa fa-credit-card mr-1" aria-hidden="true"></i>
-                Zaplatit kartou online
-            </a>
+    <? if (!$this->finished) : ?>
+        <div class="row my-4">
+            <div class="col-md-6 text-center">
+                <a class="btn btn-info" href="/Payment/init" title="Platba kartou">
+                    <i class="fa fa-credit-card mr-1" aria-hidden="true"></i>
+                    Zaplatit kartou online
+                </a>
+            </div>
+            <div class="col-md-6 text-center">
+                <a class="btn btn-info" href="/Payment/finishedCash" title="Platba v hotovosti">
+                    <i class="fa fa-money mr-1" aria-hidden="true"></i>
+                    Zaplatím v hotovosti v knihovně
+                </a>
+            </div>
         </div>
-        <div class="col-md-6 text-center">
-            <a class="btn btn-info" href="/Payment/finishedCash" title="Platba v hotovosti">
-                <i class="fa fa-money mr-1" aria-hidden="true"></i>
-                Zaplatím v hotovosti v knihovně
-            </a>
-        </div>
-    </div>
+    <? endif; ?>
 
     <p>
         Něco je špatně, částka nesedí? <a href="#" title="Zpět na vyplnění formuláře">Vraťte se zpět k formuláři.</a>

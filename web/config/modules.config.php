@@ -22,5 +22,6 @@ return [
     'Laminas\Filter',
     'Laminas\Router',
     'Laminas\Validator',
+    'Laminas\Mvc\Plugin\FlashMessenger',
     'Registration',
 ];
