@@ -11,11 +11,17 @@
     <Attribute name="urn:oid:2.5.4.17" id="postcode" />
     <Attribute name="urn:oid:2.5.4.20" id="phone" />
     <Attribute name="urn:oid:1.3.6.1.4.1.2428.90.1.3" id="birth" />
+    <Attribute name="urn:oid:1.3.6.1.4.1.5923.1.1.1.6" id="eduPersonPrincipalName" />
+    <Attribute name="urn:oid:1.3.6.1.4.1.5923.1.1.1.13" id="eduPersonUniqueId" />
+    <Attribute name="urn:oid:1.3.6.1.4.1.5923.1.1.1.10" id="eduPersonTargetedID" />
 
     <!-- MojeId attributes -->
     <Attribute name="http://specs.nic.cz/attr/contact/ident/card" id="mojeIdIdentityCardNumber" />
+    <Attribute name="http://specs.nic.cz/attr/contact/ident/pass" id="mojeIdIdentityPassNumber" />
+    <Attribute name="http://specs.nic.cz/attr/contact/isic" id="mojeIdIdentityIsicNumber" />
     <Attribute name="http://specs.nic.cz/attr/contact/valid" id="mojeIdValid" />
     <Attribute name="http://specs.nic.cz/attr/contact/status" id="mojeIdStatus" />
+    <Attribute name="http://specs.nic.cz/attr/contact/student" id="mojeIdStudent" />
 
     <!-- MojeId attributes - permanent address -->
     <Attribute name="http://specs.nic.cz/attr/addr/main/street" id="mojeIdStreet" />
@@ -34,5 +40,6 @@
     <Attribute name="http://specs.nic.cz/attr/addr/mail/pc" id="mojeIdContactPostcode" />
     <Attribute name="http://specs.nic.cz/attr/addr/mail/sp" id="mojeIdContactState" />
     <Attribute name="http://specs.nic.cz/attr/addr/mail/cc" id="mojeIdContactCountry" />
+    <Attribute name="http://specs.nic.cz/attr/addr/mail/verified" id="mojeIdContactVerified" />
 
 </Attributes>
