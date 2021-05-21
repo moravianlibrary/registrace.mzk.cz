@@ -9,13 +9,19 @@ class MojeId implements IdentityProviderInterface
 
     public function identify(Request $request)
     {
+        $birth = explode('-', $this->get($request, 'birth'));
+        $birth = [
+            'day' => $birth[0],
+            'month' => $birth[1],
+            'year' => $birth[2]
+        ];
         return [
             'user' => [
                 'firstName' => $this->get($request, 'firstName'),
                 'lastName' => $this->get($request, 'lastName'),
                 'email' => $this->get($request, 'mail'),
                 'phone' => str_replace('.', ' ', $this->get($request, 'phone')),
-                'birth' => $this->get($request, 'birth'),
+                'birth' => $birth,
                 'identificationType' => 'IC',
                 'identification' => $this->get($request, 'mojeIdIdentityCardNumber'),
             ],

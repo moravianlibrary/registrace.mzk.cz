@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Registration\Controller;
 
+use Laminas\Form\FormInterface;
 use Laminas\InputFilter\InputFilter;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\View\Model\ViewModel;
@@ -50,28 +51,37 @@ class RegistrationController extends AbstractController
     public function userFormAction()
     {
         $request = $this->getRequest();
-        if ($request->isPost() && $this->form->setData($request->getPost())->isValid()) {
+        $data = [];
+        if ($request->isPost()) {
             $this->getLogger()->info("Data from post:\n" . print_r($request->getPost()->toArray(), true));
-            $id = $this->registrationService->register(new User($request->getPost()));
+            $data = $request->getPost()->toArray();
+        }
+        $verified = false;
+        $auth = $request->getQuery('idp');
+        if ($auth != null) {
+            $idp = $this->identityProviderFactory->get($auth);
+            if ($idp != null && ($identity = $idp->identify($request)) != null) {
+                $this->getLogger()->info("Data from IdP:\n" . print_r($identity, true));
+                if ($identity['valid']) {
+                    unset($identity['valid']);
+                    $this->form->setProtectedData($identity);
+                }
+                $data = array_replace_recursive($data, $identity);
+            }
+        }
+        $this->getLogger()->info("Data after merge:\n" . print_r($data, true));
+        $this->form->setData($data);
+        if ($request->isPost() && $this->form->isValid()) {
+            $id = $this->registrationService->register(new User($data));
             $this->session->registration = [
                 'id'       => $id,
-                'verified' => $this->form->isProtected(),
+                'verified' => $verified,
                 'discount' => $this->form->get('user')->getDiscount(),
                 'expiry'   => strtotime("+1 year, + 10 days"),
                 'finished' => false,
                 'payment'  => false,
             ];
             return $this->redirect()->toRoute('registration-finished');
-        }
-        $auth = $request->getQuery('idp');
-        if ($auth != null) {
-            $idp = $this->identityProviderFactory->get($auth);
-            if ($idp != null && ($identity = $idp->identify($request)) != null) {
-                $this->form->setData($identity);
-                if ($identity['valid']) {
-                    $this->form->protect();
-                }
-            }
         }
         $view = new ViewModel([
             'config' => $this->config,

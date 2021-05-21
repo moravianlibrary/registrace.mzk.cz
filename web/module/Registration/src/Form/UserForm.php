@@ -12,19 +12,22 @@ use Laminas\Form\Element\Text;
 use Laminas\Form\Element\Csfr;
 use Laminas\Form\Element\Hidden;
 use Laminas\Form\Form;
+use Laminas\Form\FormInterface;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Validator;
+use Registration\Log\LoggerAwareTrait;
 use Registration\Utils\HmacCalculator;
 
 class UserForm extends Form implements InputFilterProviderInterface
 {
+    use LoggerAwareTrait;
 
     public function __construct()
     {
         parent::__construct('userForm', []);
     }
 
-    public function init() : void
+    public function init(): void
     {
         parent::init();
         $this->add([
@@ -50,11 +53,11 @@ class UserForm extends Form implements InputFilterProviderInterface
             'type' => PasswordFieldset::class,
         ]);
         $this->add([
-            'name'    => 'isSendNews',
-            'type'    => Checkbox::class,
+            'name' => 'isSendNews',
+            'type' => Checkbox::class,
             'options' => [
                 'label' => 'label_isSendNews',
-                'checked_value'   => 'true',
+                'checked_value' => 'true',
                 'unchecked_value' => '',
             ],
             'attributes' => [
@@ -63,21 +66,21 @@ class UserForm extends Form implements InputFilterProviderInterface
             ],
         ]);
         $this->add([
-            'name'    => 'isGdpr',
-            'type'    => Checkbox::class,
+            'name' => 'isGdpr',
+            'type' => Checkbox::class,
             'options' => [
-                'label'           => 'label_isGdpr',
-                'checked_value'   => 'true',
+                'label' => 'label_isGdpr',
+                'checked_value' => 'true',
                 'unchecked_value' => '',
-                'required'        =>  true,
+                'required' => true,
             ],
             'attributes' => [
                 'data-help' => 'help_isGdpr',
             ],
-       ]);
+        ]);
         $this->add([
             'name' => 'submit',
-            'type'  => 'Submit',
+            'type' => 'Submit',
             'attributes' => [
                 'value' => 'Submit registration',
                 'class' => 'btn btn-primary',
@@ -85,7 +88,8 @@ class UserForm extends Form implements InputFilterProviderInterface
         ]);
     }
 
-    public function isValid() {
+    public function isValid()
+    {
         $isContactAddress = $this->getFieldsets()['user']
             ->getElements()['isContactAddress']->getValue();
         if ($isContactAddress) {
@@ -119,51 +123,21 @@ class UserForm extends Form implements InputFilterProviderInterface
         return DateTime::createFromFormat('Y-m-d', $birth)->diff(new DateTime('now'))->y;
     }
 
-    public function protect()
+    public function setProtectedData($data)
     {
-        foreach ($this->getProtectedElements() as $name => $element) {
-            $element->setAttribute('readonly', true);
-        }
-        $hmac = new Hidden('hmac');
-        $hmac->setValue($this->getHmacHash());
-        $this->add($hmac);
-    }
-
-    public function isProtected()
-    {
-        return $this->has('hmac');
-    }
-
-    public function getHmacHash()
-    {
-        $hash = new HmacCalculator();
-        foreach ($this->getProtectedElements() as $name => $element) {
-            $hash->add($name, $element->getValue());
-        }
-        return $hash->toHash();
-    }
-
-    public function setData($data)
-    {
-        parent::setData($data);
-        if (isset($data['hmac'])) {
-            $this->protect();
-        }
-        return $this;
-    }
-
-    private function getProtectedElements()
-    {
-        $elements = [];
-        foreach ($this->get('user')->getElements() as $element) {
-            if ($element->getOption('protected')) {
-                $elements['user[' . $element->getName() . ']'] = $element;
+        foreach ($data as $group => $values) {
+            $fieldSet = $this->get($group);
+            if (is_array($values)) {
+                foreach ($values as $key => $value) {
+                    $element = $fieldSet->get($key);
+                    $element->setAttribute('readonly', true);
+                }
+            } else if (is_scalar($values)) {
+                $element = $this->get($group);
+                $element->setAttribute('readonly', true);
             }
         }
-        foreach ($this->get('permanentAddress')->getElements() as $element) {
-            $elements['user[' . $element->getName() . ']'] = $element;
-        }
-        return $elements;
+        return $this;
     }
 
 }
