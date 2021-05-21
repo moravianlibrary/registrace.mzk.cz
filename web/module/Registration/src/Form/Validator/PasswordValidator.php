@@ -34,6 +34,9 @@ class PasswordValidator extends AbstractValidator
         if (strlen($value) > self::MAX_LENGTH) {
             $this->lastMessages[] = self::VALIDATION_MAX_LENGTH_MESSAGE;
         }
+        if (empty($value)) {
+            return false;
+        }
         // group characters
         $alphabet = false;
         $numeric = false;
