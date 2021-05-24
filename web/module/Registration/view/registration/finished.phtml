@@ -23,36 +23,43 @@
             <?= $this->escapeHtml($price) ?>
             <?= $this->translate('payment_amount_currency') ?>
         </p>
+        <p>
+            <a href="/payment/init"><?=$this->translate('registration_online_payment_text')?> </a>
+        </p>
     <? endif; ?>
 </div>
 
 <hr>
 
-<div>
-    <p class="text-muted"><i>Text pro další krok při možnosti platby online:</i></p>
-
+<div class="text-center">
     <p>
-        Gratulujeme!<br>
+        <img src="<?=$this->basePath('img/gratulation.png')?>" alt="">
+    </p>
+    <p class="h2">
+        Gratulujeme!
+    </p>
+    <p>
         Právě jste si založili čtenářský účet v Moravské zemské knihovně.
     </p>
-    <div class="alert alert-primary">
-        Dočasný login pro vaše přihlášení do účtu je <strong><?= $this->escapeHtml($this->login); ?></strong>, po vydání průkazky se login změní.
-    </div>
     <p>
-        Na základě vámi vyplněných údajů činí roční registrační poplatek:
+        Dočasný login pro vaše přihlášení do účtu je <strong><?= $this->escapeHtml($this->login); ?></strong>, po vydání průkazky se login změní.
+    </p>
+    <div class="bg-info-light">
+        <p>Na základě vámi vyplněných údajů činí roční registrační poplatek:</p>
+        <p class="price">
         <strong><?= $this->escapeHtml($price) ?>&nbsp;<?= $this->translate('payment_amount_currency') ?></strong>
     </p>
 
     <? if (!$this->finished) : ?>
         <div class="row my-4">
-            <div class="col-md-6 text-center">
-                <a class="btn btn-info" href="/Payment/init" title="Platba kartou">
+            <div class="col-md-6">
+                <a class="btn btn-success" href="/Payment/init" title="Platba kartou">
                     <i class="fa fa-credit-card mr-1" aria-hidden="true"></i>
                     Zaplatit kartou online
                 </a>
             </div>
-            <div class="col-md-6 text-center">
-                <a class="btn btn-info" href="/Payment/finishedCash" title="Platba v hotovosti">
+            <div class="col-md-6">
+                <a class="btn btn-dark" href="/Payment/finishedCash" title="Platba v hotovosti">
                     <i class="fa fa-money mr-1" aria-hidden="true"></i>
                     Zaplatím v hotovosti v knihovně
                 </a>
@@ -61,13 +68,7 @@
     <? endif; ?>
 
     <p>
-        Něco je špatně, částka nesedí? <a href="#" title="Zpět na vyplnění formuláře">Vraťte se zpět k formuláři.</a>
-    </p>
-    <p>
-        Vaše knihovna
-    </p>
-    <p>
-        Kontakt: <a href="mailto: pujcovna@mzk.cz" title="E-mail pujcovna@mzk.cz">pujcovna@mzk.cz</a>, tel.: 541 646 207
+        Něco je špatně, částka nesedí? Vraťte se <a href="#" title="Zpět na vyplnění formuláře"><strong>zpět k formuláři.</strong></a>
     </p>
 
 </div>

@@ -18,7 +18,7 @@
         <?= $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'])
             ->prependStylesheet($this->basePath('css/style.css'))
             ->prependStylesheet($this->basePath('css/font-awesome.min.css'))
-            ->prependStylesheet($this->basePath('css/bootstrap.min.css'))
+            ->prependStylesheet($this->basePath('css/bootstrap.css'))
         ?>
 
         <!-- Scripts -->
@@ -33,30 +33,12 @@
     <body>
         <div class="header">
             <div class="container-fluid">
-                <a href="/" title="(Moravská zemská knihovna - úvodní stránka)" rel="home" class="logo">
-                    <img src="<?=$this->basePath('img/logo-mzk.svg')?>" alt="Moravská zemská knihovna - úvodní stránka">
-                </a>
-            </div>
-        </div>
-        <nav class="navbar navbar-expand-md navbar-dark bg-primary mb-4" role="navigation">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <a class="navbar-brand" href="<?= $this->url('home') ?>">
-                        Registration
+                <a href="/" title="(Moravská zemská knihovna - úvodní stránka)" rel="home" class="logo d-inline-block align-middle">
+                    <img src="<?=$this->basePath('img/logo-mzk-white.svg')?>" alt="Moravská zemská knihovna - úvodní stránka">
                     </a>
+                <div class="h1 d-inline-block align-middle">Registrace čtenáře</div>
                 </div>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="<?= $this->url('home') ?>">Home <span class="sr-only">(current)</span></a>
-                        </li>
-                    </ul>
                 </div>
-            </div>
-        </nav>
         <div class="content">
             <div class="container-fluid">
                 <?= $this->content ?>

@@ -2,6 +2,10 @@ html {
     font-size: 15px
 }
 
+body {
+    color: #514b57 !important;
+}
+
 .container-fluid {
     max-width: 900px;
 }
@@ -25,16 +29,30 @@ h4 {
 
 
 .header{
-    padding: 10px 0;
+    padding: 30px 0;
+    background: #00bed8;
+    color: #ffffff;
+    margin-bottom: 1rem;
 }
 
 .header .logo {
     display: inline-block;
+    border-right: 1px solid #ffffff;
+    padding-right: 28px;
 }
 
 .header .logo img {
-    width: 219px;
+    width: 156px;
     display: block;
+}
+
+.header .h1 {
+    font-size: 20px;
+    color: #ffffff;
+    text-transform: uppercase;
+    font-weight: normal;
+    margin: 10px 23px;
+    padding: 0;
 }
 
 footer{
@@ -62,3 +80,21 @@ ul.error {
 .form-text{
     margin-top: 0;
 }
+
+.bg-info-light {
+    background-color: #f2fdff;
+    padding: 70px 20px;
+}
+
+.bg-info-light .price {
+    color: #00bdd7;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.btn {
+    padding: 0.75rem 1rem;
+    border-radius: 1.25rem;
+    font-weight: bold;
+}
+
