@@ -196,16 +196,18 @@ $form->prepare();
     <div class="card-body">
         <h4><?=$this->translate('text_permanent_address')?></h4>
         <div class="row">
-            <div class="col-md-5">
+            <div class="col-md-6">
                 <?=$this->render('element.phtml', ['element' => $form->get('permanentAddress')->get('street')])?>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <?=$this->render('element.phtml', ['element' => $form->get('permanentAddress')->get('city')])?>
             </div>
             <div class="col-md-2">
                 <?=$this->render('element.phtml', ['element' => $form->get('permanentAddress')->get('postcode')])?>
             </div>
-            <div class="col-md-2">
+        </div>
+        <div class="row">
+            <div class="col-md-6">
                 <?=$this->render('element.phtml', ['element' => $form->get('permanentAddress')->get('country')])?>
             </div>
         </div>
@@ -215,10 +217,10 @@ $form->prepare();
         <div id="collapseisContactAddress" class="panel-collapse collapse in">
             <h4><?=$this->translate('text_contact_address')?></h4>
             <div class="row">
-                <div class="col-md-5">
+                <div class="col-md-6">
                     <?=$this->render('element.phtml', ['element' => $form->get('contactAddress')->get('street')])?>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <?=$this->render('element.phtml', ['element' => $form->get('contactAddress')->get('city')])?>
                 </div>
                 <div class="col-md-2">
