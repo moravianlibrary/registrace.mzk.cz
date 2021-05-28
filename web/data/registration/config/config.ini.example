@@ -1,3 +1,6 @@
+[demo]
+enabled = false
+
 [payment]
 url = https://aleph.mzk.cz/cgi-bin/c-gpe1-registrace-test.pl
 
