@@ -96,6 +96,7 @@ class UserForm extends Form implements InputFilterProviderInterface
             $contactAddress = $this->getFieldsets()['contactAddress']
                 ->setOptions(['required' => true]);
         }
+        $this->get('user')->updateDiscount($this);
         return parent::isValid();
     }
 
