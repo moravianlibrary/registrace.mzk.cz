@@ -28,7 +28,10 @@ $(document).ready(function() {
     $('#online_discount').hide();
     $('#not_online_discount').hide();
     $('#not_online_for_free').hide();
-    if (online) {
+    $('#age_not_valid').hide();
+    if (selected.length == 0) {
+      $('#age_not_valid').show();
+    } else if (online) {
       $('#online_discount').show();
     } else if (price == 0) {
       $('#not_online_for_free').show();
@@ -68,6 +71,10 @@ $(document).ready(function() {
       success: function(data, textStatus) {
         $options = $('select[name="user[discount]"]').children().remove().end();
         selectedOption = null;
+        if (data.length == 0) {
+          $('select[name="user[discount]"]').change();
+          return;
+        }
         $.each(data, function(key, obj) {
           option = $('<option/>');
           if (selectedOption == null || selected == key || selectedGroup == obj['group']) {
@@ -181,6 +188,9 @@ $form->prepare();
                 <div id="not_online_for_free" class="alert alert-warning">
                     <?=$this->translate('not_online_for_free')?>
                 </div>
+                <div id="age_not_valid" class="alert alert-danger">
+                    <?=$this->translate('userForm_ageNotValid')?>
+                </div>
             </div>
         </div>
         <div class="row">
@@ -270,7 +280,6 @@ $form->prepare();
     Cena registrace je <strong><span id="price">XXX</span>,- Kč</strong>
 </div>
 <div class="text-center">
-    <?//= $this->formSubmit($form->get('submit')); ?>
     <input type="submit" name="submit" class="btn btn-primary" value="<?=$this->translate('btn_next_step') ?> &raquo;">
 </div>
 <?=$this->form()->closeTag();?>
