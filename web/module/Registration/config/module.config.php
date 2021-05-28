@@ -76,7 +76,6 @@ $config = [
             \Registration\Service\DiscountService::class => \Registration\Service\DiscountServiceFactory::class,
             \Registration\Service\RegistrationServiceInterface::class => \Registration\Service\RegistrationServiceFactory::class,
             \Registration\Service\PaymentServiceInterface::class => \Registration\Service\PaymentServiceFactory::class,
-            \Registration\IdentityProvider\IdentityProviderFactory::class => InvokableFactory::class,
         ],
     ],
     'form_elements' => [

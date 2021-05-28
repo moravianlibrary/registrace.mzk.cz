@@ -4,6 +4,7 @@ namespace Registration\Controller;
 use Laminas\ServiceManager\PluginManagerInterface;
 use Psr\Container\ContainerInterface;
 use Registration\Form\UserForm;
+use Registration\IdentityProvider\IdentityProviderFactory;
 
 class RegistrationControllerFactory
 {
@@ -14,10 +15,10 @@ class RegistrationControllerFactory
         /** @var UserForm */
         $form = $formElementManager->get(UserForm::class);
         $configReader = $container->get(\Registration\Config\ConfigReader::class);
-        $identityProvider = $container->get(\Registration\IdentityProvider\IdentityProviderFactory::class);
+        $config = $configReader->getConfig('config/config.ini');
+        $identityProvider = new IdentityProviderFactory($config);
         $registrationService = $container->get(\Registration\Service\RegistrationServiceInterface::class);
-        return new RegistrationController($form, $configReader->getConfig('config/config.ini'),
-            $identityProvider, $registrationService);
+        return new RegistrationController($form, $config, $identityProvider, $registrationService);
     }
 
 }
