@@ -4,8 +4,8 @@ namespace Registration\Controller;
 
 use Laminas\View\Model\ViewModel;
 use Registration\Log\LoggerAwareTrait;
-use Registration\Service\PaymentService;
-use Registration\Service\RegistrationService;
+use Registration\Service\PaymentServiceInterface;
+use Registration\Service\RegistrationServiceInterface;
 
 class PaymentController extends AbstractController
 {
@@ -13,19 +13,23 @@ class PaymentController extends AbstractController
 
     private $url;
 
-    /** @var PaymentService */
+    /** @var bool */
+    private $demo = false;
+
+    /** @var PaymentServiceInterface */
     private $paymentService;
 
-    /** @var RegistrationService */
+    /** @var RegistrationServiceInterface */
     private $registrationService;
 
-    public function __construct(array $config, PaymentService $paymentService,
-        RegistrationService $registrationService)
+    public function __construct(array $config, PaymentServiceInterface $paymentService,
+        RegistrationServiceInterface $registrationService)
     {
         parent::__construct();
         $this->url = $config['payment']['url'];
         $this->paymentService = $paymentService;
         $this->registrationService = $registrationService;
+        $this->demo = $config['demo']['enabled'] ?? false;
     }
 
     public function initAction()
@@ -88,6 +92,24 @@ class PaymentController extends AbstractController
     {
         $view = new ViewModel();
         $view->setTemplate('payment/error');
+        return $view;
+    }
+
+    public function refusedAction()
+    {
+        $view = new ViewModel();
+        $view->setTemplate('payment/refused');
+        return $view;
+    }
+
+    public function demoGatewayAction()
+    {
+        if (!$this->demo) {
+            $this->flashMessenger()->addMessage('Demo gateway is disabled.');
+            return $this->redirect()->toRoute('registration-index');
+        }
+        $view = new ViewModel();
+        $view->setTemplate('payment/gateway');
         return $view;
     }
 

@@ -5,34 +5,50 @@ namespace Registration\Model;
 class User
 {
 
+    /** @var string */
     protected $firstName = null;
 
+    /** @var string */
     protected $lastName = null;
 
+    /** @var string */
     protected $title = null;
 
+    /** @var string */
     protected $birth = null;
 
+    /** @var string */
     protected $university = null;
 
+    /** @var string */
     protected $email = null;
 
+    /** @var string */
     protected $phone = null;
 
+    /** @var string */
     protected $identificationType = null;
 
+    /** @var string */
     protected $identification = null;
 
+    /** @var string */
     protected $password = null;
 
-    // var FullAddress
+    /** @var string */
+    protected $eduPersonPrincipalName = null;
+
+    /** @var Address */
     protected $permanentAddress = null;
 
-    // var Address
+    /** @var FullAddress */
     protected $contactAddress = null;
 
     // @var bool
     protected $sendNewsLetter = false;
+
+    // @var bool
+    protected $verified = false;
 
     public function __construct($data)
     {
@@ -49,11 +65,13 @@ class User
         $this->identificationType = $user['identificationType'];
         $this->identification = $user['identification'];
         $this->password = $data['password']['password'];
+        $this->eduPersonPrincipalName = $user['eduPersonPrincipalName'];
         $this->permanentAddress = new FullAddress($data['permanentAddress']);
         if ($user['isContactAddress'] == 1) {
             $this->contactAddress = new Address($data['contactAddress']);
         }
-        $this->sendNewsLetter = $data['isSendNews'] == 1;
+        $this->sendNewsLetter = $data['isSendNews'] == 'true';
+        $this->verified = $data['$verified'] ?? false;
     }
 
     /**
@@ -214,6 +232,22 @@ class User
     public function setPassword($password): void
     {
         $this->password = $password;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEduPersonPrincipalName(): string
+    {
+        return $this->eduPersonPrincipalName;
+    }
+
+    /**
+     * @param string $eduPersonPrincipalName
+     */
+    public function setEduPersonPrincipalName(string $eduPersonPrincipalName): void
+    {
+        $this->eduPersonPrincipalName = $eduPersonPrincipalName;
     }
 
     /**

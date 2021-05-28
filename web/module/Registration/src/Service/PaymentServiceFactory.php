@@ -10,7 +10,12 @@ class PaymentServiceFactory
     public function __invoke(ContainerInterface $container, $name, array $options = null)
     {
         $configReader = $container->get(\Registration\Config\ConfigReader::class);
-        return new PaymentService($configReader->getConfig('config/config.ini'));
+        $config = $configReader->getConfig('config/config.ini');
+        $demo = $config['demo']['enabled'] ?? false;
+        if ($demo) {
+            return new PaymentServiceDemo();
+        }
+        return new PaymentService($config);
     }
 
 }

@@ -12,9 +12,9 @@ use Laminas\Session\SessionManager;
 use Registration\Form\UserForm;
 use Registration\Log\LoggerAwareTrait;
 use Registration\Service\DiscountService;
-use Registration\Service\RegistrationService;
 use Registration\IdentityProvider\IdentityProviderFactory;
 use Registration\Model\User;
+use Registration\Service\RegistrationServiceInterface;
 
 class RegistrationController extends AbstractController
 {
@@ -28,11 +28,11 @@ class RegistrationController extends AbstractController
     /** @var IdentityProviderFactory */
     private $identityProviderFactory;
 
-    /** @var RegistrationService */
+    /** @var RegistrationServiceInterface */
     private $registrationService;
 
     public function __construct(UserForm $form, $config, IdentityProviderFactory $identityProviderFactory,
-                                RegistrationService $registrationService)
+                                RegistrationServiceInterface $registrationService)
     {
         parent::__construct();
         $this->form = $form;
@@ -61,9 +61,16 @@ class RegistrationController extends AbstractController
         if ($auth != null) {
             $idp = $this->identityProviderFactory->get($auth);
             if ($idp != null && ($identity = $idp->identify($request)) != null) {
+                // convert birth date as expected by laminas forms
+                $birth = explode('-', $identity['user']['birth']);
+                $identity['user']['birth'] = [
+                    'day' => $birth[0],
+                    'month' => $birth[1],
+                    'year' => $birth[2]
+                ];
                 $this->getLogger()->info("Data from IdP:\n" . print_r($identity, true));
-                if ($identity['valid']) {
-                    unset($identity['valid']);
+                if ($identity['verified']) {
+                    $verified = true;
                     $this->form->setProtectedData($identity);
                 }
                 $data = array_replace_recursive($data, $identity);

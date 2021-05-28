@@ -6,7 +6,7 @@ use Laminas\Http\Client;
 use Registration\Log\LoggerAwareTrait;
 use Registration\Model\User;
 
-class RegistrationService
+class RegistrationService implements RegistrationServiceInterface
 {
     use LoggerAwareTrait;
 
@@ -115,6 +115,7 @@ class RegistrationService
             $z305->{'z305-bor-status'} = '03';
             $z305->{'z305-bor-type'} = '';
         }
+        $z305->{'z305-field-3'} = $user->getEduPersonPrincipalName();
         // z308
         $z308 = $patron->{'z308'};
         foreach ($z308 as $entry) {

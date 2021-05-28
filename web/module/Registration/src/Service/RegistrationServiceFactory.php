@@ -11,7 +11,12 @@ class RegistrationServiceFactory
     public function __invoke(ContainerInterface $container, $name, array $options = null)
     {
         $configReader = $container->get(\Registration\Config\ConfigReader::class);
-        return new RegistrationService($configReader->getConfig('config/config.ini'));
+        $config = $configReader->getConfig('config/config.ini');
+        $demo = $config['demo']['mode'] ?? false;
+        if ($demo) {
+            return new RegistrationServiceDemo();
+        }
+        return new RegistrationService($config);
     }
 
 }

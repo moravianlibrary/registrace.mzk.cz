@@ -5,6 +5,7 @@ use Laminas\Filter;
 use Laminas\Form\Element\Checkbox;
 use Laminas\Form\Element\DateSelect;
 use Laminas\Form\Element\Email;
+use Laminas\Form\Element\Hidden;
 use Laminas\Form\Element\Select;
 use Laminas\Form\Element\Text;
 use Laminas\Form\Fieldset;
@@ -100,7 +101,7 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
                'data-toggle' => 'collapse',
                'data-target' => '#collapseisContactAddress',
            ],
-       ]);
+        ]);
         // Proof of identity
         $this->add([
             'name'    => 'identificationType',
@@ -166,6 +167,10 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
                 'label' => 'label_university',
                 'value_options' => $this->codeBook->getUniversities(),
             ],
+        ]);
+        $this->add([
+            'name' => 'eduPersonPrincipalName',
+            'type' => Hidden::class,
         ]);
     }
 

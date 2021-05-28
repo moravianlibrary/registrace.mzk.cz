@@ -58,7 +58,7 @@ class UserForm extends Form implements InputFilterProviderInterface
             'options' => [
                 'label' => 'label_isSendNews',
                 'checked_value' => 'true',
-                'unchecked_value' => '',
+                'unchecked_value' => 'false',
             ],
             'attributes' => [
                 'value' => 'true',
@@ -71,7 +71,7 @@ class UserForm extends Form implements InputFilterProviderInterface
             'options' => [
                 'label' => 'label_isGdpr',
                 'checked_value' => 'true',
-                'unchecked_value' => '',
+                'unchecked_value' => 'false',
                 'required' => true,
             ],
             'attributes' => [
@@ -106,10 +106,10 @@ class UserForm extends Form implements InputFilterProviderInterface
                 'required' => true,
                 'validators' => [
                     [
-                        'name' => Validator\NotEmpty::class,
+                        'name' => Validator\Identical::class,
                         'options' => [
                             'message' => 'userForm_isGdpr_required',
-                            'type' => 'string',
+                            'token'   => 'true',
                         ],
                     ],
                 ],
@@ -126,13 +126,22 @@ class UserForm extends Form implements InputFilterProviderInterface
     public function setProtectedData($data)
     {
         foreach ($data as $group => $values) {
+            if (!$this->has($group)) {
+                continue;
+            }
             $fieldSet = $this->get($group);
             if (is_array($values)) {
                 foreach ($values as $key => $value) {
+                    if (!$fieldSet->has($key)) {
+                        continue;
+                    }
                     $element = $fieldSet->get($key);
                     $element->setAttribute('readonly', true);
                 }
             } else if (is_scalar($values)) {
+                if (!$fieldSet->has($group)) {
+                    continue;
+                }
                 $element = $this->get($group);
                 $element->setAttribute('readonly', true);
             }

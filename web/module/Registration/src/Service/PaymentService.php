@@ -5,7 +5,7 @@ namespace Registration\Service;
 use Laminas\Http\Client;
 use Registration\Log\LoggerAwareTrait;
 
-class PaymentService
+class PaymentService implements PaymentServiceInterface
 {
     use LoggerAwareTrait;
 

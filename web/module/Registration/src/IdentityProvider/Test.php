@@ -17,13 +17,10 @@ class Test implements IdentityProviderInterface
                 'lastName' => 'Testovič',
                 'email' => 'tester@mzk.cz',
                 'phone' => '+420 800 123 456',
-                'birth' => [
-                    'day' => 26,
-                    'month' => 04,
-                    'year' => 1986
-                ],
+                'birth' => '26-04-1986',
                 'identificationType' => 'IC',
                 'identification' => '123456789',
+                'eduPersonPrincipalName' => 'tester@mzk.cz'
             ],
             'permanentAddress' => [
                 'street' => 'Kounicova 65a',
@@ -31,7 +28,7 @@ class Test implements IdentityProviderInterface
                 'postcode' => '602 00',
                 'country' => 'CZ',
             ],
-            'valid' => true,
+            'verified' => true,
         ];
     }
 
