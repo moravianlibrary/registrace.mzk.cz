@@ -43,7 +43,10 @@ class RegistrationController extends AbstractController
 
     public function indexAction()
     {
-        $view = new ViewModel();
+        $demo = $this->config['demo']['enabled'] ?? false;
+        $view = new ViewModel([
+            'demo' => $demo
+        ]);
         $view->setTemplate('registration/index');
         return $view;
     }

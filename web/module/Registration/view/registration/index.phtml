@@ -10,8 +10,10 @@
         <li>
             <a href="/registration/userForm">Vyplnit formulář s převzetím údajů z BrnoID</a>
         </li>
-        <li>
-            <a href="/registration/userForm?idp=test">Test</a>
-        </li>
+        <? if ($this->demo): ?>
+            <li>
+                <a href="/registration/userForm?idp=test">Test</a>
+            </li>
+        <? endif; ?>
     </ul>
 </div>
