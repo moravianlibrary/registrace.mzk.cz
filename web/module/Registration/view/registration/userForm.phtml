@@ -140,146 +140,151 @@ $(document).ready(function() {
 });
 </script>
 
-<?
-$form->prepare();
-?>
-<?= $this->form()->openTag($form); ?>
-<div class="card">
-    <h2 class="card-header">
-        <?= $this->translate('text_personal_information') ?>
-    </h2>
-    <div class="card-body">
-        <div class="row">
-            <div class="col-md-2">
-                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('degree')])?>
-            </div>
-            <div class="col-md-5">
-                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('firstName')])?>
-            </div>
-            <div class="col-md-5">
-                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('lastName')])?>
+<section>
+    <div class="container-fluid">
+        <?
+        $form->prepare();
+        ?>
+        <?= $this->form()->openTag($form); ?>
+        <div class="card">
+            <h2 class="card-header">
+                <?= $this->translate('text_personal_information') ?>
+            </h2>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-2">
+                        <?=$this->render('element.phtml', ['element' => $form->get('user')->get('degree')])?>
+                    </div>
+                    <div class="col-md-5">
+                        <?=$this->render('element.phtml', ['element' => $form->get('user')->get('firstName')])?>
+                    </div>
+                    <div class="col-md-5">
+                        <?=$this->render('element.phtml', ['element' => $form->get('user')->get('lastName')])?>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <?=$this->render('element.phtml', ['element' => $form->get('user')->get('phone')])?>
+                    </div>
+                    <div class="col-md-6">
+                        <?=$this->render('element.phtml', ['element' => $form->get('user')->get('email')])?>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <?=$this->render('element.phtml', ['element' => $form->get('user')->get('birth')])?>
+                    </div>
+                    <div class="col-md-12" style="display: none">
+                        <?=$this->render('element.phtml', ['element' => $form->get('user')->get('idsJmk')])?>
+                    </div>
+                    <div class="col-md-12">
+                        <?=$this->render('element.phtml', ['element' => $form->get('user')->get('discount')])?>
+                    </div>
+                    <div class="col-md-12">
+                        <div id="online_discount" class="alert alert-success">
+                            <?=$this->translate('online_discount')?>
+                        </div>
+                        <div id="not_online_discount" class="alert alert-warning">
+                            <?=$this->translate('not_online_discount')?>
+                        </div>
+                        <div id="not_online_for_free" class="alert alert-warning">
+                            <?=$this->translate('not_online_for_free')?>
+                        </div>
+                        <div id="age_not_valid" class="alert alert-danger">
+                            <?=$this->translate('userForm_ageNotValid')?>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12" id="groupUniversity">
+                        <?=$this->render('element.phtml', ['element' => $form->get('user')->get('university')])?>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('phone')])?>
-            </div>
-            <div class="col-md-6">
-                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('email')])?>
+
+        <div class="card">
+            <h2 class="card-header"><?=$this->translate('text_address')?></h2>
+            <div class="card-body">
+                <h4><?=$this->translate('text_permanent_address')?></h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <?=$this->render('element.phtml', ['element' => $form->get('permanentAddress')->get('street')])?>
+                    </div>
+                    <div class="col-md-4">
+                        <?=$this->render('element.phtml', ['element' => $form->get('permanentAddress')->get('city')])?>
+                    </div>
+                    <div class="col-md-2">
+                        <?=$this->render('element.phtml', ['element' => $form->get('permanentAddress')->get('postcode')])?>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <?=$this->render('element.phtml', ['element' => $form->get('permanentAddress')->get('country')])?>
+                    </div>
+                </div>
+
+                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('isContactAddress')])?>
+
+                <div id="collapseisContactAddress" class="panel-collapse collapse in">
+                    <h4><?=$this->translate('text_contact_address')?></h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <?=$this->render('element.phtml', ['element' => $form->get('contactAddress')->get('street')])?>
+                        </div>
+                        <div class="col-md-4">
+                            <?=$this->render('element.phtml', ['element' => $form->get('contactAddress')->get('city')])?>
+                        </div>
+                        <div class="col-md-2">
+                            <?=$this->render('element.phtml', ['element' => $form->get('contactAddress')->get('postcode')])?>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12">
-                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('birth')])?>
-            </div>
-            <div class="col-md-12" style="display: none">
-                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('idsJmk')])?>
-            </div>
-            <div class="col-md-12">
-                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('discount')])?>
-            </div>
-            <div class="col-md-12">
-                <div id="online_discount" class="alert alert-success">
-                    <?=$this->translate('online_discount')?>
-                </div>
-                <div id="not_online_discount" class="alert alert-warning">
-                    <?=$this->translate('not_online_discount')?>
-                </div>
-                <div id="not_online_for_free" class="alert alert-warning">
-                    <?=$this->translate('not_online_for_free')?>
-                </div>
-                <div id="age_not_valid" class="alert alert-danger">
-                    <?=$this->translate('userForm_ageNotValid')?>
+
+        <div class="card">
+            <h2 class="card-header"><?=$this->translate('Doklad totožnosti')?></h2>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <?=$this->render('element.phtml', ['element' => $form->get('user')->get('identificationType')])?>
+                    </div>
+                    <div class="col-md-6">
+                        <?=$this->render('element.phtml', ['element' => $form->get('user')->get('identification')])?>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12" id="groupUniversity">
-                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('university')])?>
+
+        <div class="card">
+            <h2 class="card-header"><?= $this->translate('text_password') ?></h2>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <?=$this->render('element.phtml', ['element' => $form->get('password')->get('password')])?>
+                    </div>
+                    <div class="col-md-6">
+                        <?=$this->render('element.phtml', ['element' => $form->get('password')->get('passwordConfirm')])?>
+                    </div>
+                </div>
             </div>
         </div>
+
+        <div class="card-body">
+            <?=$this->render('element.phtml', ['element' => $form->get('isSendNews')])?>
+            <?=$this->render('element.phtml', ['element' => $form->get('isGdpr')])?>
+        </div>
+
+        <?=$this->formElement($form->get('user')->get('eduPersonPrincipalName'))?>
+
+        <div class="alert alert-primary text-center">
+            Cena registrace je <strong><span id="price">XXX</span>,- Kč</strong>
+        </div>
+        <div class="text-center">
+            <input type="submit" name="submit" class="btn btn-primary" value="<?=$this->translate('btn_submit_registration') ?> &raquo;">
+        </div>
+        <?=$this->form()->closeTag();?>
     </div>
-</div>
+</section>
 
-<div class="card">
-    <h2 class="card-header"><?=$this->translate('text_address')?></h2>
-    <div class="card-body">
-        <h4><?=$this->translate('text_permanent_address')?></h4>
-        <div class="row">
-            <div class="col-md-6">
-                <?=$this->render('element.phtml', ['element' => $form->get('permanentAddress')->get('street')])?>
-            </div>
-            <div class="col-md-4">
-                <?=$this->render('element.phtml', ['element' => $form->get('permanentAddress')->get('city')])?>
-            </div>
-            <div class="col-md-2">
-                <?=$this->render('element.phtml', ['element' => $form->get('permanentAddress')->get('postcode')])?>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <?=$this->render('element.phtml', ['element' => $form->get('permanentAddress')->get('country')])?>
-            </div>
-        </div>
-
-        <?=$this->render('element.phtml', ['element' => $form->get('user')->get('isContactAddress')])?>
-
-        <div id="collapseisContactAddress" class="panel-collapse collapse in">
-            <h4><?=$this->translate('text_contact_address')?></h4>
-            <div class="row">
-                <div class="col-md-6">
-                    <?=$this->render('element.phtml', ['element' => $form->get('contactAddress')->get('street')])?>
-                </div>
-                <div class="col-md-4">
-                    <?=$this->render('element.phtml', ['element' => $form->get('contactAddress')->get('city')])?>
-                </div>
-                <div class="col-md-2">
-                    <?=$this->render('element.phtml', ['element' => $form->get('contactAddress')->get('postcode')])?>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="card">
-    <h2 class="card-header"><?=$this->translate('Doklad totožnosti')?></h2>
-    <div class="card-body">
-        <div class="row">
-            <div class="col-md-6">
-                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('identificationType')])?>
-            </div>
-            <div class="col-md-6">
-                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('identification')])?>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="card">
-    <h2 class="card-header"><?= $this->translate('text_password') ?></h2>
-    <div class="card-body">
-        <div class="row">
-            <div class="col-md-6">
-                <?=$this->render('element.phtml', ['element' => $form->get('password')->get('password')])?>
-            </div>
-            <div class="col-md-6">
-                <?=$this->render('element.phtml', ['element' => $form->get('password')->get('passwordConfirm')])?>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="card-body">
-    <?=$this->render('element.phtml', ['element' => $form->get('isSendNews')])?>
-    <?=$this->render('element.phtml', ['element' => $form->get('isGdpr')])?>
-</div>
-
-<?=$this->formElement($form->get('user')->get('eduPersonPrincipalName'))?>
-
-<div class="alert alert-primary text-center">
-    Cena registrace je <strong><span id="price">XXX</span>,- Kč</strong>
-</div>
-<div class="text-center">
-    <input type="submit" name="submit" class="btn btn-primary" value="<?=$this->translate('btn_submit_registration') ?> &raquo;">
-</div>
-<?=$this->form()->closeTag();?>

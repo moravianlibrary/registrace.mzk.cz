@@ -1,7 +1,16 @@
-<div>
-    <?= $this->flashMessenger()->render(); ?>
-    <ul>
-        <li>
+<div class="page-index">
+
+    <section>
+        <div class="container-fluid">
+            <?=$this->flashMessenger()->render(); ?>
+        </div>
+    </section>
+
+    <!-- test -->
+    <?php if ($this->demo): ?>
+        <div class="container-fluid">
+            <ul>
+                <li>
             <a href="/registration/userForm">Vyplnit formulář</a>
         </li>
         <li>
@@ -15,5 +24,12 @@
                 <a href="/registration/userForm?idp=test">Test</a>
             </li>
         <? endif; ?>
-    </ul>
+                    <a href="/registration/userForm?idp=test">Test</a>
+                </li>
+            </ul>
+        </div>
+    <?php endif; ?>
+    <!-- /test -->
+
+
 </div>

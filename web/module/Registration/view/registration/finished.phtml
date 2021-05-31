@@ -4,74 +4,77 @@
     $price = $discount['price'];
     $paymentLink = ($online && $price > 0);
 ?>
-<div>
-    <? if (!$this->verified): ?>
-        <p>
-            <?= $this->translate('preregistration_finished') ?>
-        </p>
-    <? else: ?>
-        <p>
-            <?= $this->translate('registration_finished') ?>
-        </p>
-    <? endif; ?>
-    <p>
-        <?= $this->translate('registration_login_text') ?> <?= $this->escapeHtml($this->login); ?>
-    </p>
-    <? if ($paymentLink): ?>
-        <p>
-            <?= $this->translate('payment_amount_text') ?>
-            <?= $this->escapeHtml($price) ?>
-            <?= $this->translate('payment_amount_currency') ?>
-        </p>
-        <p>
-            <a href="/payment/init"><?=$this->translate('registration_online_payment_text')?> </a>
-        </p>
-    <? endif; ?>
-</div>
-
-<hr>
-
-<div class="text-center">
-    <p>
-        <img src="<?=$this->basePath('img/gratulation.png')?>" alt="">
-    </p>
-    <p class="h2">
-        Gratulujeme!
-    </p>
-    <p>
-        Právě jste si založili čtenářský účet v Moravské zemské knihovně.
-    </p>
-    <p>
-        Dočasný login pro vaše přihlášení do účtu je <strong><?= $this->escapeHtml($this->login); ?></strong>, po vydání průkazky se login změní.
-    </p>
-    <div class="bg-info-light">
-        <p>Na základě vámi vyplněných údajů činí roční registrační poplatek:</p>
-        <p class="price">
-        <strong><?= $this->escapeHtml($price) ?>&nbsp;<?= $this->translate('payment_amount_currency') ?></strong>
-    </p>
-
-    <? if (!$this->finished) : ?>
-        <div class="row my-4">
-            <div class="col-md-6">
-                <a class="btn btn-success" href="/Payment/init" title="Platba kartou">
-                    <i class="fa fa-credit-card mr-1" aria-hidden="true"></i>
-                    Zaplatit kartou online
-                </a>
-            </div>
-            <div class="col-md-6">
-                <a class="btn btn-dark" href="/Payment/finishedCash" title="Platba v hotovosti">
-                    <i class="fa fa-money mr-1" aria-hidden="true"></i>
-                    Zaplatím v hotovosti v knihovně
-                </a>
-            </div>
+<section>
+    <div class="container-fluid">
+        <div>
+            <? if (!$this->verified): ?>
+                <p>
+                    <?= $this->translate('preregistration_finished') ?>
+                </p>
+            <? else: ?>
+                <p>
+                    <?= $this->translate('registration_finished') ?>
+                </p>
+            <? endif; ?>
+            <p>
+                <?= $this->translate('registration_login_text') ?> <?= $this->escapeHtml($this->login); ?>
+            </p>
+            <? if ($paymentLink): ?>
+                <p>
+                    <?= $this->translate('payment_amount_text') ?>
+                    <?= $this->escapeHtml($price) ?>
+                    <?= $this->translate('payment_amount_currency') ?>
+                </p>
+                <p>
+                    <a href="/payment/init"><?=$this->translate('registration_online_payment_text')?> </a>
+                </p>
+            <? endif; ?>
         </div>
-    <? endif; ?>
 
-    <p>
-        Něco je špatně, částka nesedí? Vraťte se <a href="#" title="Zpět na vyplnění formuláře"><strong>zpět k formuláři.</strong></a>
-    </p>
+        <hr>
 
-</div>
+        <div class="text-center">
+            <p>
+                <img src="<?=$this->basePath('img/gratulation.png')?>" alt="">
+            </p>
+            <p class="h2">
+                Gratulujeme!
+            </p>
+            <p>
+                Právě jste si založili čtenářský účet v Moravské zemské knihovně.
+            </p>
+            <p>
+                Dočasný login pro vaše přihlášení do účtu je <strong><?= $this->escapeHtml($this->login); ?></strong>, po vydání průkazky se login změní.
+            </p>
+            <div class="bg-info-light">
+                <p>Na základě vámi vyplněných údajů činí roční registrační poplatek:</p>
+                <p class="price">
+                    <strong><?= $this->escapeHtml($price) ?>&nbsp;<?= $this->translate('payment_amount_currency') ?></strong>
+                </p>
 
-<hr>
+                <? if (!$this->finished) : ?>
+                    <div class="row my-4">
+                        <div class="col-md-6">
+                            <a class="btn btn-success" href="/Payment/init" title="Platba kartou">
+                                <i class="fa fa-credit-card mr-1" aria-hidden="true"></i>
+                                Zaplatit kartou online
+                            </a>
+                        </div>
+                        <div class="col-md-6">
+                            <a class="btn btn-dark" href="/Payment/finishedCash" title="Platba v hotovosti">
+                                <i class="fa fa-money mr-1" aria-hidden="true"></i>
+                                Zaplatím v hotovosti v knihovně
+                            </a>
+                        </div>
+                    </div>
+                <? endif; ?>
 
+                <p>
+                    Něco je špatně, částka nesedí? Vraťte se <a href="#" title="Zpět na vyplnění formuláře"><strong>zpět k formuláři.</strong></a>
+                </p>
+
+            </div>
+
+            <hr>
+    </div>
+</section>
