@@ -12,7 +12,7 @@ class RegistrationServiceFactory
     {
         $configReader = $container->get(\Registration\Config\ConfigReader::class);
         $config = $configReader->getConfig('config/config.ini');
-        $demo = $config['demo']['mode'] ?? false;
+        $demo = $config['demo']['enabled'] ?? false;
         if ($demo) {
             return new RegistrationServiceDemo();
         }
