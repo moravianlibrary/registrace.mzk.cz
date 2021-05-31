@@ -62,7 +62,7 @@ class UserForm extends Form implements InputFilterProviderInterface
             ],
             'attributes' => [
                 'value' => 'true',
-                'data-help-icon' => 'help_isSendNews',
+                'data-help' => 'help_isSendNews',
             ],
         ]);
         $this->add([
