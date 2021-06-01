@@ -67,9 +67,9 @@ class RegistrationController extends AbstractController
                 // convert birth date as expected by laminas forms
                 $birth = explode('-', $identity['user']['birth']);
                 $identity['user']['birth'] = [
-                    'day' => $birth[0],
+                    'year' => $birth[0],
                     'month' => $birth[1],
-                    'year' => $birth[2]
+                    'day' => $birth[2]
                 ];
                 $this->getLogger()->info("Data from IdP:\n" . print_r($identity, true));
                 if ($identity['verified']) {
