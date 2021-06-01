@@ -16,7 +16,8 @@ class RegistrationServiceFactory
         if ($demo) {
             return new RegistrationServiceDemo();
         }
-        return new RegistrationService($config);
+        $codeBook = $container->get(\Registration\Form\CodeBook::class);
+        return new RegistrationService($config, $codeBook);
     }
 
 }

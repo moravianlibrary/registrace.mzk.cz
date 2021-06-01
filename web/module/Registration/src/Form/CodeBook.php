@@ -47,6 +47,12 @@ class CodeBook
         ];
     }
 
+    public function getCountryByCode($code)
+    {
+        $countries = $this->parseSimple('countries.ini');
+        return $countries[$code] ?? null;
+    }
+
     protected function parse($file)
     {
         $values = $this->reader->getConfig($file);

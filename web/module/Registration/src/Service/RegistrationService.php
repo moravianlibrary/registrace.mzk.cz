@@ -3,6 +3,7 @@
 namespace Registration\Service;
 
 use Laminas\Http\Client;
+use Registration\Form\CodeBook;
 use Registration\Log\LoggerAwareTrait;
 use Registration\Model\User;
 
@@ -38,7 +39,10 @@ class RegistrationService implements RegistrationServiceInterface
     /** @var boolean */
     protected $test;
 
-    public function __construct($config)
+    /** @var CodeBook */
+    protected $codeBook;
+
+    public function __construct(array $config, CodeBook $codeBook)
     {
         $this->xServerUrl = $config['alephXServer']['url'];
         $this->xServerUser = $config['alephXServer']['user'] ?? null;
@@ -46,6 +50,7 @@ class RegistrationService implements RegistrationServiceInterface
         $this->library = $config['aleph']['library'] ?? 'MZK50';
         $this->demo = $config['aleph']['demo'] ?? false;
         $this->test = $config['aleph']['test'] ?? false;
+        $this->codeBook = $codeBook;
     }
 
     public function register(User $user)
@@ -92,8 +97,14 @@ class RegistrationService implements RegistrationServiceInterface
             $z304->{'z304-telephone'} = $user->getPhone();
             $z304->{'z304-address-1'} = $cn;
             $z304->{'z304-address-2'} = $address->getStreet();
-            $z304->{'z304-address-3'} = $address->getPostcode()
-                . ' ' . $address->getCity();
+            $city = $address->getPostcode() . ' ' . $address->getCity();
+            $countryCode = $address->getCountry();
+            // permanent address not in Czech Republic
+            if ($index == 0 && $countryCode != 'CZ') {
+                $countryDescription = $this->codeBook->getCountryByCode($countryCode);
+                $city .=  ', ' . $countryDescription;
+            }
+            $z304->{'z304-address-3'} = $city;
             $z304->{'z304-telephone-2'} = $user->getIdentificationType()
                 . ' ' . $user->getIdentification();
             $z304->{'z304-telephone-3'} = $user->isSendNewsLetter() ? '' : 'NE';
