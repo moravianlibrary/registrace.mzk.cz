@@ -5,28 +5,28 @@ namespace Registration\Model;
 class FullAddress extends Address
 {
 
-    protected $state;
+    protected $country;
 
     public function __construct($data)
     {
         parent::__construct($data);
-        $this->state = $data['state'];
+        $this->country = $data['country'];
     }
 
     /**
      * @return string
      */
-    public function getState(): ?string
+    public function getCountry(): ?string
     {
-        return $this->state;
+        return $this->country;
     }
 
     /**
      * @param string $state
      */
-    public function setState($state): void
+    public function setCountry($country): void
     {
-        $this->state = $state;
+        $this->country = $country;
     }
 
 }
