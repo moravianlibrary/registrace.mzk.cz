@@ -2,34 +2,151 @@
 
     <section>
         <div class="container-fluid">
-            <?=$this->flashMessenger()->render(); ?>
+            <?=$this->flashMessenger()->render();?>
+
+            <h2 class="supertitle">Co získám registrací do <img src="<?=$this->basePath('img/logo-mzk-sign.svg')?>" alt="MZK">?</h2>
+            <div class="row">
+                <div class="col-sm-12 col-md-6 pt-4">
+                    <ul class="list-unstyled tips">
+                        <li>
+                            <span class="rounded-pill">
+                                <i class="fa fa-2x fa-check-circle text-success"></i>
+                                4,5 milionu knihovních jednotek
+                            </span>
+                        </li>
+                        <li>
+                            <span class="rounded-pill">
+                                <i class="fa fa-2x fa-check-circle text-success"></i>
+                                Statisíce digitalizovaných knih, novin, časopisů, starých tisků, map…
+                            </span>
+                        </li>
+                        <li>
+                            <span class="rounded-pill">
+                                <i class="fa fa-2x fa-check-circle text-success"></i>
+                                Miliony dalších odborných studií a článků z&nbsp;licencovaných databází
+                            </span>
+                        </li>
+                        <li>
+                            <span class="rounded-pill">
+                                <i class="fa fa-2x fa-check-circle text-success"></i>
+                                Od roku 1935 kompletní českou knižní produkci
+                            </span>
+                        </li>
+                        <li>
+                            <span class="rounded-pill">
+                                <i class="fa fa-2x fa-check-circle text-success"></i>
+                                4,5 milionu knihovních jednotek
+                            </span>
+                        </li>
+                        <li>
+                            <span class="rounded-pill">
+                                <i class="fa fa-2x fa-check-circle text-success"></i>
+                                4,5 milionu knihovních jednotek
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-6 d-none d-md-block d-lg-block d-xl-block">
+                    <img src="<?=$this->basePath('img/home.png')?>" alt="">
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- test -->
-    <?php if ($this->demo): ?>
+    <section>
         <div class="container-fluid">
-            <ul>
-                <li>
-            <a href="/registration/userForm">Vyplnit formulář</a>
-        </li>
-        <li>
-            <a href="https://registrace.mzk.cz/Shibboleth.sso/DS?entityID=https://mojeid.regtest.nic.cz/saml/idp.xml&target=/registration/userForm%3Fidp%3Dmojeid">Vyplnit formulář s převzetím údajů z MojeID</a>
-        </li>
-        <li>
-            <a href="/registration/userForm">Vyplnit formulář s převzetím údajů z BrnoID</a>
-        </li>
-        <? if ($this->demo): ?>
-            <li>
-                <a href="/registration/userForm?idp=test">Test</a>
-            </li>
-        <? endif; ?>
-                    <a href="/registration/userForm?idp=test">Test</a>
+            <ul class="list-unstyled list-inline tips-small">
+                <li class="list-inline-item">
+                    <i class="fa fa-book" aria-hidden="true"></i>
+                    Mohu si pujčit knihu domú i&nbsp;do&nbsp;studovny
+                </li>
+                <li class="list-inline-item">
+                    <i class="fa fa-institution" aria-hidden="true"></i>
+                    Získám příjemné místo ke&nbsp;studiu (i&nbsp;setkávání) od&nbsp;rána do&nbsp;večera, šest dní v&nbsp;týdnu
+                </li>
+                <li class="list-inline-item">
+                    <i class="fa fa-laptop" aria-hidden="true"></i>
+                    Mohu&nbsp;si z&nbsp;křesla v&nbsp;obýváku prohlížet autorsky chráněné digitalizované dokumenty
+                </li>
+                <li class="list-inline-item">
+                    <i class="fa fa-users" aria-hidden="true"></i>
+                    Rady odborníků při&nbsp;hledání jakéhokoliv zdroje pro&nbsp;studium, psaní diplomky i&nbsp;jen tak pro&nbsp;zábavu
+                </li>
+                <li class="list-inline-item">
+                    <i class="fa fa-newspaper-o" aria-hidden="true"></i>
+                    Přístup k&nbsp;aktuálním vydáním novin a časopisů z&nbsp;celého světa, online i offline, ve studovně i z&nbsp;pohodlí domova
+                </li>
+                <li class="list-inline-item">
+                    <i class="fa fa-wifi" aria-hidden="true"></i>
+                    WIFI v&nbsp;budově zdarma
                 </li>
             </ul>
         </div>
-    <?php endif; ?>
-    <!-- /test -->
+    </section>
 
+    <section class="select-registration">
+        <div class="container-fluid">
+            <div class="row">
+
+                <!-- mojeID -->
+                <div class="col-md-6 col-lg-4 text-center">
+                    <div class="card border-0 rounded-pill card-mojeid">
+                        <div class="card-body">
+                            <p class="h6">Registrace přes</p>
+                            <h2 class="heading-logo"><img src="<?=$this->basePath('img/logo-mojeid.svg')?>" alt="Moje ID" title="Moje ID"></h2>
+                            <p><small>Mám validovaný účet Moje ID (tj.&nbsp;s&nbsp;ověřenou totožností), s&nbsp;nímž je registrace rychlejší a&nbsp;k&nbsp;dokončení není třeba navštívit knihovnu.</small></p>
+                            <p><small>Po zaplacení registračního poplatku kartou online můžete hned využívat vzdálený přístup do licencovaných databází či do digitálních zdrojů.</small></p>
+                            <p>
+                                <a class="btn btn-success text-uppercase" href="https://registrace.mzk.cz/Shibboleth.sso/DS?entityID=https://mojeid.regtest.nic.cz/saml/idp.xml&target=/registration/userForm%3Fidp%3Dmojeid" title="">Registrovat</a>
+                            </p>
+                            <p>
+                                <a class="btn btn-sm btn-link" href="#" title=""><small>Co je účet mojeID?</small></a>
+                                <br>
+                                <a class="btn btn-sm btn-link" href="#" title=""><small>Chci si založit účet mojeID</small></a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- /mojeID -->
+
+                <!-- BrnoiD -->
+                <div class="col-md-6 col-lg-4 text-center">
+                    <div class="card border-0 rounded-pill card-brnoid">
+                        <div class="card-body">
+                            <p class="h6">Registrace přes</p>
+                            <h2 class="heading-logo"><img src="<?=$this->basePath('img/logo-brnoid.svg')?>" alt="Brno iD" title="Brno iD"></h2>
+                            <p><small>Mám validovaný účet Brno ID full (tj.&nbsp;s&nbsp;ověřenou totožností), s&nbsp;nímž je registrace rychlejší a&nbsp;k&nbsp;dokončení není třeba navštívit knihovnu.</small></p>
+                            <p><small>Po zaplacení registračního poplatku kartou online můžete hned využívat vzdálený přístup do licencovaných databází či do digitálních zdrojů.</small></p>
+                            <p>
+                                <a class="btn btn-success text-uppercase" href="/registration/userForm" title="">Registrovat</a>
+                            </p>
+                            <p>
+                                <a class="btn btn-sm btn-link" href="#" title=""><small>Co je účet mojeID?</small></a>
+                                <br>
+                                <a class="btn btn-sm btn-link" href="#" title=""><small>Chci si založit účet mojeID</small></a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- /BrnoiD -->
+
+                <!-- MZK -->
+                <div class="col-md-6 col-lg-4 text-center">
+                    <div class="card border-0 rounded-pill card-mzk">
+                        <div class="card-body">
+                            <p class="h6">Předregistrace</p>
+                            <h2 class="heading-logo"><img src="<?=$this->basePath('img/logo-mzk.svg')?>" alt="Moravská zemská knihovna" title="Moravská zemská knihovna"></h2>
+                            <p><small>K dokončení registrace bude nutné navštívit knihovnu kvůli ověření totožnosti.</small></p>
+                            <p>
+                                <a class="btn btn-success text-uppercase" href="/registration/userForm" title="">Registrovat</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- /MZK -->
+
+            </div>
+        </div>
+    </section>
 
 </div>
