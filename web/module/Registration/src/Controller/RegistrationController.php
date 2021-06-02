@@ -43,9 +43,11 @@ class RegistrationController extends AbstractController
 
     public function indexAction()
     {
-        $demo = $this->config['demo']['enabled'] ?? false;
+        $mojeid = $this->config['mojeid']['url'];
+        $baseUrl = $this->config['application']['url'];
         $view = new ViewModel([
-            'demo' => $demo
+            'mojeid' => $mojeid,
+            'baseUrl' => $baseUrl,
         ]);
         $view->setTemplate('registration/index');
         $this->layout()->showRegistrationButton = true;

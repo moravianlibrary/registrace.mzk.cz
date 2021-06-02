@@ -7,11 +7,12 @@ namespace Registration\IdentityProvider;
 class IdentityProviderFactory
 {
 
+    /** @var bool */
     protected $test = false;
 
     public function __construct($config)
     {
-        $this->test = $config['test']['enabled'] ?? false;
+        $this->test = (bool) $config['mojeid']['test'] ?? false;
     }
 
     public function get(string $type)

@@ -92,7 +92,7 @@
                             <p><small>Mám validovaný účet Moje ID (tj.&nbsp;s&nbsp;ověřenou totožností), s&nbsp;nímž je registrace rychlejší a&nbsp;k&nbsp;dokončení není třeba navštívit knihovnu.</small></p>
                             <p><small>Po zaplacení registračního poplatku kartou online můžete hned využívat vzdálený přístup do licencovaných databází či do digitálních zdrojů.</small></p>
                             <p>
-                                <a class="btn btn-success text-uppercase" href="https://registrace.mzk.cz/Shibboleth.sso/DS?entityID=https://mojeid.regtest.nic.cz/saml/idp.xml&target=/registration/userForm%3Fidp%3Dmojeid" title="">Registrovat</a>
+                                <a class="btn btn-success text-uppercase" href="<?=$this->escapeHtmlAttr($this->baseUrl)?>/Shibboleth.sso/DS?entityID=<?=urlencode($this->mojeid)?>&target=<?=urlencode($this->baseUrl)?>/registration/userForm%3Fidp%3Dmojeid" title="">Registrovat</a>
                             </p>
                             <p>
                                 <a class="btn btn-sm btn-link" href="#" title=""><small>Co je účet mojeID?</small></a>
