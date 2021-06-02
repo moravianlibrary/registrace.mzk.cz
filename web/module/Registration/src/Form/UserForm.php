@@ -97,6 +97,8 @@ class UserForm extends Form implements InputFilterProviderInterface
                 ->setOptions(['required' => true]);
         }
         $this->get('user')->updateDiscount($this);
+        $country = $this->get('permanentAddress')->get('country')->getValue();
+        $this->get('user')->setCountry($country);
         return parent::isValid();
     }
 

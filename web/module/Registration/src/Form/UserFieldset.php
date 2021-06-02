@@ -26,6 +26,9 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
     /** @var DiscountService */
     protected $discountService;
 
+    /** @var string */
+    protected $country;
+
     public function __construct(CodeBook $codeBook, Translator $translator,
         DiscountService $discountService)
     {
@@ -241,7 +244,9 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
                         'options' => [
                             'message' => IdentityCardNumberValidator::IDENTITY_CARD_INVALID,
                             'callback' => function($value, $context=[]) {
-                                if ($context['identificationType'] != 'IC') {
+                                $type = $context['identificationType'];
+                                $country = $this->getCountry();
+                                if (!($type == 'IC' && $country == 'CZ')) {
                                     return true;
                                 }
                                 $validator = new IdentityCardNumberValidator();
@@ -296,6 +301,16 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
         }
         $this->get('discount')->setValueOptions($discounts);
 
+    }
+
+    public function setCountry($country)
+    {
+        $this->country = $country;
+    }
+
+    public function getCountry()
+    {
+        return $this->country;
     }
 
     protected function getDiscounts()
