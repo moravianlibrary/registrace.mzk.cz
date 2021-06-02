@@ -12,6 +12,7 @@ use Laminas\Form\Fieldset;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Validator;
+use Registration\Form\Validator\IdentityCardNumberValidator;
 use Registration\Service\DiscountService;
 
 class UserFieldset extends Fieldset implements InputFilterProviderInterface
@@ -234,6 +235,19 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
                             'message' => 'userForm_missing_identification',
                             'type' => 'string',
                         ],
+                    ],
+                    [
+                        'name' => Validator\Callback::class,
+                        'options' => [
+                            'message' => IdentityCardNumberValidator::IDENTITY_CARD_INVALID,
+                            'callback' => function($value, $context=[]) {
+                                if ($context['identificationType'] != 'IC') {
+                                    return true;
+                                }
+                                $validator = new IdentityCardNumberValidator();
+                                return $validator->isValid($value);
+                            },
+                        ]
                     ],
                 ],
             ],
