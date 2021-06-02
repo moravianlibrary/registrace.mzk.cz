@@ -28,24 +28,24 @@ h4 {
 }
 
 
-.header {
+header {
     padding: 30px 0;
     background: #00bed8;
     color: #ffffff;
 }
 
-.header .logo {
+header .logo {
     display: inline-block;
     border-right: 1px solid #ffffff;
     padding-right: 28px;
 }
 
-.header .logo img {
+header .logo img {
     width: 156px;
     display: block;
 }
 
-.header .h1 {
+header .h1 {
     font-size: 20px;
     color: #ffffff;
     text-transform: uppercase;
