@@ -7,9 +7,35 @@ use Laminas\Http\PhpEnvironment\Request as Request;
 class MojeId implements IdentityProviderInterface
 {
 
+    const REQUIRED_ATTRIBUTES = [
+        'firstName',
+        'lastName',
+        'birth',
+        'mojeIdIdentityCardNumber',
+        'mojeIdStreet',
+        'mojeIdCity',
+        'mojeIdPostcode'
+    ];
+
+    /** @var array */
+    protected $idPs = [
+        'https://mojeid.cz/saml/idp.xml'
+    ];
+
+    public function __construct(bool $test)
+    {
+        if ($test) {
+            $this->idPs[] = 'https://mojeid.regtest.nic.cz/saml/idp.xml';
+        }
+    }
+
     public function identify(Request $request)
     {
-        return [
+        $entityId = $this->get($request, 'Shib-Identity-Provider');
+        if (!in_array($entityId, $this->idPs)) {
+            return null;
+        }
+        $result = [
             'user' => [
                 'firstName' => $this->get($request, 'firstName'),
                 'lastName' => $this->get($request, 'lastName'),
@@ -24,13 +50,25 @@ class MojeId implements IdentityProviderInterface
                 'city' => $this->get($request, 'mojeIdCity'),
                 'postcode' => $this->get($request, 'mojeIdPostcode'),
             ],
-            'verified' => true,
         ];
+        $verified = strtolower($this->get($request, 'mojeIdValid')) == 'true';
+        $result['verified'] = $verified && $this->hasAllRequiredAttributes($request);
+        return $result;
     }
 
-    public function get(Request $request, $variable)
+    public function get(Request $request, string $variable)
     {
         return $request->getServer($variable);
+    }
+
+    public function hasAllRequiredAttributes(Request $request)
+    {
+        foreach (self::REQUIRED_ATTRIBUTES as $attr) {
+            if (empty($this->get($request, $attr))) {
+                return false;
+            }
+        }
+        return true;
     }
 
 }
