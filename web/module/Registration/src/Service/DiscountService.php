@@ -52,7 +52,10 @@ class DiscountService
         }
         // try to find discount by age
         $preferred = $this->findDiscountByAge($user);
-        $verified = ((bool) $user->get('verified')->getValue()) ?? false;
+        $verified = false;
+        if ($user != null) {
+            $verified = ($user->get('verified')->getValue() == '1');
+        }
         // only add cheaper discounts
         $discounts = [];
         $idsJmk = $user->get('user')->get('idsJmk')->getValue();

@@ -5,6 +5,7 @@
 ?>
 <script>
 config = <?= json_encode($this->config, JSON_PRETTY_PRINT); ?>;
+translations = <?= json_encode($this->translations, JSON_PRETTY_PRINT); ?>;
 
 $(document).ready(function() {
   // University/High school selection
@@ -59,6 +60,52 @@ $(document).ready(function() {
     }
   });
   $('select[name="permanentAddress[country]"]').change();
+
+  $('input[name="password[password]"]').focusout(function() {
+    password = $(this).val();
+    jQuery.ajax({
+      url: "/ajax/validatePassword",
+      type: "POST",
+      data: {'password' : password },
+      dataType: "json",
+      contentType: "application/x-www-form-urlencoded; charset=utf-8",
+      success: function (data, textStatus) {
+        // reset previous errors
+        $('#userForm :input[name="password[password]"]').removeClass('is-invalid');
+        $('#userForm :input[name="password[password]"]').parent().find('ul').remove();
+        if (data['status'] == 'ok') {
+          return;
+        }
+        input = $('#userForm :input[name="password[password]"]');
+        input.addClass('is-invalid');
+        ul = $('<ul/>');
+        ul.attr({'class': 'form-text error'});
+        $.each(data['messages'], function(index, error) {
+          li = $('<li/>');
+          li.text(error);
+          ul.append(li);
+        });
+        input.parent().append(ul);
+      }
+    });
+  });
+
+  $('input[name="password[passwordConfirm]"]').focusout(function() {
+    password = $('input[name="password[password]"]').val();
+    passwordConfirm = $(this).val();
+    $(this).removeClass('is-invalid');
+    $(this).parent().find('ul').remove();
+    if (password == passwordConfirm) {
+      return;
+    }
+    $(this).addClass('is-invalid');
+    ul = $('<ul/>');
+    ul.attr({'class': 'form-text error'});
+    li = $('<li/>');
+    li.text(translations['userForm_passwordConfirmNoMatch']);
+    ul.append(li);
+    $(this).parent().append(ul);
+  });
 
   $(':input[name="user[birth][day]"], :input[name="user[birth][month]"], :input[name="user[birth][year]"], ' +
     ':input[name="user[idsJmk]"]').change(function() {

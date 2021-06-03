@@ -7,6 +7,7 @@ namespace Registration\Controller;
 use Laminas\Form\FormInterface;
 use Laminas\InputFilter\InputFilter;
 use Laminas\Mvc\Controller\AbstractActionController;
+use Laminas\Mvc\I18n\Translator;
 use Laminas\View\Model\ViewModel;
 use Laminas\Session\SessionManager;
 use Registration\Form\UserForm;
@@ -31,14 +32,18 @@ class RegistrationController extends AbstractController
     /** @var RegistrationServiceInterface */
     private $registrationService;
 
+    /** @var Translator */
+    private $translator;
+
     public function __construct(UserForm $form, $config, IdentityProviderFactory $identityProviderFactory,
-                                RegistrationServiceInterface $registrationService)
+                                RegistrationServiceInterface $registrationService, Translator $translator)
     {
         parent::__construct();
         $this->form = $form;
         $this->config = $config;
         $this->identityProviderFactory = $identityProviderFactory;
         $this->registrationService = $registrationService;
+        $this->translator = $translator;
     }
 
     public function indexAction()
@@ -88,18 +93,30 @@ class RegistrationController extends AbstractController
         $this->form->setData($data);
         if ($request->isPost() && $this->form->isValid()) {
             $id = $this->registrationService->register(new User($data));
+            $discount = $this->form->get('user')->getDiscount();
+            $expiry = strtotime("+1 year, + 10 days");
+            $finished = false;
+            if ($verified && $discount['online'] && $discount['price'] == 0) {
+                $this->registrationService->updateExpiration($id, $expiry);
+                $finished = true;
+            }
             $this->session->registration = [
                 'id'       => $id,
                 'verified' => $verified,
-                'discount' => $this->form->get('user')->getDiscount(),
-                'expiry'   => strtotime("+1 year, + 10 days"),
-                'finished' => false,
+                'discount' => $discount,
+                'expiry'   => $expiry,
+                'finished' => $finished,
                 'payment'  => false,
             ];
             return $this->redirect()->toRoute('registration-finished');
         }
         $view = new ViewModel([
-            'config' => $this->config,
+            'config' => [
+                'countries' => $this->config['countries']
+            ],
+            'translations' => [
+                'userForm_passwordConfirmNoMatch' => $this->translator->translate('userForm_passwordConfirmNoMatch'),
+            ],
             'form' => $this->form
         ]);
         $view->setTemplate('registration/userForm');

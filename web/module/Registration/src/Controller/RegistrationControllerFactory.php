@@ -1,6 +1,7 @@
 <?php
 namespace Registration\Controller;
 
+use Laminas\Mvc\I18n\Translator;
 use Laminas\ServiceManager\PluginManagerInterface;
 use Psr\Container\ContainerInterface;
 use Registration\Form\UserForm;
@@ -18,7 +19,8 @@ class RegistrationControllerFactory
         $config = $configReader->getConfig('config/config.ini');
         $identityProvider = new IdentityProviderFactory($config);
         $registrationService = $container->get(\Registration\Service\RegistrationServiceInterface::class);
-        return new RegistrationController($form, $config, $identityProvider, $registrationService);
+        $translator = $container->get(Translator::class);
+        return new RegistrationController($form, $config, $identityProvider, $registrationService, $translator);
     }
 
 }
