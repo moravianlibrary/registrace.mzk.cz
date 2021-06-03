@@ -4,6 +4,9 @@
     $price = $discount['price'];
     $paymentLink = ($online && $price > 0);
 ?>
+
+<?=$this->render('steps.phtml', ['step' => 2]) ?>
+
 <section>
     <div class="container-fluid">
         <div>
