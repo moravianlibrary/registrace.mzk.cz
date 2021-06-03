@@ -1,8 +1,15 @@
-[demo]
-enabled = false
+[application]
+url = http://localhost:8080
 
-[payment]
-url = https://aleph.mzk.cz/cgi-bin/c-gpe1-registrace-test.pl
+[demo]
+enabled = true
+
+[mojeid]
+url = https://mojeid.regtest.nic.cz/saml/idp.xml
+test = true
+
+[brnoid]
+enabled = true
 
 [countries]
 EU[] = AT
@@ -33,6 +40,18 @@ EU[] = ES
 EU[] = SE
 
 [aleph]
+library = MZK50
+demo = true
+test = true
+
+[payment]
+create_url = http://aleph.mzk.cz/cgi-bin/poplatek_vlozit.pl
+redirect_url = https://aleph.mzk.cz/cgi-bin/c-gpe1-registrace-test.pl
+
+[alephXServer]
 url = https://aleph.mzk.cz/X
-user = WWW-X
-password = WWW-X
+user =
+password =
+
+[alephRestServer]
+url = https://aleph.mzk.cz:8443

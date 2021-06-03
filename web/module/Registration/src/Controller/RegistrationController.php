@@ -45,9 +45,11 @@ class RegistrationController extends AbstractController
     {
         $mojeid = $this->config['mojeid']['url'];
         $baseUrl = $this->config['application']['url'];
+        $brnoIdEnabled = (bool) ($this->config['brnoid']['enabled'] ?? true);
         $view = new ViewModel([
             'mojeid' => $mojeid,
             'baseUrl' => $baseUrl,
+            'brnoIdEnabled' => $brnoIdEnabled,
         ]);
         $view->setTemplate('registration/index');
         $this->layout()->showRegistrationButton = true;
