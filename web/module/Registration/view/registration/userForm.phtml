@@ -29,8 +29,11 @@ $(document).ready(function() {
     $('#not_online_discount').hide();
     $('#not_online_for_free').hide();
     $('#age_not_valid').hide();
+    $('#online_free').hide();
     if (selected.length == 0) {
       $('#age_not_valid').show();
+    } else if (online && price == 0) {
+      $('#online_free').show();
     } else if (online) {
       $('#online_discount').show();
     } else if (price == 0) {
@@ -206,16 +209,19 @@ $(document).ready(function() {
                         <?=$this->render('element.phtml', ['element' => $form->get('user')->get('discount')])?>
                     </div>
                     <div class="col-md-12">
-                        <div id="online_discount" class="alert alert-success">
-                            <?=$this->translate('online_discount')?>
-                        </div>
                         <div id="not_online_discount" class="alert alert-warning">
                             <?=$this->translate('not_online_discount')?>
                         </div>
-                        <div id="not_online_for_free" class="alert alert-warning">
+                        <div id="online_discount" class="alert alert-success" style="display: none;">
+                            <?=$this->translate('online_discount')?>
+                        </div>
+                        <div id="online_free" class="alert alert-success" style="display: none;">
+                            <?=$this->translate('online_for_free')?>
+                        </div>
+                        <div id="not_online_for_free" class="alert alert-warning" style="display: none;">
                             <?=$this->translate('not_online_for_free')?>
                         </div>
-                        <div id="age_not_valid" class="alert alert-danger">
+                        <div id="age_not_valid" class="alert alert-danger" style="display: none;">
                             <?=$this->translate('userForm_ageNotValid')?>
                         </div>
                     </div>
@@ -301,7 +307,7 @@ $(document).ready(function() {
             <?=$this->render('element.phtml', ['element' => $form->get('isGdpr')])?>
         </div>
 
-        <?=$this->formElement($form->get('user')->get('eduPersonPrincipalName'))?>
+        <?=$this->formElement($form->get('verified'))?>
 
         <div class="alert alert-primary text-center">
             Cena registrace je <strong><span id="price">XXX</span>,- Kč</strong>

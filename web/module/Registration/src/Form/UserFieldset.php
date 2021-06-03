@@ -172,10 +172,6 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
                 'value_options' => $this->codeBook->getUniversities(),
             ],
         ]);
-        $this->add([
-            'name' => 'eduPersonPrincipalName',
-            'type' => Hidden::class,
-        ]);
     }
 
     public function getInputFilterSpecification() : array

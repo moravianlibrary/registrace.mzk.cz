@@ -5,6 +5,7 @@ namespace Registration\Form;
 use DateTime;
 use Laminas\Filter\StringTrim;
 use Laminas\Filter\StripTags;
+use Laminas\Form\Element;
 use Laminas\Form\Element\Checkbox;
 use Laminas\Form\Element\DateSelect;
 use Laminas\Form\Element\Select;
@@ -79,6 +80,10 @@ class UserForm extends Form implements InputFilterProviderInterface
             ],
         ]);
         $this->add([
+            'name' => 'verified',
+            'type' => Hidden::class,
+        ]);
+        $this->add([
             'name' => 'submit',
             'type' => 'Submit',
             'attributes' => [
@@ -142,7 +147,7 @@ class UserForm extends Form implements InputFilterProviderInterface
                     $element->setAttribute('readonly', true);
                 }
             } else if (is_scalar($values)) {
-                if (!$fieldSet->has($group)) {
+                if (!($fieldSet instanceof Fieldset && $fieldSet->has($group))) {
                     continue;
                 }
                 $element = $this->get($group);
