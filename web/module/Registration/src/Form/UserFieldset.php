@@ -168,6 +168,7 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
             'name'    => 'university',
             'type'    => Select::class,
             'options' => [
+                'empty_option' => 'Select university',
                 'label' => 'label_university',
                 'value_options' => $this->codeBook->getUniversities(),
             ],
