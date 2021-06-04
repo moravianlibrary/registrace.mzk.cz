@@ -159,7 +159,7 @@ $(document).ready(function() {
         // if validation is OK, submit the form
         if (data['status'] == 'ok') {
           $("#userForm").unbind('submit');
-          $("#userForm :submit").click()
+          $("#userForm :submit").click();
           return;
         }
         // fill new errors
@@ -182,7 +182,10 @@ $(document).ready(function() {
         $('#userForm :input.is-invalid').first().focus();
       },
       error : function(data, textStatus) {
+        // submit the form manually and use server side validation
         $('#userForm :submit').removeAttr('disabled');
+        $("#userForm").unbind('submit');
+        $("#userForm :submit").click();
       }
     });
   });

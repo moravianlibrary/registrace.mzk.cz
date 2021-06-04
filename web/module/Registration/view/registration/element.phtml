@@ -15,6 +15,9 @@
         if ($readonly) {
             $elementClass .= ' readonly';
         }
+        if (!empty($element->getMessages())) {
+            $elementClass .= ' is-invalid';
+        }
         $dayElement = $element->getDayElement()
             ->setAttribute('class', $elementClass);
 
@@ -48,9 +51,13 @@
 
     <? elseif ($element instanceof \Laminas\Form\Element\Checkbox): ?>
         <?php
+        $elementClass = 'form-check-input';
+        if (!empty($element->getMessages())) {
+            $elementClass .= ' is-invalid';
+        }
         $element
             ->setLabelAttributes(['class' => 'form-check-label'])
-            ->setAttribute('class', 'form-check-input')
+            ->setAttribute('class', $elementClass)
             ->setAttribute('id', $element->getName());
         ?>
         <div class="form-group form-check">
@@ -75,6 +82,9 @@
         $class = 'form-control';
         if ($element->getAttribute('readonly')) {
             $class .= ' readonly';
+        }
+        if (!empty($element->getMessages())) {
+            $class .= ' is-invalid';
         }
         $element->setAttribute('class', $class);
         $element->setAttribute('id', $element->getName());
