@@ -9,33 +9,6 @@
 
 <section>
     <div class="container-fluid">
-        <div>
-            <? if (!$this->verified): ?>
-                <p>
-                    <?= $this->translate('preregistration_finished') ?>
-                </p>
-            <? else: ?>
-                <p>
-                    <?= $this->translate('registration_finished') ?>
-                </p>
-            <? endif; ?>
-            <p>
-                <?= $this->translate('registration_login_text') ?> <?= $this->escapeHtml($this->login); ?>
-            </p>
-            <? if ($paymentLink): ?>
-                <p>
-                    <?= $this->translate('payment_amount_text') ?>
-                    <?= $this->escapeHtml($price) ?>
-                    <?= $this->translate('payment_amount_currency') ?>
-                </p>
-                <p>
-                    <a href="/payment/init"><?=$this->translate('registration_online_payment_text')?> </a>
-                </p>
-            <? endif; ?>
-        </div>
-
-        <hr>
-
         <div class="text-center">
             <p>
                 <img src="<?=$this->basePath('img/gratulation.png')?>" alt="">
@@ -44,7 +17,11 @@
                 Gratulujeme!
             </p>
             <p>
-                Právě jste si založili čtenářský účet v Moravské zemské knihovně.
+                <? if (!$this->verified): ?>
+                    <?= $this->translate('preregistration_finished') ?>
+                <? else: ?>
+                    <?= $this->translate('registration_finished') ?>
+                <? endif; ?>
             </p>
             <p>
                 Dočasný login pro vaše přihlášení do účtu je <strong><?= $this->escapeHtml($this->login); ?></strong>, po vydání průkazky se login změní.
@@ -57,12 +34,14 @@
 
                 <? if (!$this->finished) : ?>
                     <div class="row my-4">
-                        <div class="col-md-6">
-                            <a class="btn btn-success" href="/Payment/init" title="Platba kartou">
-                                <i class="fa fa-credit-card mr-1" aria-hidden="true"></i>
-                                Zaplatit kartou online
-                            </a>
-                        </div>
+                        <? if ($paymentLink): ?>
+                            <div class="col-md-6">
+                                <a class="btn btn-success" href="/Payment/init" title="Platba kartou">
+                                    <i class="fa fa-credit-card mr-1" aria-hidden="true"></i>
+                                    Zaplatit kartou online
+                                </a>
+                            </div>
+                        <? endif; ?>
                         <div class="col-md-6">
                             <a class="btn btn-dark" href="/Payment/finishedCash" title="Platba v hotovosti">
                                 <i class="fa fa-money mr-1" aria-hidden="true"></i>
