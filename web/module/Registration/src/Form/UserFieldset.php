@@ -164,13 +164,18 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
                 'label' => 'label_idsJmk',
             ],
         ]);
+        $universities = [
+            'INV' => [
+                'label' => 'Select university',
+                'value' => 'INV'
+            ]
+        ] + $this->codeBook->getUniversities();
         $this->add([
             'name'    => 'university',
             'type'    => Select::class,
             'options' => [
-                'empty_option' => 'Select university',
                 'label' => 'label_university',
-                'value_options' => $this->codeBook->getUniversities(),
+                'value_options' => $universities,
             ],
         ]);
     }
@@ -278,6 +283,24 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
                             },
                         ]
                     ],
+                ],
+            ],
+            'university' => [
+                'validators' => [
+                    [
+                        'name' => Validator\Callback::class,
+                        'options' => [
+                            'message' => 'userForm_select_university',
+                            'callback' => function($value, $context=[]) {
+                                $discount = $this->discountService->getByCode($context['discount']);
+                                $student = $discount['student'] ?? false;
+                                if (!$student) {
+                                    return true;
+                                }
+                                return $value != 'INV';
+                            },
+                        ]
+                    ]
                 ],
             ],
         ];
