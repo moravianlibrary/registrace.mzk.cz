@@ -14,7 +14,8 @@ class MojeId implements IdentityProviderInterface
         'mojeIdIdentityCardNumber',
         'mojeIdStreet',
         'mojeIdCity',
-        'mojeIdPostcode'
+        'mojeIdPostcode',
+        'mojeIdCountry',
     ];
 
     /** @var array */
@@ -49,6 +50,7 @@ class MojeId implements IdentityProviderInterface
                 'street' => $this->get($request, 'mojeIdStreet'),
                 'city' => $this->get($request, 'mojeIdCity'),
                 'postcode' => $this->get($request, 'mojeIdPostcode'),
+                'country' => $this->get($request, 'mojeIdCountry'),
             ],
         ];
         $verified = strtolower($this->get($request, 'mojeIdValid')) == 'true';
