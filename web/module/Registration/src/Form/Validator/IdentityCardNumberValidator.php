@@ -36,10 +36,12 @@ class IdentityCardNumberValidator extends AbstractValidator
         $body = $response->getBody();
         $this->getLogger()->info("Response body: " . $body);
         $xml = @simplexml_load_string($body);
+        // Invalid XML, assume that the service is not available
         if (!$xml) {
             return true;
         }
-        $valid = ($xml->odpoved['evidovano'] ?? 'ne') == 'ne';
+        $badNumber = ($xml->chyba['spatny_dotaz'] ?? 'ne') == 'ano';
+        $valid = !$badNumber && ($xml->odpoved['evidovano'] ?? 'ne') == 'ne';
         if (!$valid) {
             $this->lastMessages[] = self::IDENTITY_CARD_INVALID;
         }
