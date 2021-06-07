@@ -23,10 +23,6 @@ h4 {
   font-size: 1rem;
 }
 
-.card-body {
-  padding-bottom: 0;
-}
-
 header {
   padding: 30px 0;
   background: #00bed8;
@@ -299,6 +295,60 @@ h2.supertitle img {
 }
 .bg-faded, .bg-secondary {
   background-color: #f5f5f5 !important;
+}
+
+section.thank-mzk {
+  background: #f1fdff;
+}
+
+.box-purple {
+  background: #e6e1f4;
+  color: #9182be;
+}
+
+.box-blue {
+  background: #b7d9f1;
+  color: #4b96cd;
+}
+
+.box-cyan {
+  background: #c1f4fb;
+  color: #00bdd7;
+}
+
+.btn-purple {
+  background: #9182be;
+  color: #ffffff;
+}
+.btn-purple:hover {
+  color: #ffffff;
+  background: #7360ad;
+}
+
+.btn-blue {
+  background: #4b96cd;
+  color: #ffffff;
+}
+.btn-blue:hover {
+  color: #ffffff;
+  background: #327cb3;
+}
+
+.btn-cyan {
+  background: #00bdd7;
+  color: #ffffff;
+}
+.btn-cyan:hover {
+  color: #ffffff;
+  background: #0090a4;
+}
+
+.card-body *:last-child {
+  margin-bottom: 0 !important;
+}
+
+.rounded-pill .card-body {
+  padding: 1.5rem 1.25rem;
 }
 
 /*# sourceMappingURL=style.css.map */
