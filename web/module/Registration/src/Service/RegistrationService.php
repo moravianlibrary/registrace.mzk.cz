@@ -34,9 +34,6 @@ class RegistrationService implements RegistrationServiceInterface
     protected $library;
 
     /** @var boolean */
-    protected $demo;
-
-    /** @var boolean */
     protected $test;
 
     /** @var CodeBook */
@@ -48,7 +45,6 @@ class RegistrationService implements RegistrationServiceInterface
         $this->xServerUser = $config['alephXServer']['user'] ?? null;
         $this->xServerPassword = $config['alephXServer']['password'] ?? null;
         $this->library = $config['aleph']['library'] ?? 'MZK50';
-        $this->demo = $config['aleph']['demo'] ?? false;
         $this->test = $config['aleph']['test'] ?? false;
         $this->codeBook = $codeBook;
     }
@@ -60,7 +56,7 @@ class RegistrationService implements RegistrationServiceInterface
         $expiry = date('Ymd', strtotime('+14 days'));
         $xml = simplexml_load_file(self::XML_TEMPLATE);
         $patron = $xml->{'patron-record'}[0];
-        $recordAction = ($this->demo) ? 'U' : 'I';
+        $recordAction = ($this->test) ? 'U' : 'I';
         // z303
         $z303 = $patron->{'z303'};
         $z303->{'match-id'} = $id;
@@ -75,7 +71,7 @@ class RegistrationService implements RegistrationServiceInterface
         $z303->{'z303-delinq-n-1'} = 'Online předregistrace';
         $z303->{'z303-delinq-1-update-date'} = $now;
         // test
-        if ($this->demo || $this->test) {
+        if ($this->test) {
             $z303->{'z303-delinq-2'} = '88';
             $z303->{'z303-delinq-n-2'} = 'Testovací registrace';
             $z303->{'z303-delinq-2-update-date'} = $now;
@@ -254,7 +250,7 @@ class RegistrationService implements RegistrationServiceInterface
 
     protected function getId(User $user)
     {
-        if ($this->demo) {
+        if ($this->test) {
             return 'MZKTEST';
         }
         $count = strlen(self::CHARACTERS);

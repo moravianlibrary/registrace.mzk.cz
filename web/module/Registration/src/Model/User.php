@@ -237,7 +237,7 @@ class User
     /**
      * @return string
      */
-    public function getEduPersonPrincipalName(): string
+    public function getEduPersonPrincipalName(): ?string
     {
         return $this->eduPersonPrincipalName;
     }
