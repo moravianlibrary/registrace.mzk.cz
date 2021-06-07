@@ -64,7 +64,7 @@ class RegistrationService implements RegistrationServiceInterface
         $cn = $user->getFirstName() . ' ' . $user->getLastName();
         $z303->{'z303-name'} = $cn;
         $z303->{'z303-open-date'} = $now;
-        $z303->{'z303-title'} = $user->getTitle();
+        $z303->{'z303-title'} = $user->getDegree();
         $z303->{'z303-birth-date'} = $user->getBirth()->format("Ymd");
         // online registration
         $z303->{'z303-delinq-1'} = '50';
@@ -104,7 +104,6 @@ class RegistrationService implements RegistrationServiceInterface
             $z304->{'z304-telephone-2'} = $user->getIdentificationType()
                 . ' ' . $user->getIdentification();
             $z304->{'z304-telephone-3'} = $user->isSendNewsLetter() ? '' : 'NE';
-            $z304->{'z304-telephone-4'} = $user->isSendNewsLetter() ? '' : 'NE';
             $index++;
         }
         // z305

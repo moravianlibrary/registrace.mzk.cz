@@ -12,7 +12,7 @@ class User
     protected $lastName = null;
 
     /** @var string */
-    protected $title = null;
+    protected $degree = null;
 
     /** @var string */
     protected $birth = null;
@@ -55,11 +55,12 @@ class User
         $user = $data['user'];
         $this->firstName = $user['firstName'];
         $this->lastName = $user['lastName'];
+        $this->degree = $user['degree'];
         $year = $user['birth']['year'];
         $month = $user['birth']['month'];
         $day = $user['birth']['day'];
         $this->birth = new \DateTime("$year-$month-$day");
-        $this->university = $user['birth']['university'];
+        $this->university = $user['university'];
         $this->email = $user['mail'];
         $this->phone = $user['phone'];
         $this->identificationType = $user['identificationType'];
@@ -77,17 +78,17 @@ class User
     /**
      * @return string
      */
-    public function getTitle(): ?string
+    public function getDegree(): ?string
     {
-        return $this->title;
+        return $this->degree;
     }
 
     /**
      * @param string $title
      */
-    public function setTitle($title): void
+    public function setDegree($degree): void
     {
-        $this->title = $title;
+        $this->degree = $degree;
     }
 
     /**
