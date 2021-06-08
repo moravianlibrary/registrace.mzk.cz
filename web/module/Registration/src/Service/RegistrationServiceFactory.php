@@ -17,7 +17,8 @@ class RegistrationServiceFactory
             return new RegistrationServiceDemo();
         }
         $codeBook = $container->get(\Registration\Form\CodeBook::class);
-        return new RegistrationService($config, $codeBook);
+        $translator = $container->get(\Laminas\Mvc\I18n\Translator::class);
+        return new RegistrationService($config, $codeBook, $translator);
     }
 
 }

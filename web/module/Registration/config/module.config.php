@@ -109,6 +109,17 @@ $config = [
                 'base_dir' => __DIR__ . '/../../../data/language/',
                 'pattern'  => '%s.ini',
             ],
+            [
+                'type'        => \Registration\I18n\Translator\Loader\Ini::class,
+                'base_dir'    => __DIR__ . '/../../../data/language/',
+                'pattern'     => 'base.ini',
+            ],
+            [
+                'type'        => \Registration\I18n\Translator\Loader\Ini::class,
+                'base_dir'    => __DIR__ . '/../../../data/language/',
+                'pattern'     => 'countries.ini',
+                'text_domain' => 'country',
+            ],
         ],
     ],
     'session_manager' => [
