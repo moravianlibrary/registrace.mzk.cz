@@ -8,7 +8,7 @@ $paymentLink = ($online && $price > 0);
 <?=$this->render('steps.phtml', ['step' => 2]) ?>
 
 <section class="thank-mzk py-5">
-    <div class="container-fluid">
+    <div class="container">
 
         <div class="row">
             <div class="col-md-6 d-none d-md-block d-lg-block d-xl-block text-center">
@@ -32,7 +32,7 @@ $paymentLink = ($online && $price > 0);
 </section>
 
 <section class="bg-info-light">
-    <div class="container-fluid text-center">
+    <div class="container text-center">
         <p>Na základě vámi vyplněných údajů činí roční registrační poplatek:</p>
         <p class="price">
             <strong><?=$this->escapeHtml($price)?>&nbsp;<?=$this->translate('payment_amount_currency')?></strong>

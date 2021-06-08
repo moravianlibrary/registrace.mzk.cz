@@ -6,10 +6,6 @@ body {
   color: #514b57 !important;
 }
 
-.container-fluid {
-  max-width: 900px;
-}
-
 /* card */
 .card {
   margin-bottom: 1rem;
