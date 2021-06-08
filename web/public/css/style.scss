@@ -5,7 +5,6 @@ $my-primary-blue: #00bed8;
 $my-header-bg: $my-primary-blue;
 $my-footer-bg: #cccccc;
 $my-error-bg: #dc3545;
-$my-thank-mzk: #f1fdff;
 
 $my-box-purple-bg: #e6e1f4;
 $my-box-purple-color: #9182be;
@@ -113,14 +112,17 @@ ul.error {
   padding: 70px 20px;
 }
 
-.bg-info-light .price {
-  color: #00bdd7;
+.price {
+  display: inline-block;
   font-size: 20px;
   font-weight: bold;
+  color: #00bdd7;
+  background: #ffffff;
+  padding: 0.9rem 2rem 0.8rem;
 }
 
 .btn {
-  padding: 0.9rem 2rem 0.8rem 2rem;
+  padding: 0.9rem 2rem 0.8rem;
   border-radius: 1.25rem;
   font-weight: bold;
   line-height: 1;
@@ -362,10 +364,6 @@ h2.supertitle {
 
 .bg-faded, .bg-secondary {
   background-color: #f5f5f5 !important;
-}
-
-section.thank-mzk {
-  background: $my-thank-mzk;
 }
 
 .box-purple {

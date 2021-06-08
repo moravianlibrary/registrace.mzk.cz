@@ -1,62 +1,61 @@
 <?php
-    $discount = $this->discount;
-    $online = $discount['online'];
-    $price = $discount['price'];
-    $paymentLink = ($online && $price > 0);
+$discount = $this->discount;
+$online = $discount['online'];
+$price = $discount['price'];
+$paymentLink = ($online && $price > 0);
 ?>
 
 <?=$this->render('steps.phtml', ['step' => 2]) ?>
 
-<section>
+<section class="thank-mzk py-5">
     <div class="container-fluid">
-        <div class="text-center">
-            <p>
-                <img src="<?=$this->basePath('img/gratulation.png')?>" alt="">
-            </p>
-            <p class="h2">
-                Gratulujeme!
-            </p>
-            <p>
-                <? if (!$this->verified): ?>
-                    <?= $this->translate('preregistration_finished') ?>
-                <? else: ?>
-                    <?= $this->translate('registration_finished') ?>
-                <? endif; ?>
-            </p>
-            <p>
-                Dočasný login pro vaše přihlášení do účtu je <strong><?= $this->escapeHtml($this->login); ?></strong>, po vydání průkazky se login změní.
-            </p>
-            <div class="bg-info-light">
-                <p>Na základě vámi vyplněných údajů činí roční registrační poplatek:</p>
-                <p class="price">
-                    <strong><?= $this->escapeHtml($price) ?>&nbsp;<?= $this->translate('payment_amount_currency') ?></strong>
-                </p>
 
-                <? if (!$this->finished) : ?>
-                    <div class="row my-4">
-                        <? if ($paymentLink): ?>
-                            <div class="col-md-6">
-                                <a class="btn btn-success" href="/Payment/init" title="Platba kartou">
-                                    <i class="fa fa-credit-card mr-1" aria-hidden="true"></i>
-                                    Zaplatit kartou online
-                                </a>
-                            </div>
-                        <? endif; ?>
-                        <div class="col-md-6">
-                            <a class="btn btn-dark" href="/Payment/finishedCash" title="Platba v hotovosti">
-                                <i class="fa fa-money mr-1" aria-hidden="true"></i>
-                                Zaplatím v hotovosti v knihovně
-                            </a>
-                        </div>
-                    </div>
-                <? endif; ?>
-
-                <p>
-                    Něco je špatně, částka nesedí? Vraťte se <a href="#" title="Zpět na vyplnění formuláře"><strong>zpět k formuláři.</strong></a>
-                </p>
-
+        <div class="row">
+            <div class="col-md-6 d-none d-md-block d-lg-block d-xl-block text-center">
+                <img class="img-fluid" src="<?=$this->basePath('img/gratulation.png')?>" alt="">
             </div>
+            <div class="col-md-6">
+                <h1>Gratulujeme!</h1>
+                <p>
+                    <?php if (!$this->verified): ?>
+                        <?=$this->translate('preregistration_finished')?>
+                    <?php else: ?>
+                        <?=$this->translate('registration_finished')?>
+                    <?php endif; ?>
+                </p>
+                <p>
+                    Dočasný login pro vaše přihlášení do účtu je <strong><?=$this->escapeHtml($this->login);?></strong>, po vydání průkazky se login změní.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
 
-            <hr>
+<section class="bg-info-light">
+    <div class="container-fluid text-center">
+        <p>Na základě vámi vyplněných údajů činí roční registrační poplatek:</p>
+        <p class="price">
+            <strong><?=$this->escapeHtml($price)?>&nbsp;<?=$this->translate('payment_amount_currency')?></strong>
+        </p>
+
+        <?php if (!$this->finished): ?>
+            <div class="row my-4">
+                <?php if ($paymentLink): ?>
+                    <div class="col-md-6">
+                        <a class="btn btn-success" href="/Payment/init" title="Platba kartou">
+                            <i class="fa fa-credit-card mr-1" aria-hidden="true"></i>
+                            Zaplatit kartou online
+                        </a>
+                    </div>
+                <?php endif; ?>
+                <div class="col-md-6">
+                    <a class="btn btn-dark" href="/Payment/finishedCash" title="Platba v hotovosti">
+                        <i class="fa fa-money mr-1" aria-hidden="true"></i>
+                        Zaplatím v hotovosti v knihovně
+                    </a>
+                </div>
+            </div>
+        <?php endif; ?>
+        <p>Něco je špatně, částka nesedí? Vraťte se <a href="#" title="Zpět na vyplnění formuláře"><strong>zpět k formuláři.</strong></a></p>
     </div>
 </section>

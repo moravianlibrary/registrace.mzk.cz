@@ -80,14 +80,17 @@ ul.error {
   padding: 70px 20px;
 }
 
-.bg-info-light .price {
-  color: #00bdd7;
+.price {
+  display: inline-block;
   font-size: 20px;
   font-weight: bold;
+  color: #00bdd7;
+  background: #ffffff;
+  padding: 0.9rem 2rem 0.8rem;
 }
 
 .btn {
-  padding: 0.9rem 2rem 0.8rem 2rem;
+  padding: 0.9rem 2rem 0.8rem;
   border-radius: 1.25rem;
   font-weight: bold;
   line-height: 1;
@@ -295,10 +298,6 @@ h2.supertitle img {
 }
 .bg-faded, .bg-secondary {
   background-color: #f5f5f5 !important;
-}
-
-section.thank-mzk {
-  background: #f1fdff;
 }
 
 .box-purple {
