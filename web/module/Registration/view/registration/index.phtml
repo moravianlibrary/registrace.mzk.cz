@@ -81,20 +81,22 @@
 
     <section class="select-registration" id="registration">
         <div class="container">
-            <div class="row">
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-5">
 
                 <!-- mojeID -->
-                <div class="col-md-6 col-lg-4 text-center">
-                    <div class="card border-0 rounded-pill card-mojeid">
+                <div class="col text-center mb-3">
+                    <div class="card h-100 border-0 rounded-pill card-mojeid">
                         <div class="card-body">
                             <p class="h6">Registrace přes</p>
                             <h2 class="heading-logo"><img src="<?=$this->basePath('img/logo-mojeid.svg')?>" alt="Moje ID" title="Moje ID"></h2>
                             <p><small>Mám validovaný účet Moje ID (tj.&nbsp;s&nbsp;ověřenou totožností), s&nbsp;nímž je registrace rychlejší a&nbsp;k&nbsp;dokončení není třeba navštívit knihovnu.</small></p>
                             <p><small>Po zaplacení registračního poplatku kartou online můžete hned využívat vzdálený přístup do licencovaných databází či do digitálních zdrojů.</small></p>
+                        </div>
+                        <div class="card-footer">
                             <p>
                                 <a class="btn btn-success text-uppercase" href="<?=$this->escapeHtmlAttr($this->baseUrl)?>/Shibboleth.sso/DS?entityID=<?=urlencode($this->mojeid)?>&target=<?=urlencode($this->baseUrl)?>/registration/userForm%3Fidp%3Dmojeid" title="">Registrovat</a>
                             </p>
-                            <p>
+                            <p class="mb-0">
                                 <a class="btn btn-sm btn-link" href="https://www.mzk.cz/mojeid-v-moravske-zemske-knihovne" title=""><small>Co je účet mojeID?</small></a>
                                 <br>
                                 <a class="btn btn-sm btn-link" href="https://mojeid.cz/registration/" title=""><small>Chci si založit účet mojeID</small></a>
@@ -106,30 +108,40 @@
 
                 <!-- BrnoiD -->
                 <? if ($this->brnoIdEnabled) : ?>
-                <div class="col-md-6 col-lg-4 text-center">
-                    <div class="card border-0 rounded-pill card-brnoid">
-                        <div class="card-body">
-                            <p class="h6">Registrace přes</p>
-                            <h2 class="heading-logo"><img src="<?=$this->basePath('img/logo-brnoid.svg')?>" alt="Brno iD" title="Brno iD"></h2>
-                            <p><small>Mám validovaný účet Brno ID full (tj.&nbsp;s&nbsp;ověřenou totožností), s&nbsp;nímž je registrace rychlejší a&nbsp;k&nbsp;dokončení není třeba navštívit knihovnu.</small></p>
-                            <p><small>Po zaplacení registračního poplatku kartou online můžete hned využívat vzdálený přístup do licencovaných databází či do digitálních zdrojů.</small></p>
-                            <p>
-                                <a class="btn btn-success text-uppercase" href="/registration/userForm" title="">Registrovat</a>
-                            </p>
+                    <div class="col text-center mb-3">
+                        <div class="card h-100 border-0 rounded-pill card-brnoid">
+                            <div class="card-body">
+                                <p class="h6">Registrace přes</p>
+                                <h2 class="heading-logo"><img src="<?=$this->basePath('img/logo-brnoid.svg')?>" alt="Brno iD" title="Brno iD"></h2>
+                                <p><small>Mám validovaný účet Brno ID full (tj.&nbsp;s&nbsp;ověřenou totožností), s&nbsp;nímž je registrace rychlejší a&nbsp;k&nbsp;dokončení není třeba navštívit knihovnu.</small></p>
+                                <p><small>Po zaplacení registračního poplatku kartou online můžete hned využívat vzdálený přístup do licencovaných databází či do digitálních zdrojů.</small></p>
+                            </div>
+                            <div class="card-footer">
+                                <p>
+                                    <a class="btn btn-success text-uppercase" href="/registration/userForm" title="">Registrovat</a>
+                                </p>
+                                <p class="mb-0">
+                                    <a class="btn btn-sm btn-link" href="" title=""><small>Co je účet Brno iD?</small></a>
+                                    <br>
+                                    <a class="btn btn-sm btn-link" href="" title=""><small>Chci si založit účet Brno iD</small></a>
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
                 <? endif; ?>
                 <!-- /BrnoiD -->
 
                 <!-- MZK -->
-                <div class="col-md-6 col-lg-4 text-center">
-                    <div class="card border-0 rounded-pill card-mzk">
+                <div class="col text-center mb-3">
+                    <div class="card h-100 border-0 rounded-pill card-mzk">
                         <div class="card-body">
                             <p class="h6">Předregistrace</p>
                             <h2 class="heading-logo"><img src="<?=$this->basePath('img/logo-mzk.svg')?>" alt="Moravská zemská knihovna" title="Moravská zemská knihovna"></h2>
                             <p><small>K dokončení registrace bude nutné navštívit knihovnu kvůli ověření totožnosti.</small></p>
-                            <p>
+
+                        </div>
+                        <div class="card-footer">
+                            <p class="mb-0">
                                 <a class="btn btn-success text-uppercase" href="/registration/userForm" title="">Registrovat</a>
                             </p>
                         </div>
