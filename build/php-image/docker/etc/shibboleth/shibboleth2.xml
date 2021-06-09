@@ -141,7 +141,7 @@
             <Handler type="Session" Location="/Session" showAttributeValues="true"/>
 
             <!-- Metadata -->
-            <Handler type="MetadataGenerator" Location="/Metadata" signing="false" template="/etc/shibboleth/template.xml"/>
+            <Handler type="MetadataGenerator" Location="/EduIDMetadata" signing="false" template="/etc/shibboleth/template-eduid.xml"/>
 
             <Handler type="MetadataGenerator" Location="/MojeIDMetadata" signing="false" template="/etc/shibboleth/template-mojeid.xml"/>
 
