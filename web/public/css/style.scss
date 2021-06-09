@@ -407,12 +407,18 @@ h2.supertitle {
   }
 }
 
-.card-body{
+.card-body {
   padding-bottom: 0 !important;
 }
 
-.rounded-pill {
+.card.rounded-pill {
+  padding: 1rem 0;
+
   .card-body {
-    padding: 1.5rem 1.25rem;
+  }
+
+  .card-footer {
+    border-top: 0;
+    background-color: transparent;
   }
 }
