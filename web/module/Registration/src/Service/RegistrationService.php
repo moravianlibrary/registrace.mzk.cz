@@ -3,6 +3,7 @@
 namespace Registration\Service;
 
 use Laminas\Http\Client;
+use Laminas\Mvc\I18n\Translator;
 use Registration\Form\CodeBook;
 use Registration\Log\LoggerAwareTrait;
 use Registration\Model\User;
@@ -39,7 +40,10 @@ class RegistrationService implements RegistrationServiceInterface
     /** @var CodeBook */
     protected $codeBook;
 
-    public function __construct(array $config, CodeBook $codeBook)
+    /** @var Translator */
+    protected $translator;
+
+    public function __construct(array $config, CodeBook $codeBook, Translator $translator)
     {
         $this->xServerUrl = $config['alephXServer']['url'];
         $this->xServerUser = $config['alephXServer']['user'] ?? null;
@@ -47,6 +51,7 @@ class RegistrationService implements RegistrationServiceInterface
         $this->library = $config['aleph']['library'] ?? 'MZK50';
         $this->test = $config['aleph']['test'] ?? false;
         $this->codeBook = $codeBook;
+        $this->translator = $translator;
     }
 
     public function register(User $user)
@@ -98,7 +103,7 @@ class RegistrationService implements RegistrationServiceInterface
             // permanent address not in Czech Republic
             if ($index == 0 && $countryCode != 'CZ') {
                 $countryDescription = $this->codeBook->getCountryByCode($countryCode);
-                $city .=  ', ' . $countryDescription;
+                $city .=  ', ' . $this->translator->translate($countryDescription, 'country');
             }
             $z304->{'z304-address-3'} = $city;
             $z304->{'z304-telephone-2'} = $user->getIdentificationType()
