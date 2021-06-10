@@ -42,8 +42,13 @@ class PaymentController extends AbstractController
         if ($registration['finished']) {
             return $this->redirect()->toRoute('payment-finished');
         }
+        // create payment
         $paymentUrl = $this->paymentService->prepareAndReturnPaymentUrl($registration);
         $registration['payment'] = true;
+        // and prolong registration
+        $login = $registration['id'];
+        $expiry = $registration['expiry'];
+        $this->registrationService->updateExpiration($login, $expiry);
         return $this->redirect()->toUrl($paymentUrl);
     }
 
@@ -59,7 +64,7 @@ class PaymentController extends AbstractController
         $expiry = $registration['expiry'];
         $finished = $registration['finished'];
         if (!$finished && !$this->paymentService->hasRegistrationPayment($login)) {
-            $this->registrationService->updateExpiration($login, $expiry);
+            // TODO: update user's blocks or wait for background job in Aleph?
         }
         $registration['finished'] = true;
         $view = new ViewModel();
