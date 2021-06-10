@@ -106,7 +106,7 @@
                 </div>
                 <!-- /mojeID -->
 
-                <!-- BrnoiD -->
+                <!-- eduID -->
                 <? if ($this->brnoIdEnabled) : ?>
                     <div class="col text-center mb-3">
                         <div class="card h-100 border-0 rounded-pill card-brnoid">
@@ -124,6 +124,24 @@
                                     <a class="btn btn-sm btn-link" href="" title=""><small>Co je účet Brno iD?</small></a>
                                     <br>
                                     <a class="btn btn-sm btn-link" href="" title=""><small>Chci si založit účet Brno iD</small></a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                <? endif; ?>
+                <!-- /eduID -->
+
+                <!-- eduID -->
+                <? if ($this->eduIdEnabled) : ?>
+                    <div class="col text-center mb-3">
+                        <div class="card h-100 border-0 rounded-pill card-eduid">
+                            <div class="card-body">
+                                <p class="h6">Registrace přes</p>
+                                <h2 class="heading-logo"><img src="<?=$this->basePath('img/logo-eduid.png')?>" alt="eduID" title="eduID"></h2>
+                            </div>
+                            <div class="card-footer">
+                                <p>
+                                    <a class="btn btn-success text-uppercase" href="<?=$this->escapeHtmlAttr($this->baseUrl)?>/Shibboleth.sso/DS?entityID=https://idp2.ics.muni.cz/idp/shibboleth&target=<?=urlencode($this->baseUrl)?>/registration/userForm%3Fidp%3Deduid" title="">Registrovat</a>
                                 </p>
                             </div>
                         </div>

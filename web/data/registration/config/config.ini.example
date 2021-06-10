@@ -11,6 +11,9 @@ test = true
 [brnoid]
 enabled = true
 
+[eduid]
+enabled = true
+
 [countries]
 EU[] = AT
 EU[] = BE

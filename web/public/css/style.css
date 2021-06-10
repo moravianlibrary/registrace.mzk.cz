@@ -147,6 +147,20 @@ ul.error {
   color: #000000;
 }
 
+.card-eduid {
+  background-color: #ffffff;
+  color: #a1a1a1;
+}
+.card-eduid .h6 {
+  color: #504b55;
+}
+.card-eduid .btn-link {
+  color: #504b55;
+}
+.card-eduid .btn-link:hover {
+  color: #000000;
+}
+
 ul.tips {
   margin-bottom: 2rem;
 }
