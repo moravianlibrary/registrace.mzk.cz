@@ -19,6 +19,9 @@ $paymentLink = ($online && $price > 0);
             <div class="col-md-7 align-self-center">
                 <h1>Gratulujeme!</h1>
                 <p>
+                    <strong>Vaše platba proběhla úspěšně.</strong>
+                </p>
+                <p>
                     <?php if (!$this->verified): ?>
                         <?=$this->translate('preregistration_finished')?>
                     <?php else: ?>
