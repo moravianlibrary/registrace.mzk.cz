@@ -52,13 +52,20 @@ $paymentLink = ($online && $price > 0);
                             Zaplatit kartou online
                         </a>
                     </div>
+                    <div class="col-md-6">
+                        <a class="btn btn-dark" href="/Payment/finishedCash" title="Platba v hotovosti">
+                            <i class="fa fa-money mr-1" aria-hidden="true"></i>
+                            Zaplatím v hotovosti v knihovně
+                        </a>
+                    </div>
+                <?php else: ?>
+                    <div class="col-md-12">
+                        <a class="btn btn-dark" href="/Payment/finishedCash" title="Platba v hotovosti">
+                            <i class="fa fa-money mr-1" aria-hidden="true"></i>
+                            Zaplatím v hotovosti v knihovně
+                        </a>
+                    </div>
                 <?php endif; ?>
-                <div class="col-md-6">
-                    <a class="btn btn-dark" href="/Payment/finishedCash" title="Platba v hotovosti">
-                        <i class="fa fa-money mr-1" aria-hidden="true"></i>
-                        Zaplatím v hotovosti v knihovně
-                    </a>
-                </div>
             </div>
         <?php endif; ?>
     </div>
