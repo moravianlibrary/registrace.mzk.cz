@@ -77,12 +77,15 @@ class RegistrationController extends AbstractController
             $idp = $this->identityProviderFactory->get($auth);
             if ($idp != null && ($identity = $idp->identify($request)) != null) {
                 // convert birth date as expected by laminas forms
-                $birth = explode('-', $identity['user']['birth']);
-                $identity['user']['birth'] = [
-                    'year' => $birth[0],
-                    'month' => $birth[1],
-                    'day' => $birth[2]
-                ];
+                $birth = $identity['user']['birth'] ?? null;
+                if ($birth != null) {
+                    $birth = explode('-', $identity['user']['birth']);
+                    $identity['user']['birth'] = [
+                        'year' => $birth[0],
+                        'month' => $birth[1],
+                        'day' => $birth[2]
+                    ];
+                }
                 $this->getLogger()->info("Data from IdP:\n" . print_r($identity, true));
                 if ($identity['verified']) {
                     $verified = true;

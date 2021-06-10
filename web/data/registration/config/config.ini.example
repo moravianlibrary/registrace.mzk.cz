@@ -9,7 +9,7 @@ url = https://mojeid.regtest.nic.cz/saml/idp.xml
 test = true
 
 [brnoid]
-enabled = true
+enabled = false
 
 [eduid]
 enabled = true

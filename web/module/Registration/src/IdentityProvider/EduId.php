@@ -22,7 +22,9 @@ class EduId implements IdentityProviderInterface
                 'city' => $this->get($request, 'city'),
                 'postcode' => $this->get($request, 'postcode'),
             ],
+            'verified' => false,
         ];
+        return $result;
     }
 
     public function get(Request $request, string $variable)
