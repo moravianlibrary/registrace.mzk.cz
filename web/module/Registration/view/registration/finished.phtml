@@ -7,14 +7,16 @@ $paymentLink = ($online && $price > 0);
 
 <?=$this->render('steps.phtml', ['step' => 2]) ?>
 
-<section class="thank-mzk py-5">
+<section class="thank-mzk py-3">
     <div class="container">
 
         <div class="row">
-            <div class="col-md-6 d-none d-md-block d-lg-block d-xl-block text-center">
-                <img class="img-fluid" src="<?=$this->basePath('img/gratulation.png')?>" alt="">
+            <div class="col-md-5 d-none d-md-block d-lg-block d-xl-block text-center">
+                <div class="pr-3">
+                    <img class="img-fluid" src="<?=$this->basePath('img/gratulation.png')?>" alt="">
+                </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-7 align-self-center">
                 <h1>Gratulujeme!</h1>
                 <p>
                     <?php if (!$this->verified): ?>
@@ -35,7 +37,7 @@ $paymentLink = ($online && $price > 0);
     <div class="container text-center">
         <p>Na základě vámi vyplněných údajů činí roční registrační poplatek:</p>
         <p class="price">
-            <strong><?=$this->escapeHtml($price)?>&nbsp;<?=$this->translate('payment_amount_currency')?></strong>
+            <strong><?=$this->escapeHtml($price)?><?=$this->translate('payment_amount_currency')?></strong>
         </p>
 
         <?php if (!$this->finished): ?>
