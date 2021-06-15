@@ -147,20 +147,6 @@ ul.error {
   color: #000000;
 }
 
-.card-eduid {
-  background-color: #ffffff;
-  color: #a1a1a1;
-}
-.card-eduid .h6 {
-  color: #504b55;
-}
-.card-eduid .btn-link {
-  color: #504b55;
-}
-.card-eduid .btn-link:hover {
-  color: #000000;
-}
-
 ul.tips {
   margin-bottom: 2rem;
 }
@@ -360,6 +346,14 @@ h2.supertitle img {
 .card.rounded-pill .card-footer {
   border-top: 0;
   background-color: transparent;
+}
+
+.logo-footer .logo-footer {
+  padding: 16px 25px 16px 0;
+}
+.logo-footer .media-body {
+  border-left: 1px solid #ffffff;
+  padding: 16px 25px;
 }
 
 /*# sourceMappingURL=style.css.map */
