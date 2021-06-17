@@ -22,6 +22,7 @@
         <?= $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/x-icon', 'href' => $this->basePath() . '/img/favicon.ico'])
             ->prependStylesheet($this->basePath('css/style.css'))
             ->prependStylesheet($this->basePath('css/font-awesome.min.css'))
+            ->prependStylesheet($this->basePath('css/bootstrap-select.css'))
             ->prependStylesheet($this->basePath('css/bootstrap.css'))
         ?>
 
@@ -29,6 +30,8 @@
         <?= $this->headScript() ?>
         <?= $this->inlineScript()
             ->prependFile($this->basePath('js/app.js'))
+            ->prependFile($this->basePath('js/i18n/defaults-cs_CZ.min.js'))
+            ->prependFile($this->basePath('js/bootstrap-select.min.js'))
             ->prependFile($this->basePath('js/bootstrap.min.js'))
             ->prependFile($this->basePath('js/popper.min.js'))
             ->prependFile($this->basePath('js/jquery-3.5.1.min.js'))
