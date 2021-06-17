@@ -215,21 +215,28 @@ ul.list-tips {
 }
 
 
-ul.tips-small {
-  font-size: 85%;
-  line-height: 1;
+ul.list-tips-small {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 2rem;
+  font-size: 0.9rem;
 
   li {
-    display: inline-block;
+    margin-bottom: 1rem;
     background: $my-white;
-    margin: 0 15px 15px 0 !important;
-    padding: 8px 14px;
+    padding: 0.2rem 0.4rem 0.2rem 0.8rem;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
     border-radius: 2rem;
 
-    .fa {
-      font-size: 1.3em;
-      padding-right: 3px;
-      color: #00bed8;
+    i.fa {
+      color: $my-primary-blue;
+      font-size: 1.1rem;
+    }
+
+    span {
+      padding: 0.2rem 0.5rem;
     }
   }
 }

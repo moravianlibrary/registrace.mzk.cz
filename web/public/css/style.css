@@ -165,21 +165,27 @@ ul.list-tips li span {
   padding: 0.2rem 0.5rem;
 }
 
-ul.tips-small {
-  font-size: 85%;
-  line-height: 1;
+ul.list-tips-small {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 2rem;
+  font-size: 0.9rem;
 }
-ul.tips-small li {
-  display: inline-block;
+ul.list-tips-small li {
+  margin-bottom: 1rem;
   background: #ffffff;
-  margin: 0 15px 15px 0 !important;
-  padding: 8px 14px;
+  padding: 0.2rem 0.4rem 0.2rem 0.8rem;
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
   border-radius: 2rem;
 }
-ul.tips-small li .fa {
-  font-size: 1.3em;
-  padding-right: 3px;
+ul.list-tips-small li i.fa {
   color: #00bed8;
+  font-size: 1.1rem;
+}
+ul.list-tips-small li span {
+  padding: 0.2rem 0.5rem;
 }
 
 h2.heading-logo {
