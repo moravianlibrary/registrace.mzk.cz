@@ -59,7 +59,6 @@ class RegistrationController extends AbstractController
             'eduIdEnabled'  => $eduIdEnabled,
         ]);
         $view->setTemplate('registration/index');
-        $this->layout()->showRegistrationButton = true;
         return $view;
     }
 
