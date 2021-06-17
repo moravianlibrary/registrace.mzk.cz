@@ -147,18 +147,22 @@ ul.error {
   color: #000000;
 }
 
-ul.tips {
+ul.list-tips {
+  list-style: none;
+  padding-left: 0;
   margin-bottom: 2rem;
 }
-ul.tips li {
+ul.list-tips li {
   margin-bottom: 1rem;
-}
-ul.tips li span {
-  display: inline-block;
   background: #ffffff;
-  text-indent: -16px;
-  padding-left: 39px;
-  padding-right: 18px;
+  padding: 0.2rem 0.4rem;
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  border-radius: 2rem;
+}
+ul.list-tips li span {
+  padding: 0.2rem 0.5rem;
 }
 
 ul.tips-small {

@@ -190,18 +190,26 @@ ul.error {
   }
 }
 
-ul.tips {
+ul.list-tips {
+  list-style: none;
+  padding-left: 0;
   margin-bottom: 2rem;
 
   li {
     margin-bottom: 1rem;
+    background: $my-white;
+    padding: 0.2rem 0.4rem;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    border-radius: 2rem;
+
+    i {
+
+    }
 
     span {
-      display: inline-block;
-      background: $my-white;
-      text-indent: -16px;
-      padding-left: 39px;
-      padding-right: 18px;
+      padding: 0.2rem 0.5rem;
     }
   }
 }
