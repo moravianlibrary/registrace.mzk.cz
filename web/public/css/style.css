@@ -356,4 +356,26 @@ h2.supertitle img {
   padding: 16px 25px;
 }
 
+.bootstrap-select .selectpicker-img {
+  width: 24px;
+  height: 24px;
+  margin-right: 5px;
+}
+.bootstrap-select .btn.dropdown-toggle {
+  padding: 0.9rem 1rem 0.8rem;
+  font-weight: normal;
+  font-size: 0.9rem;
+}
+.bootstrap-select .dropdown-menu {
+  padding: 0;
+  font-size: 0.9rem;
+}
+.bootstrap-select .dropdown-item {
+  padding: 0.5rem 1rem;
+}
+.bootstrap-select .bs-searchbox {
+  margin-top: 0.4rem;
+  margin-bottom: 0.4rem;
+}
+
 /*# sourceMappingURL=style.css.map */

@@ -138,10 +138,19 @@
                             <div class="card-body">
                                 <p class="h6">Registrace přes</p>
                                 <h2 class="heading-logo"><img src="<?=$this->basePath('img/logo-eduid.svg')?>" alt="eduID" title="eduID"></h2>
+                                <select class="selectpicker" data-live-search="true" data-width="100%" data-style="btn-light">
+                                    <option data-content='<img class="selectpicker-img" src="https://cdn.muni.cz/Css/_Shared/Favicons/000000.ico"> Masarykova univerzita' value="muni" selected></option>
+                                    <option data-content='<img class="selectpicker-img" src="https://www.vutbr.cz/images/favicon_ostra.ico"> Vysoké učení technické v Brně' value="vutbrno"></option>
+                                </select>
                             </div>
                             <div class="card-footer">
                                 <p>
                                     <a class="btn btn-success text-uppercase" href="<?=$this->escapeHtmlAttr($this->baseUrl)?>/Shibboleth.sso/DS?entityID=https://idp2.ics.muni.cz/idp/shibboleth&target=<?=urlencode($this->baseUrl)?>/registration/userForm%3Fidp%3Deduid" title="">Registrovat</a>
+                                </p>
+                                <p class="mb-0">
+                                    <a class="btn btn-sm btn-link" href="" title=""><small>Co je účet eduID.cz?</small></a>
+                                    <br>
+                                    <a class="btn btn-sm btn-link" href="" title=""><small>Chci si založit účet eduID.cz</small></a>
                                 </p>
                             </div>
                         </div>
