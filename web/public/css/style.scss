@@ -422,17 +422,32 @@ h2.supertitle {
   }
 }
 
-.logo-footer {
 
+@media (min-width: 577px) {
   .logo-footer {
-    padding: 16px 25px 16px 0;
-  }
 
-  .media-body {
-    border-left: 1px solid #ffffff;
-    padding: 16px 25px;
-  }
+    .media-header {
+      padding: 16px 25px 16px 0;
+    }
 
+    .media-body {
+      border-left: 1px solid #ffffff;
+      padding: 16px 25px;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .logo-footer {
+    display: block;
+
+    .media-header {
+      margin-bottom: 1rem;
+    }
+
+    .media-body {
+    }
+  }
 }
 
 

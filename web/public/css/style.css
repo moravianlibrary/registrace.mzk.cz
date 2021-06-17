@@ -348,14 +348,23 @@ h2.supertitle img {
   background-color: transparent;
 }
 
-.logo-footer .logo-footer {
-  padding: 16px 25px 16px 0;
+@media (min-width: 577px) {
+  .logo-footer .media-header {
+    padding: 16px 25px 16px 0;
+  }
+  .logo-footer .media-body {
+    border-left: 1px solid #ffffff;
+    padding: 16px 25px;
+  }
 }
-.logo-footer .media-body {
-  border-left: 1px solid #ffffff;
-  padding: 16px 25px;
+@media (max-width: 576px) {
+  .logo-footer {
+    display: block;
+  }
+  .logo-footer .media-header {
+    margin-bottom: 1rem;
+  }
 }
-
 .bootstrap-select .selectpicker-img {
   width: 24px;
   height: 24px;
