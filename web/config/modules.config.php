@@ -12,6 +12,8 @@
  * This should be an array of module namespaces used in the registration.
  */
 return [
+    'Laminas\Log',
+    'Laminas\Session',
     'Laminas\Mvc\I18n',
     'Laminas\I18n',
     'Laminas\Form',
@@ -20,5 +22,6 @@ return [
     'Laminas\Filter',
     'Laminas\Router',
     'Laminas\Validator',
+    'Laminas\Mvc\Plugin\FlashMessenger',
     'Registration',
 ];

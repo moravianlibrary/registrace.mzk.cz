@@ -5,12 +5,14 @@ use Laminas\Filter;
 use Laminas\Form\Element\Checkbox;
 use Laminas\Form\Element\DateSelect;
 use Laminas\Form\Element\Email;
+use Laminas\Form\Element\Hidden;
 use Laminas\Form\Element\Select;
 use Laminas\Form\Element\Text;
 use Laminas\Form\Fieldset;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Validator;
+use Registration\Form\Validator\IdentityCardNumberValidator;
 use Registration\Service\DiscountService;
 
 class UserFieldset extends Fieldset implements InputFilterProviderInterface
@@ -23,6 +25,9 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
 
     /** @var DiscountService */
     protected $discountService;
+
+    /** @var string */
+    protected $country;
 
     public function __construct(CodeBook $codeBook, Translator $translator,
         DiscountService $discountService)
@@ -43,6 +48,7 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
             'options' => [
                 'label' => 'label_firstName',
                 'required' => true,
+                'protected' => true,
             ],
         ]);
         // Last name
@@ -52,6 +58,7 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
             'options' => [
                 'label' => 'label_lastName',
                 'required' => true,
+                'protected' => true,
             ],
         ]);
         // Degree
@@ -68,7 +75,11 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
             'type'    => Email::class,
             'options' => [
                 'label' => 'label_email',
+                'protected' => true,
             ],
+            'attributes' => [
+                'data-help-icon' => 'help_email',
+            ]
         ]);
         // Phone number
         $this->add([
@@ -76,9 +87,11 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
             'type'    => Text::class,
             'options' => [
                 'label' => 'label_phone',
+                'protected' => true,
             ],
             'attributes' => [
                 'value' => '+420 ',
+                'data-help-icon' => 'help_phone',
             ],
         ]);
         // Is contact address
@@ -92,7 +105,7 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
                'data-toggle' => 'collapse',
                'data-target' => '#collapseisContactAddress',
            ],
-       ]);
+        ]);
         // Proof of identity
         $this->add([
             'name'    => 'identificationType',
@@ -104,6 +117,9 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
                     'PAS' => $this->translator->translate('option_identificationType_pas'),
                 ],
             ],
+            'attributes' => [
+                'data-help-icon' => 'help_id',
+            ]
         ]);
         $this->add([
             'name'    => 'identification',
@@ -119,12 +135,14 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
             'type'    => DateSelect::class,
             'attributes' => [
                 'value' => (date("Y") - 26) . '-01-01',
+                'data-help-icon' => 'help_birth',
             ],
             'options' => [
                 'label' => 'label_birth',
                 'required' => true,
                 'min_year'  => '1900',
                 'max_year'  => date("Y") - 15,
+                'protected' => true,
             ],
         ]);
         // Discount
@@ -146,12 +164,18 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
                 'label' => 'label_idsJmk',
             ],
         ]);
+        $universities = [
+            'INV' => [
+                'label' => 'Select university',
+                'value' => 'INV'
+            ]
+        ] + $this->codeBook->getUniversities();
         $this->add([
             'name'    => 'university',
             'type'    => Select::class,
             'options' => [
                 'label' => 'label_university',
-                'value_options' => $this->codeBook->getUniversities(),
+                'value_options' => $universities,
             ],
         ]);
     }
@@ -217,6 +241,21 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
                             'type' => 'string',
                         ],
                     ],
+                    [
+                        'name' => Validator\Callback::class,
+                        'options' => [
+                            'message' => IdentityCardNumberValidator::IDENTITY_CARD_INVALID,
+                            'callback' => function($value, $context=[]) {
+                                $type = $context['identificationType'];
+                                $country = $this->getCountry();
+                                if (!($type == 'IC' && $country == 'CZ')) {
+                                    return true;
+                                }
+                                $validator = new IdentityCardNumberValidator();
+                                return $validator->isValid($value);
+                            },
+                        ]
+                    ],
                 ],
             ],
             'birth' => [
@@ -246,13 +285,58 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
                     ],
                 ],
             ],
+            'university' => [
+                'validators' => [
+                    [
+                        'name' => Validator\Callback::class,
+                        'options' => [
+                            'message' => 'userForm_select_university',
+                            'callback' => function($value, $context=[]) {
+                                $discount = $this->discountService->getByCode($context['discount']);
+                                $student = $discount['student'] ?? false;
+                                if (!$student) {
+                                    return true;
+                                }
+                                return $value != 'INV';
+                            },
+                        ]
+                    ]
+                ],
+            ],
         ];
+    }
+
+    public function getDiscount()
+    {
+        return $this->discountService->getByCode(
+            $this->get('discount')->getValue());
+    }
+
+    public function updateDiscount(UserForm $userForm)
+    {
+        $discounts = [];
+        $discounts = $this->discountService->getAvailable($userForm);
+        foreach ($discounts as $code => $discount) {
+            $discounts[$code] = $discount['label'];
+        }
+        $this->get('discount')->setValueOptions($discounts);
+
+    }
+
+    public function setCountry($country)
+    {
+        $this->country = $country;
+    }
+
+    public function getCountry()
+    {
+        return $this->country;
     }
 
     protected function getDiscounts()
     {
         $discounts = [];
-        foreach ($this->discountService->getDefault() as $code => $discount) {
+        foreach ($this->discountService->getAll() as $code => $discount) {
             $discounts[$code] = $discount['label'];
         }
         return $discounts;

@@ -17,6 +17,9 @@ class PasswordFieldset extends Fieldset implements InputFilterProviderInterface
                 'label' => 'Password',
                 'required' => true,
             ],
+           'attributes' => [
+               'data-help-icon' => 'help_password',
+           ]
         ]);
         $this->add([
             'name'    => 'passwordConfirm',
@@ -40,6 +43,9 @@ class PasswordFieldset extends Fieldset implements InputFilterProviderInterface
                             'message' => 'userForm_missing_password',
                             'type' => 'string',
                         ],
+                    ],
+                    [
+                        'name' => \Registration\Form\Validator\PasswordValidator::class,
                     ],
                 ],
             ],

@@ -5,6 +5,7 @@
 ?>
 <script>
 config = <?= json_encode($this->config, JSON_PRETTY_PRINT); ?>;
+translations = <?= json_encode($this->translations, JSON_PRETTY_PRINT); ?>;
 
 $(document).ready(function() {
   // University/High school selection
@@ -20,8 +21,27 @@ $(document).ready(function() {
   discountSelect.change();
 
   $('select[name="user[discount]"]').change(function() {
-    price = $(this).find(':selected').data('price');
+    selected = $(this).find(':selected');
+    price = selected.data('price');
     $('#price').text(price);
+    online = selected.data('online');
+    price = selected.data('price');
+    $('#online_discount').hide();
+    $('#not_online_discount').hide();
+    $('#not_online_for_free').hide();
+    $('#age_not_valid').hide();
+    $('#online_free').hide();
+    if (selected.length == 0) {
+      $('#age_not_valid').show();
+    } else if (online && price == 0) {
+      $('#online_free').show();
+    } else if (online) {
+      $('#online_discount').show();
+    } else if (price == 0) {
+      $('#not_online_for_free').show();
+    } else {
+      $('#not_online_discount').show();
+    }
   });
 
   $('select[name="permanentAddress[country]"]').change(function() {
@@ -29,21 +49,68 @@ $(document).ready(function() {
     icOption = $("select[name='user[identificationType]'] option[value='IC']");
     passportOption = $("select[name='user[identificationType]'] option[value='PAS']");
     if (country == 'CZ') {
-      icOption.removeAttr('disabled').prop('selected', true);
-      passportOption.attr('disabled', 'disabled');
+      icOption.show().prop('selected', true);
+      passportOption.hide();
     } else if (config.countries.EU.includes(country)) {
-      icOption.removeAttr('disabled').prop('selected', true);
-      passportOption.removeAttr('disabled');
+      icOption.show().prop('selected', true);
+      passportOption.show();
     } else {
-      icOption.attr('disabled', 'disabled');
-      passportOption.removeAttr('disabled').prop('selected', true);
+      icOption.hide();
+      passportOption.show().prop('selected', true);
     }
   });
   $('select[name="permanentAddress[country]"]').change();
 
+  $('input[name="password[password]"]').focusout(function() {
+    password = $(this).val();
+    jQuery.ajax({
+      url: "/ajax/validatePassword",
+      type: "POST",
+      data: {'password' : password },
+      dataType: "json",
+      contentType: "application/x-www-form-urlencoded; charset=utf-8",
+      success: function (data, textStatus) {
+        // reset previous errors
+        $('#userForm :input[name="password[password]"]').removeClass('is-invalid');
+        $('#userForm :input[name="password[password]"]').parent().find('ul').remove();
+        if (data['status'] == 'ok') {
+          return;
+        }
+        input = $('#userForm :input[name="password[password]"]');
+        input.addClass('is-invalid');
+        ul = $('<ul/>');
+        ul.attr({'class': 'form-text error'});
+        $.each(data['messages'], function(index, error) {
+          li = $('<li/>');
+          li.text(error);
+          ul.append(li);
+        });
+        input.parent().append(ul);
+      }
+    });
+  });
+
+  $('input[name="password[passwordConfirm]"]').focusout(function() {
+    password = $('input[name="password[password]"]').val();
+    passwordConfirm = $(this).val();
+    $(this).removeClass('is-invalid');
+    $(this).parent().find('ul').remove();
+    if (password == passwordConfirm) {
+      return;
+    }
+    $(this).addClass('is-invalid');
+    ul = $('<ul/>');
+    ul.attr({'class': 'form-text error'});
+    li = $('<li/>');
+    li.text(translations['userForm_passwordConfirmNoMatch']);
+    ul.append(li);
+    $(this).parent().append(ul);
+  });
+
   $(':input[name="user[birth][day]"], :input[name="user[birth][month]"], :input[name="user[birth][year]"], ' +
     ':input[name="user[idsJmk]"]').change(function() {
     selected = $('select[name="user[discount]"]').val();
+    selectedGroup = $('select[name="user[discount]"]').find(':selected').data('group')
     params = $("#userForm").serialize();
     jQuery.ajax ({
       url: "/ajax/discount",
@@ -53,14 +120,21 @@ $(document).ready(function() {
       contentType: "application/x-www-form-urlencoded; charset=utf-8",
       success: function(data, textStatus) {
         $options = $('select[name="user[discount]"]').children().remove().end();
+        selectedOption = null;
+        if (data.length == 0) {
+          $('select[name="user[discount]"]').change();
+          return;
+        }
         $.each(data, function(key, obj) {
           option = $('<option/>');
-          if (selected == key) {
-              option.attr({'selected': ''});
+          if (selectedOption == null || selected == key || selectedGroup == obj['group']) {
+              selectedOption = option;
           }
-          option.attr({ 'value': key, 'data-price': obj['price'] }).text(obj['label']);
+          option.attr({ 'value': key, 'data-price': obj['price'], 'data-group' : obj['group'],
+            'data-online': obj['online'] }).text(obj['label']);
           $options.append(option);
         });
+        selectedOption.attr({'selected': ''});
         $('select[name="user[discount]"]').change();
       }
     });
@@ -85,7 +159,7 @@ $(document).ready(function() {
         // if validation is OK, submit the form
         if (data['status'] == 'ok') {
           $("#userForm").unbind('submit');
-          $("#userForm :submit").click()
+          $("#userForm :submit").click();
           return;
         }
         // fill new errors
@@ -96,7 +170,7 @@ $(document).ready(function() {
           input = $('#userForm :input[name=\'' + key + '\']');
           input.addClass('is-invalid');
           ul = $('<ul/>');
-          ul.attr({'class': 'form-text'});
+          ul.attr({'class': 'form-text error'});
           $.each(errors, function(index, error) {
             li = $('<li/>');
             li.text(error);
@@ -108,7 +182,10 @@ $(document).ready(function() {
         $('#userForm :input.is-invalid').first().focus();
       },
       error : function(data, textStatus) {
+        // submit the form manually and use server side validation
         $('#userForm :submit').removeAttr('disabled');
+        $("#userForm").unbind('submit');
+        $("#userForm :submit").click();
       }
     });
   });
@@ -116,129 +193,160 @@ $(document).ready(function() {
 });
 </script>
 
-<?
-$form->prepare();
-?>
-<?= $this->form()->openTag($form); ?>
-<div class="card">
-    <h2 class="card-header">
-        <?= $this->translate('text_personal_information') ?>
-    </h2>
-    <div class="card-body">
-        <div class="row">
-            <div class="col-md-2">
-                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('degree')])?>
-            </div>
-            <div class="col-md-5">
-                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('firstName')])?>
-            </div>
-            <div class="col-md-5">
-                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('lastName')])?>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('phone')])?>
-            </div>
-            <div class="col-md-6">
-                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('email')])?>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('birth')])?>
-            </div>
-            <div class="col-md-12">
-                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('idsJmk')])?>
-            </div>
-            <div class="col-md-12">
-                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('discount')])?>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12" id="groupUniversity">
-                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('university')])?>
-            </div>
-        </div>
-    </div>
-</div>
+<?=$this->render('steps.phtml', ['step' => 1]) ?>
 
-<div class="card">
-    <h2 class="card-header"><?=$this->translate('text_address')?></h2>
-    <div class="card-body">
-        <h4><?=$this->translate('text_permanent_address')?></h4>
+<section>
+    <div class="container">
         <div class="row">
-            <div class="col-md-5">
-                <?=$this->render('element.phtml', ['element' => $form->get('permanentAddress')->get('street')])?>
-            </div>
-            <div class="col-md-3">
-                <?=$this->render('element.phtml', ['element' => $form->get('permanentAddress')->get('city')])?>
-            </div>
-            <div class="col-md-2">
-                <?=$this->render('element.phtml', ['element' => $form->get('permanentAddress')->get('postcode')])?>
-            </div>
-            <div class="col-md-2">
-                <?=$this->render('element.phtml', ['element' => $form->get('permanentAddress')->get('country')])?>
-            </div>
-        </div>
-
-        <?=$this->render('element.phtml', ['element' => $form->get('user')->get('isContactAddress')])?>
-
-        <div id="collapseisContactAddress" class="panel-collapse collapse in">
-            <h4><?=$this->translate('text_contact_address')?></h4>
-            <div class="row">
-                <div class="col-md-5">
-                    <?=$this->render('element.phtml', ['element' => $form->get('contactAddress')->get('street')])?>
+            <div class="col-xl-10 offset-xl-1">
+                <?php
+                $form->prepare();
+                ?>
+                <?= $this->form()->openTag($form); ?>
+                <div class="card">
+                    <h2 class="card-header">
+                        <?= $this->translate('text_personal_information') ?>
+                    </h2>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('degree')])?>
+                            </div>
+                            <div class="col-md-5">
+                                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('firstName')])?>
+                            </div>
+                            <div class="col-md-5">
+                                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('lastName')])?>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('phone')])?>
+                            </div>
+                            <div class="col-md-6">
+                                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('email')])?>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('birth')])?>
+                            </div>
+                            <div class="col-md-12" style="display: none">
+                                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('idsJmk')])?>
+                            </div>
+                            <div class="col-md-12">
+                                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('discount')])?>
+                            </div>
+                            <div class="col-md-12">
+                                <div id="not_online_discount" class="alert alert-warning">
+                                    <?=$this->translate('not_online_discount')?>
+                                </div>
+                                <div id="online_discount" class="alert alert-success" style="display: none;">
+                                    <?=$this->translate('online_discount')?>
+                                </div>
+                                <div id="online_free" class="alert alert-success" style="display: none;">
+                                    <?=$this->translate('online_for_free')?>
+                                </div>
+                                <div id="not_online_for_free" class="alert alert-warning" style="display: none;">
+                                    <?=$this->translate('not_online_for_free')?>
+                                </div>
+                                <div id="age_not_valid" class="alert alert-danger" style="display: none;">
+                                    <?=$this->translate('userForm_ageNotValid')?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12" id="groupUniversity">
+                                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('university')])?>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-3">
-                    <?=$this->render('element.phtml', ['element' => $form->get('contactAddress')->get('city')])?>
+
+                <div class="card">
+                    <h2 class="card-header"><?=$this->translate('text_address')?></h2>
+                    <div class="card-body">
+                        <h4><?=$this->translate('text_permanent_address')?></h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <?=$this->render('element.phtml', ['element' => $form->get('permanentAddress')->get('street')])?>
+                            </div>
+                            <div class="col-md-4">
+                                <?=$this->render('element.phtml', ['element' => $form->get('permanentAddress')->get('city')])?>
+                            </div>
+                            <div class="col-md-2">
+                                <?=$this->render('element.phtml', ['element' => $form->get('permanentAddress')->get('postcode')])?>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <?=$this->render('element.phtml', ['element' => $form->get('permanentAddress')->get('country')])?>
+                            </div>
+                        </div>
+
+                        <?=$this->render('element.phtml', ['element' => $form->get('user')->get('isContactAddress')])?>
+
+                        <div id="collapseisContactAddress" class="panel-collapse collapse in">
+                            <h4><?=$this->translate('text_contact_address')?></h4>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <?=$this->render('element.phtml', ['element' => $form->get('contactAddress')->get('street')])?>
+                                </div>
+                                <div class="col-md-4">
+                                    <?=$this->render('element.phtml', ['element' => $form->get('contactAddress')->get('city')])?>
+                                </div>
+                                <div class="col-md-2">
+                                    <?=$this->render('element.phtml', ['element' => $form->get('contactAddress')->get('postcode')])?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-2">
-                    <?=$this->render('element.phtml', ['element' => $form->get('contactAddress')->get('postcode')])?>
+
+                <div class="card">
+                    <h2 class="card-header"><?=$this->translate('Doklad totožnosti')?></h2>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('identificationType')])?>
+                            </div>
+                            <div class="col-md-6">
+                                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('identification')])?>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
+                <div class="card">
+                    <h2 class="card-header"><?= $this->translate('text_password') ?></h2>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <?=$this->render('element.phtml', ['element' => $form->get('password')->get('password')])?>
+                            </div>
+                            <div class="col-md-6">
+                                <?=$this->render('element.phtml', ['element' => $form->get('password')->get('passwordConfirm')])?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <?=$this->render('element.phtml', ['element' => $form->get('isSendNews')])?>
+                    <?=$this->render('element.phtml', ['element' => $form->get('isGdpr')])?>
+                </div>
+
+                <?=$this->formElement($form->get('verified'))?>
+
+                <div class="alert alert-primary text-center">
+                    Cena registrace je <strong><span id="price">XXX</span>,- Kč</strong>
+                </div>
+                <div class="text-center">
+                    <input type="submit" name="submit" class="btn btn-primary" value="<?=$this->translate('btn_submit_registration') ?> &raquo;">
+                </div>
+                <?=$this->form()->closeTag(); ?>
             </div>
         </div>
     </div>
-</div>
+</section>
 
-<div class="card">
-    <h2 class="card-header"><?=$this->translate('Doklad totožnosti')?></h2>
-    <div class="card-body">
-        <div class="row">
-            <div class="col-md-6">
-                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('identificationType')])?>
-            </div>
-            <div class="col-md-6">
-                <?=$this->render('element.phtml', ['element' => $form->get('user')->get('identification')])?>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="card">
-    <h2 class="card-header"><?= $this->translate('text_password') ?></h2>
-    <div class="card-body">
-        <div class="row">
-            <div class="col-md-6">
-                <?=$this->render('element.phtml', ['element' => $form->get('password')->get('password')])?>
-            </div>
-            <div class="col-md-6">
-                <?=$this->render('element.phtml', ['element' => $form->get('password')->get('passwordConfirm')])?>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="card-body">
-    <?=$this->render('element.phtml', ['element' => $form->get('isSendNews')])?>
-    <?=$this->render('element.phtml', ['element' => $form->get('isGdpr')])?>
-</div>
-
-<div class="alert alert-primary text-center">
-    Cena registrace je <strong><span id="price">XXX</span>,- Kč</strong>
-</div>
-<div class="text-center">
-    <?//= $this->formSubmit($form->get('submit')); ?>
-    <input type="submit" name="submit" class="btn btn-primary" value="<?=$this->translate('btn_next_step') ?> &raquo;">
-</div>
-<?=$this->form()->closeTag();?>

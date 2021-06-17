@@ -35,6 +35,12 @@ Build PHP image:
     changes:
       - build/php-image/*
       - build/php-image/**/*
+      - .gitlab-ci.yml
+
+  cache:
+    key: build # all shared
+    paths:
+      - .buildah
 
   before_script:
     # try to load image from cache registry
@@ -71,6 +77,12 @@ Build app image:
     reports:
       dotenv:
         - .artifacts/image_deploy.env
+
+  cache:
+    key: build # all shared
+    paths:
+      - .buildah
+
   before_script:
     - mkdir -p .artifacts
     # try to load image from cache registry
@@ -150,10 +162,17 @@ Deploy devel image:
     - cd registration/devel;
     - kustomize edit set image registration=${APP_IMAGE_NAME}:${APP_IMAGE_TAG}
     - git config user.name "${GITLAB_USER_NAME} by Gitlab Robot"
-    - git config user.email "<gitlab-cpk@knihovny.cz>"
+    - git config user.email "${GITLAB_USER_EMAIL}"
+    - |
+        cat >> ${TMP_DIR}/commit-message <<EOF
+        ${CI_COMMIT_SHORT_SHA}: ${CI_COMMIT_TITLE}
+        * Upgrade image version to ${APP_IMAGE_TAG}
+        * commit: ${CI_PROJECT_URL}/-/commit/${CI_COMMIT_SHORT_SHA}
+        * CI job: ${CI_JOB_URL}
+        EOF 
     - git add .
     - |
-        git commit -m "${CI_COMMIT_SHORT_SHA}: Upgrade image version to '${APP_IMAGE_TAG}'"
+        git commit --file ${TMP_DIR}/commit-message
     - git push
 
 Deploy master image:

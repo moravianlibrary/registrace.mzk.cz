@@ -6,7 +6,9 @@ namespace Registration;
 
 use Laminas\Router\Http\Literal;
 use Laminas\Router\Http\Segment;
+use Laminas\Session;
 use Laminas\ServiceManager\Factory\InvokableFactory;
+use Registration\Controller\PaymentController;
 
 $config = [
     'router' => [
@@ -31,6 +33,16 @@ $config = [
                     ],
                 ],
             ],
+            'payment' => [
+                'type'    => Segment::class,
+                'options' => [
+                    'route'    => '/payment[/:action]',
+                    'defaults' => [
+                        'controller' => Controller\PaymentController::class,
+                        'action'     => 'index',
+                    ],
+                ],
+            ],
             'ajax' => [
                 'type'    => Segment::class,
                 'options' => [
@@ -46,11 +58,13 @@ $config = [
     'controllers' => [
         'factories' => [
             Controller\RegistrationController::class => Controller\RegistrationControllerFactory::class,
+            Controller\PaymentController::class => Controller\PaymentControllerFactory::class,
             Controller\AjaxController::class => Controller\AjaxControllerFactory::class,
         ],
         'aliases' => [
             'Registration' => 'Registration\Controller\RegistrationController',
             'Ajax' => 'Registration\Controller\AjaxController',
+            'Payment' => 'Registration\Controller\PaymentController'
         ],
     ],
     'service_manager' => [
@@ -60,6 +74,9 @@ $config = [
             \Registration\Form\CodeBook::class => \Registration\Form\CodeBookFactory::class,
             \Laminas\Mvc\I18n\Translator::class => \Laminas\Mvc\I18n\TranslatorFactory::class,
             \Registration\Service\DiscountService::class => \Registration\Service\DiscountServiceFactory::class,
+            \Registration\Service\RegistrationServiceInterface::class => \Registration\Service\RegistrationServiceFactory::class,
+            \Registration\Service\PaymentServiceInterface::class => \Registration\Service\PaymentServiceFactory::class,
+            \Registration\Form\Validator\PasswordValidator::class => \Registration\Form\Validator\PasswordValidatorFactory::class,
         ],
     ],
     'form_elements' => [
@@ -92,12 +109,44 @@ $config = [
                 'base_dir' => __DIR__ . '/../../../data/language/',
                 'pattern'  => '%s.ini',
             ],
+            [
+                'type'        => \Registration\I18n\Translator\Loader\Ini::class,
+                'base_dir'    => __DIR__ . '/../../../data/language/',
+                'pattern'     => 'base.ini',
+            ],
+            [
+                'type'        => \Registration\I18n\Translator\Loader\Ini::class,
+                'base_dir'    => __DIR__ . '/../../../data/language/',
+                'pattern'     => 'countries.ini',
+                'text_domain' => 'country',
+            ],
+        ],
+    ],
+    'session_manager' => [
+        'config' => [
+            'class' => Session\Config\SessionConfig::class,
+            'options' => [
+                'name' => 'registration',
+            ],
+        ],
+        'storage' => Session\Storage\SessionArrayStorage::class,
+        'validators' => [
+            Session\Validator\RemoteAddr::class,
+            Session\Validator\HttpUserAgent::class,
         ],
     ],
 ];
 
 $routes = [
-    'Registration/index', 'Registration/userForm', 'Registration/finished'
+    'Registration/index',
+    'Registration/userForm',
+    'Registration/finished',
+    'Payment/init',
+    'Payment/finished',
+    'Payment/finishedCash',
+    'Payment/finishedOnlineVerified',
+    'Payment/finishedOnlineVerifiedNot',
+    'Payment/error'
 ];
 
 foreach ($routes as $route) {

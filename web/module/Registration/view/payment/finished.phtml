@@ -1,0 +1,83 @@
+<?=$this->render('steps.phtml', ['step' => 3])?>
+
+<section class="thank-mzk py-5 bg-info-light">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-5 d-none d-md-block d-lg-block d-xl-block text-center">
+                <div class="pr-3">
+                    <img class="img-fluid" src="<?=$this->basePath('img/mzk.png')?>" alt="">
+                </div>
+            </div>
+            <div class="col-md-7 align-self-center">
+                <h1>Děkujeme, že jste si vybrali Moravskou zemskou knihovnu!</h1>
+
+                <p>Pro vystavení čtenářské průkazky, nutné pro fyzické výpůjčky, navštivte půjčovnu v přízemí knihovny.</p>
+
+                <p>Těšíme se na Vaši návštěvu!</p>
+
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">Již nyní můžete z pohodlí domova využívat následující služby:</h2>
+
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-5">
+            <!-- database -->
+            <div class="col text-center mb-3">
+                <div class="card h-100 border-0 rounded-pill box-purple">
+                    <div class="card-body">
+                        <p>
+                            <img class="img-fluid" src="<?=$this->basePath('img/database.png')?>" alt="Elektronické informační zdroje">
+                        </p>
+                        <p class="my-4">
+                            Vzdálený přístup do vybraných elektronických informačních zdrojů
+                        </p>
+                    </div>
+                    <div class="card-footer">
+                        <a class="btn btn-purple" href="#" title="">Prozkoumat</a>
+                    </div>
+                </div>
+            </div>
+            <!-- /database -->
+            <!-- digital library -->
+            <div class="col text-center mb-3">
+                <div class="card h-100 border-0 rounded-pill box-blue">
+                    <div class="card-body">
+                        <p>
+                            <img class="img-fluid" src="<?=$this->basePath('img/digitallibrary.png')?>" alt="Vzdálený přístup">
+                        </p>
+                        <p class="my-4">
+                            Vzdálený přístup do databáze digitalizovaných děl nedostupnýých na trhu (včetně autorsky chráněných děl)
+                        </p>
+                    </div>
+                    <div class="card-footer">
+                        <a class="btn btn-blue" href="#" title="">Prozkoumat</a>
+                    </div>
+                </div>
+            </div>
+            <!-- /digital library -->
+            <!-- catalog -->
+            <div class="col text-center mb-3">
+                <div class="card h-100 border-0 rounded-pill box-cyan">
+                    <div class="card-body">
+                        <p>
+                            <img class="img-fluid" src="<?=$this->basePath('img/catalog.png')?>" alt="Katalog MZK">
+                        </p>
+                        <p class="my-4">
+                            Současně si již také můžete vybírat a objednávat knihy z našeho katalogu.
+                        </p>
+                    </div>
+                    <div class="card-footer">
+                        <a class="btn btn-cyan" href="#" title="">Prozkoumat</a>
+                    </div>
+                </div>
+            </div>
+            <!-- /catalog -->
+        </div>
+    </div>
+</section>

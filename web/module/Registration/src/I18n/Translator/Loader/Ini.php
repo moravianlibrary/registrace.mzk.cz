@@ -39,7 +39,6 @@ class Ini extends AbstractFileLoader
                 $filename
             ));
         }
-
         $iniReader = new IniReader();
         $messages = $iniReader->fromFile($fromIncludePath);
         return new TextDomain($messages);

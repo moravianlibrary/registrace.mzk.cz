@@ -18,6 +18,7 @@ class AjaxControllerFactory
         /** @var UserForm */
         $form = $formElementManager->get(UserForm::class);
         $discountService = $container->get(\Registration\Service\DiscountService::class);
-        return new AjaxController($translator, $form, $discountService);
+        $passwordValidator = $container->get(\Registration\Form\Validator\PasswordValidator::class);
+        return new AjaxController($translator, $form, $discountService, $passwordValidator);
     }
 }

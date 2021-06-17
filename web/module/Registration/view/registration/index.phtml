@@ -1,13 +1,173 @@
-<div>
-    <ul>
-        <li>
-            <a href="/registration/userForm">Vyplnit formulář</a>
-        </li>
-        <li>
-            <a href="/registration/userForm">Vyplnit formulář s převzetím údajů z MojeID</a>
-        </li>
-        <li>
-            <a href="/registration/userForm">Vyplnit formulář s převzetím údajů z BrnoID</a>
-        </li>
-    </ul>
+<div class="page-index">
+
+    <section>
+        <div class="container">
+            <?=$this->flashMessenger()->render();?>
+
+            <h2 class="supertitle">Co získám registrací do <img src="<?=$this->basePath('img/logo-mzk-sign.svg')?>" alt="MZK">?</h2>
+            <div class="row">
+                <div class="col-sm-12 col-md-6 pt-4">
+
+                    <ul class="list-tips">
+                        <li>
+                            <i class="fa fa-2x fa-check-circle text-success"></i>
+                            <span>4,5 milionu knihovních jednotek</span>
+                        </li>
+                        <li>
+                            <i class="fa fa-2x fa-check-circle text-success"></i>
+                            <span>Statisíce digitalizovaných knih, novin, časopisů, starých tisků, map…</span>
+                        </li>
+                        <li>
+                            <i class="fa fa-2x fa-check-circle text-success"></i>
+                            <span>Miliony dalších odborných studií a článků z&nbsp;licencovaných databází</span>
+                        </li>
+                        <li>
+                            <i class="fa fa-2x fa-check-circle text-success"></i>
+                            <span>Od roku 1935 kompletní českou knižní produkci</span>
+                        </li>
+                    </ul>
+
+                    <div>
+                        <a class="btn btn-success text-uppercase" href="#registration">
+                            Zvolit způsob registrace
+                        </a>
+                    </div>
+
+                </div>
+                <div class="col-md-6 d-none d-md-block d-lg-block d-xl-block">
+                    <img src="<?=$this->basePath('img/home.png')?>" alt="">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <ul class="list-tips-small">
+                <li>
+                    <i class="fa fa-book"></i>
+                    <span>Mohu si pujčit knihu domů i&nbsp;do&nbsp;studovny</span>
+                </li>
+                <li>
+                    <i class="fa fa-couch"></i>
+                    <span>Získám příjemné místo ke&nbsp;studiu (i&nbsp;setkávání) od&nbsp;rána do&nbsp;večera, šest dní v&nbsp;týdnu</span>
+                </li>
+                <li>
+                    <i class="fa fa-laptop"></i>
+                    <span>Mohu&nbsp;si z&nbsp;křesla v&nbsp;obýváku prohlížet autorsky chráněné digitalizované dokumenty</span>
+                </li>
+                <li>
+                    <i class="fa fa-users"></i>
+                    <span>Rady odborníků při&nbsp;hledání jakéhokoliv zdroje pro&nbsp;studium, psaní diplomky i&nbsp;jen tak pro&nbsp;zábavu</span>
+                </li>
+                <li>
+                    <i class="fa fa-newspaper"></i>
+                    <span>Přístup k&nbsp;aktuálním vydáním novin a časopisů z&nbsp;celého světa, online i offline, ve studovně i z&nbsp;pohodlí domova</span>
+                </li>
+                <li>
+                    <i class="fa fa-wifi"></i>
+                    <span>WIFI v&nbsp;budově zdarma</span>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="select-registration" id="registration">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-5">
+
+                <!-- mojeID -->
+                <div class="col text-center mb-3">
+                    <div class="card h-100 border-0 rounded-pill card-mojeid">
+                        <div class="card-body">
+                            <p class="h6">Registrace přes</p>
+                            <h2 class="heading-logo"><img src="<?=$this->basePath('img/logo-mojeid.svg')?>" alt="Moje ID" title="Moje ID"></h2>
+                            <p><small>Mám validovaný účet Moje ID (tj.&nbsp;s&nbsp;ověřenou totožností), s&nbsp;nímž je registrace rychlejší a&nbsp;k&nbsp;dokončení není třeba navštívit knihovnu.</small></p>
+                            <p><small>Po zaplacení registračního poplatku kartou online můžete hned využívat vzdálený přístup do licencovaných databází či do digitálních zdrojů.</small></p>
+                            <p class="mb-0">
+                                <a class="btn btn-sm btn-link" href="https://www.mzk.cz/mojeid-v-moravske-zemske-knihovne" title=""><small>Co je účet mojeID?</small></a>
+                                <br>
+                                <a class="btn btn-sm btn-link" href="https://mojeid.cz/registration/" title=""><small>Chci si založit účet mojeID</small></a>
+                            </p>
+                        </div>
+                        <div class="card-footer">
+                            <p class="mb-0">
+                                <a class="btn btn-success text-uppercase" href="<?=$this->escapeHtmlAttr($this->baseUrl)?>/Shibboleth.sso/DS?entityID=<?=urlencode($this->mojeid)?>&target=<?=urlencode($this->baseUrl)?>/registration/userForm%3Fidp%3Dmojeid" title="">Registrovat</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- /mojeID -->
+
+                <!-- BrnoiD -->
+                <? if ($this->brnoIdEnabled) : ?>
+                    <div class="col text-center mb-3">
+                        <div class="card h-100 border-0 rounded-pill card-brnoid">
+                            <div class="card-body">
+                                <p class="h6">Registrace přes</p>
+                                <h2 class="heading-logo"><img src="<?=$this->basePath('img/logo-brnoid.svg')?>" alt="Brno iD" title="Brno iD"></h2>
+                                <p><small>Mám validovaný účet Brno ID full (tj.&nbsp;s&nbsp;ověřenou totožností), s&nbsp;nímž je registrace rychlejší a&nbsp;k&nbsp;dokončení není třeba navštívit knihovnu.</small></p>
+                                <p><small>Po zaplacení registračního poplatku kartou online můžete hned využívat vzdálený přístup do licencovaných databází či do digitálních zdrojů.</small></p>
+                            </div>
+                            <div class="card-footer">
+                                <p>
+                                    <a class="btn btn-success text-uppercase" href="/registration/userForm" title="">Registrovat</a>
+                                </p>
+                                <p class="mb-0">
+                                    <a class="btn btn-sm btn-link" href="" title=""><small>Co je účet Brno iD?</small></a>
+                                    <br>
+                                    <a class="btn btn-sm btn-link" href="" title=""><small>Chci si založit účet Brno iD</small></a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                <? endif; ?>
+                <!-- /BrnoiD -->
+
+                <!-- eduID -->
+                <? if ($this->eduIdEnabled) : ?>
+                    <div class="col text-center mb-3">
+                        <div class="card h-100 border-0 rounded-pill card-eduid">
+                            <div class="card-body">
+                                <p class="h6">Registrace přes univerzitní účet</p>
+                                <p class="text-center">Studenti a pedagogové vyberte níže svou univerzitu:</p>
+                                <p>
+                                    <select class="selectpicker" data-width="100%" data-style="btn-light">
+                                        <option data-content='<img class="selectpicker-img" src="https://cdn.muni.cz/Css/_Shared/Favicons/000000.ico"> Masarykova univerzita' value="muni" selected></option>
+                                    </select>
+                                </p>
+                                <p><small>Po zaplacení registračního poplatku kartou online můžete hned využívat vzdálený přístup do licencovaných databází či do digitálních zdrojů.</small></p>
+                            </div>
+                            <div class="card-footer">
+                                <p class="mb-0">
+                                    <a class="btn btn-success text-uppercase" href="<?=$this->escapeHtmlAttr($this->baseUrl)?>/Shibboleth.sso/DS?entityID=https://idp2.ics.muni.cz/idp/shibboleth&target=<?=urlencode($this->baseUrl)?>/registration/userForm%3Fidp%3Deduid" title="">Registrovat</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                <? endif; ?>
+                <!-- /eduID -->
+
+                <!-- MZK -->
+                <div class="col text-center mb-3">
+                    <div class="card h-100 border-0 rounded-pill card-mzk">
+                        <div class="card-body">
+                            <p class="h6">Předregistrace</p>
+                            <h2 class="heading-logo"><img src="<?=$this->basePath('img/logo-mzk.svg')?>" alt="Moravská zemská knihovna" title="Moravská zemská knihovna"></h2>
+                            <p><small>K dokončení registrace bude nutné navštívit knihovnu kvůli ověření totožnosti.</small></p>
+
+                        </div>
+                        <div class="card-footer">
+                            <p class="mb-0">
+                                <a class="btn btn-success text-uppercase" href="/registration/userForm" title="">Registrovat</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- /MZK -->
+
+            </div>
+        </div>
+    </section>
+
 </div>

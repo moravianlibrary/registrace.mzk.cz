@@ -7,26 +7,35 @@
     <? if ($element instanceof \Laminas\Form\Element\DateSelect): ?>
         <?php
         $options = $element->getOptions();
-        $labelClass = 'form-label';
         $required = isset($options['required']) && $options['required'];
-        if ($required) {
-            $labelClass .= ' required';
-        }
-        $element->setLabelAttributes(['class' => $labelClass]);
+        $element->setLabelAttributes(['class' => 'form-label']);
 
+        $elementClass = 'form-control';
+        $readonly = $element->getAttribute('readonly');
+        if ($readonly) {
+            $elementClass .= ' readonly';
+        }
+        if (!empty($element->getMessages())) {
+            $elementClass .= ' is-invalid';
+        }
         $dayElement = $element->getDayElement()
-            ->setAttribute('class', 'form-control');
+            ->setAttribute('class', $elementClass);
 
         $monthElement = $element->getMonthElement()
-            ->setAttribute('class', 'form-control');
+            ->setAttribute('class', $elementClass);
 
         $yearElement = $element->getYearElement()
-            ->setAttribute('class', 'form-control');
+            ->setAttribute('class', $elementClass);
         ?>
         <div class="form-group">
-            <label class="form-label<?= $required ? ' required' : '' ?>" for="<?= $element->getName() ?>">
+            <label class="form-label<?= $required ? ' required' : '' ?><?= $readonly ? ' readonly' : '' ?>" for="<?= $element->getName() ?>">
                 <?=$this->translate($element->getLabel()); ?>:<?= $required ? '*' : null ?>
             </label>
+            <?php if($element->hasAttribute('data-help-icon')): ?>
+                <span class="help-context" data-toggle="popover" data-placement="top" data-content="<?= $this->translate($element->getAttribute('data-help-icon'))?>">
+                    <i class="fa fa-question-circle text-muted" aria-hidden="true"></i>
+                </span>
+            <?php endif ?>
             <div class="form-inline">
                 <div class="form-group">
                     <div>
@@ -35,21 +44,33 @@
                         <?=$this->formElement($monthElement) ?>
                         <?=$this->formElement($yearElement) ?>
                     </div>
-                    <?=$this->formElementErrors()->render($element, ['class' => 'form-text']) ?>
+                    <?=$this->formElementErrors()->render($element, ['class' => 'form-text error']) ?>
                 </div>
             </div>
         </div>
 
     <? elseif ($element instanceof \Laminas\Form\Element\Checkbox): ?>
         <?php
+        $elementClass = 'form-check-input';
+        if (!empty($element->getMessages())) {
+            $elementClass .= ' is-invalid';
+        }
         $element
             ->setLabelAttributes(['class' => 'form-check-label'])
-            ->setAttribute('class', 'form-check-input')
+            ->setAttribute('class', $elementClass)
             ->setAttribute('id', $element->getName());
         ?>
         <div class="form-group form-check">
             <?=$this->formElement($element)?>
             <?=$this->formLabel($element)?>
+            <?php if($element->hasAttribute('data-help-icon')): ?>
+                <span class="help-context" data-toggle="popover" data-placement="top" data-content="<?= $this->translate($element->getAttribute('data-help-icon'))?>">
+                    <i class="fa fa-question-circle text-muted" aria-hidden="true"></i>
+                </span>
+            <?php endif ?>
+            <?php if($element->hasAttribute('data-help')): ?>
+                <small class="form-text text-muted"><?= $this->translate($element->getAttribute('data-help'))?></small>
+            <?php endif; ?>
         </div>
 
     <? else: ?>
@@ -57,11 +78,15 @@
         $options = $element->getOptions();
         $labelClass = 'form-label';
         $required = isset($options['required']) && $options['required'];
-        if ($required) {
-            $labelClass .= ' required';
-        }
         $element->setLabelAttributes(['class' => $labelClass]);
-        $element->setAttribute('class', 'form-control');
+        $class = 'form-control';
+        if ($element->getAttribute('readonly')) {
+            $class .= ' readonly';
+        }
+        if (!empty($element->getMessages())) {
+            $class .= ' is-invalid';
+        }
+        $element->setAttribute('class', $class);
         $element->setAttribute('id', $element->getName());
         ?>
         <div class="form-group<?= $required ? ' required' : '' ?>">
@@ -69,8 +94,13 @@
             <label class="form-label<?= $required ? ' required' : '' ?>" for="<?= $element->getName() ?>">
                 <?=$this->translate($element->getLabel()); ?>:<?= $required ? '*' : null ?>
             </label>
+            <?php if($element->hasAttribute('data-help-icon')): ?>
+                <span class="help-context" data-toggle="popover" data-placement="top" data-content="<?= $this->translate($element->getAttribute('data-help-icon'))?>">
+                    <i class="fa fa-question-circle text-muted" aria-hidden="true"></i>
+                </span>
+            <?php endif ?>
             <?= $this->formElement($element) ?>
-            <?= $this->formElementErrors()->render($element, ['class' => 'form-text']) ?>
+            <?=$this->formElementErrors()->render($element, ['class' => 'form-text error']) ?>
         </div>
     <? endif; ?>
 <? endif; ?>

@@ -19,17 +19,42 @@
     <md:AttributeConsumingService index="0">
       <md:ServiceName xml:lang="en">On-line registration to Moravian library</md:ServiceName>
       <md:ServiceName xml:lang="cs">On-line registrace do Moravské zemské knihovny</md:ServiceName>
+      <md:RequestedAttribute FriendlyName="eduPersonPrincipalName" Name="urn:oid:1.3.6.1.4.1.5923.1.1.1.6" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/>
+      <md:RequestedAttribute FriendlyName="eduPersonUniqueId" Name="urn:oid:1.3.6.1.4.1.5923.1.1.1.13" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/>
+      <md:RequestedAttribute FriendlyName="eduPersonTargetedID" Name="urn:oid:1.3.6.1.4.1.5923.1.1.1.10" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/>
       <md:RequestedAttribute FriendlyName="firstName" Name="urn:oid:2.5.4.42" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/>
       <md:RequestedAttribute FriendlyName="lastName" Name="urn:oid:2.5.4.4" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/>
-      <md:RequestedAttribute FriendlyName="mail" Name="urn:oid:0.9.2342.19200300.100.1.3" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
-      <md:RequestedAttribute FriendlyName="street" Name="urn:oid:2.5.4.9" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/>
-      <md:RequestedAttribute FriendlyName="city" Name="urn:oid:2.5.4.7" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/>
-      <md:RequestedAttribute FriendlyName="postcode" Name="urn:oid:2.5.4.17" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/>
       <md:RequestedAttribute FriendlyName="phone" Name="urn:oid:2.5.4.20" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
       <md:RequestedAttribute FriendlyName="birth" Name="urn:oid:1.3.6.1.4.1.2428.90.1.3" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/>
+      <md:RequestedAttribute FriendlyName="mail" Name="urn:oid:0.9.2342.19200300.100.1.3" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
+
+      <!-- Permanent address -->
+      <md:RequestedAttribute FriendlyName="mojeIdStreet" Name="http://specs.nic.cz/attr/addr/main/street" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/>
+      <md:RequestedAttribute FriendlyName="mojeIdStreet1" Name="http://specs.nic.cz/attr/addr/main/street1" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/>
+      <md:RequestedAttribute FriendlyName="mojeIdStreet2" Name="http://specs.nic.cz/attr/addr/main/street2" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/>
+      <md:RequestedAttribute FriendlyName="mojeIdCity" Name="http://specs.nic.cz/attr/addr/main/city" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/>
+      <md:RequestedAttribute FriendlyName="mojeIdPostcode" Name="http://specs.nic.cz/attr/addr/main/pc" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/>
+      <md:RequestedAttribute FriendlyName="mojeIdState" Name="http://specs.nic.cz/attr/addr/main/sp" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/>
+      <md:RequestedAttribute FriendlyName="mojeIdCountry" Name="http://specs.nic.cz/attr/addr/main/cc" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/>
+
+      <!-- Contact (correspondence) address -->
+      <md:RequestedAttribute FriendlyName="mojeIdContactStreet" Name="http://specs.nic.cz/attr/addr/mail/street" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
+      <md:RequestedAttribute FriendlyName="mojeIdContactStreet1" Name="http://specs.nic.cz/attr/addr/mail/street1" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
+      <md:RequestedAttribute FriendlyName="mojeIdContactStreet2" Name="http://specs.nic.cz/attr/addr/mail/street2" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
+      <md:RequestedAttribute FriendlyName="mojeIdContactCity" Name="http://specs.nic.cz/attr/addr/mail/city" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
+      <md:RequestedAttribute FriendlyName="mojeIdContactPostcode" Name="http://specs.nic.cz/attr/addr/mail/pc" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
+      <md:RequestedAttribute FriendlyName="mojeIdContactState" Name="http://specs.nic.cz/attr/addr/mail/sp" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
+      <md:RequestedAttribute FriendlyName="mojeIdContactCountry" Name="http://specs.nic.cz/attr/addr/mail/cc" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
+      <md:RequestedAttribute FriendlyName="mojeIdContactVerified" Name="http://specs.nic.cz/attr/addr/mail/verified" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
+
+      <!-- MojeId attributes -->
       <md:RequestedAttribute FriendlyName="mojeIdIdentityCardNumber" Name="http://specs.nic.cz/attr/contact/ident/card" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/>
+      <md:RequestedAttribute FriendlyName="mojeIdIdentityPassNumber" Name="http://specs.nic.cz/attr/contact/ident/pass" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/>
+      <md:RequestedAttribute FriendlyName="mojeIdIsicNumber" Name="http://specs.nic.cz/attr/contact/isic" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/>
       <md:RequestedAttribute FriendlyName="mojeIdValid" Name="http://specs.nic.cz/attr/contact/valid" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/>
       <md:RequestedAttribute FriendlyName="mojeIdStatus" Name="http://specs.nic.cz/attr/contact/status" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/>
+      <md:RequestedAttribute FriendlyName="mojeIdStudent" Name="http://specs.nic.cz/attr/contact/student" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/>
+
     </md:AttributeConsumingService>
 
   </md:SPSSODescriptor>

@@ -14,10 +14,13 @@
     </InProcess>
 
     <!-- Only one listener can be defined, to connect in process modules to shibd. -->
-    <UnixListener address="shibd.sock"/>
+    <TCPListener address="127.0.0.1" port="1600" acl="127.0.0.1"/>
 
     <!-- This set of components stores sessions and other persistent data in daemon memory. -->
-    <StorageService type="Memory" id="mem" cleanupInterval="900"/>
+    <!-- <StorageService type="Memory" id="mem" cleanupInterval="900"/> -->
+    <StorageService type="MEMCACHE" id="mem" prefix="shibd:">
+        <Hosts>${MEMCACHED_SERVICE}</Hosts>
+    </StorageService>
     <SessionCache type="StorageService" StorageService="mem" cacheTimeout="3600" inprocTimeout="900" cleanupInterval="900"/>
     <ReplayCache StorageService="mem"/>
     <ArtifactMap artifactTTL="180"/>
@@ -138,7 +141,7 @@
             <Handler type="Session" Location="/Session" showAttributeValues="true"/>
 
             <!-- Metadata -->
-            <Handler type="MetadataGenerator" Location="/Metadata" signing="false" template="/etc/shibboleth/template.xml"/>
+            <Handler type="MetadataGenerator" Location="/EduIDMetadata" signing="false" template="/etc/shibboleth/template-eduid.xml"/>
 
             <Handler type="MetadataGenerator" Location="/MojeIDMetadata" signing="false" template="/etc/shibboleth/template-mojeid.xml"/>
 
@@ -172,6 +175,14 @@
 
             <MetadataProvider type="XML" uri="https://metadata.cesnet.cz/entities/extidp.cesnet.cz"
                               backingFilePath="/etc/shibboleth/eduid-extern-metadata.xml"
+                              reloadInterval="7200"/>
+
+            <MetadataProvider type="XML" uri="https://mojeid.regtest.nic.cz/saml/idp.xml"
+                              backingFilePath="/etc/shibboleth/mojeid-test-metadata.xml"
+                              reloadInterval="7200"/>
+
+            <MetadataProvider type="XML" uri="https://mojeid.cz/saml/idp.xml"
+                              backingFilePath="/etc/shibboleth/mojeid-production-metadata.xml"
                               reloadInterval="7200"/>
 
         </MetadataProvider>

@@ -10,6 +10,7 @@ use Laminas\Form\Element\DateSelect;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
 use Registration\Form\UserForm;
+use Registration\Form\Validator\PasswordValidator;
 use Registration\Service\DiscountService;
 
 class AjaxController extends AbstractActionController
@@ -21,11 +22,16 @@ class AjaxController extends AbstractActionController
 
     protected $discountService;
 
-    public function __construct(Translator $translator, UserForm $form, DiscountService $discountService)
+    /** @var PasswordValidator */
+    protected $passwordValidator;
+
+    public function __construct(Translator $translator, UserForm $form,
+                                DiscountService $discountService, PasswordValidator $passwordValidator)
     {
         $this->translator = $translator;
         $this->form = $form;
         $this->discountService = $discountService;
+        $this->passwordValidator = $passwordValidator;
     }
 
     public function discountAction()
@@ -58,6 +64,23 @@ class AjaxController extends AbstractActionController
             }
         }
         return $this->getAjaxResponse($errors);
+    }
+
+    public function validatePasswordAction()
+    {
+        $password = $this->params()->fromPost('password');
+        $valid = $this->passwordValidator->isValid($password);
+        $result = [];
+        if ($valid) {
+            $result = [ 'status' => 'ok'];
+        } else {
+            $messages = $this->passwordValidator->getMessages();
+            $result = [
+                'status' => 'error',
+                'messages' => $messages,
+            ];
+        }
+        return $this->getAjaxResponse($result);
     }
 
     /**
