@@ -24,6 +24,9 @@ $my-btn-blue-color: $my-white;
 $my-btn-cyan-bg: #00bdd7;
 $my-btn-cyan-color: $my-white;
 
+$my-eduid-bg: #e60000;
+$my-eduid-color: #ffffff;
+
 // tags:
 html {
   font-size: 16px
@@ -159,6 +162,23 @@ ul.error {
 .card-brnoid {
   background-color: #de2a32;
   color: #f3c0c1;
+
+  .h6 {
+    color: $my-white;
+  }
+
+  .btn-link {
+    color: #f3c0c1;
+  }
+
+  .btn-link:hover {
+    color: $my-white;
+  }
+}
+
+.card-eduid {
+  background-color: $my-eduid-bg;
+  color: $my-eduid-color;
 
   .h6 {
     color: $my-white;

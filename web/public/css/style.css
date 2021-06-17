@@ -133,6 +133,20 @@ ul.error {
   color: #ffffff;
 }
 
+.card-eduid {
+  background-color: #e60000;
+  color: #ffffff;
+}
+.card-eduid .h6 {
+  color: #ffffff;
+}
+.card-eduid .btn-link {
+  color: #f3c0c1;
+}
+.card-eduid .btn-link:hover {
+  color: #ffffff;
+}
+
 .card-mzk {
   background-color: #ffffff;
   color: #a1a1a1;
