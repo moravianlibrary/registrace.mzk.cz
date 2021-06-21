@@ -127,8 +127,8 @@
                 <!-- eduID -->
                 <? if ($this->eduIdEnabled) : ?>
                     <div class="col text-center mb-3">
-                        <div class="card h-100 border-0 rounded-pill card-eduid">
-                            <form method="get" action="/Shibboleth.sso/DS">
+                        <form class="h-100" method="get" action="/Shibboleth.sso/DS">
+                            <div class="card h-100 border-0 rounded-pill card-eduid">
                                 <div class="card-body">
                                     <input type="hidden" name="target" value="<?=$this->escapeHtmlAttr($this->baseUrl)?>/registration/userForm?idp=eduid"/>
                                     <p class="h6">Registrace přes univerzitní účet</p>
@@ -141,12 +141,12 @@
                                     <p><small>Po zaplacení registračního poplatku kartou online můžete hned využívat vzdálený přístup do licencovaných databází či do digitálních zdrojů.</small></p>
                                 </div>
                                 <div class="card-footer">
-                                    <p>
+                                    <p class="mb-0">
                                         <input class="btn btn-success text-uppercase" type="submit" value="Registrovat"/>
                                     </p>
                                 </div>
-                            </form>
-                        </div>
+                            </div>
+                        </form>
                     </div>
                 <? endif; ?>
                 <!-- /eduID -->
