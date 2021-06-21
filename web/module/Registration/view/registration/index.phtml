@@ -128,21 +128,24 @@
                 <? if ($this->eduIdEnabled) : ?>
                     <div class="col text-center mb-3">
                         <div class="card h-100 border-0 rounded-pill card-eduid">
-                            <div class="card-body">
-                                <p class="h6">Registrace přes univerzitní účet</p>
-                                <p class="text-center">Studenti a pedagogové vyberte níže svou univerzitu:</p>
-                                <p>
-                                    <select class="selectpicker" data-width="100%" data-style="btn-light">
-                                        <option data-content='<img class="selectpicker-img" src="https://cdn.muni.cz/Css/_Shared/Favicons/000000.ico"> Masarykova univerzita' value="muni" selected></option>
-                                    </select>
-                                </p>
-                                <p><small>Po zaplacení registračního poplatku kartou online můžete hned využívat vzdálený přístup do licencovaných databází či do digitálních zdrojů.</small></p>
-                            </div>
-                            <div class="card-footer">
-                                <p class="mb-0">
-                                    <a class="btn btn-success text-uppercase" href="<?=$this->escapeHtmlAttr($this->baseUrl)?>/Shibboleth.sso/DS?entityID=https://idp2.ics.muni.cz/idp/shibboleth&target=<?=urlencode($this->baseUrl)?>/registration/userForm%3Fidp%3Deduid" title="">Registrovat</a>
-                                </p>
-                            </div>
+                            <form method="get" action="/Shibboleth.sso/DS">
+                                <div class="card-body">
+                                    <input type="hidden" name="target" value="<?=$this->escapeHtmlAttr($this->baseUrl)?>/registration/userForm?ipd=eduid"/>
+                                    <p class="h6">Registrace přes univerzitní účet</p>
+                                    <p class="text-center">Studenti a pedagogové vyberte níže svou univerzitu:</p>
+                                    <p>
+                                        <select class="selectpicker" data-width="100%" data-style="btn-light" name="entityID">
+                                            <option data-content='<img class="selectpicker-img" src="https://cdn.muni.cz/Css/_Shared/Favicons/000000.ico"> Masarykova univerzita' value="https://idp2.ics.muni.cz/idp/shibboleth" selected></option>
+                                        </select>
+                                    </p>
+                                    <p><small>Po zaplacení registračního poplatku kartou online můžete hned využívat vzdálený přístup do licencovaných databází či do digitálních zdrojů.</small></p>
+                                </div>
+                                <div class="card-footer">
+                                    <p>
+                                        <input class="btn btn-success text-uppercase" type="submit" value="Registrovat"/>
+                                    </p>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 <? endif; ?>
