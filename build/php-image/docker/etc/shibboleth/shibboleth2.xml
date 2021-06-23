@@ -143,8 +143,6 @@
             <!-- Metadata -->
             <Handler type="MetadataGenerator" Location="/EduIDMetadata" signing="false" template="/etc/shibboleth/template-eduid.xml"/>
 
-            <Handler type="MetadataGenerator" Location="/MojeIDMetadata" signing="false" template="/etc/shibboleth/template-mojeid.xml"/>
-
         </Sessions>
 
         <!--
