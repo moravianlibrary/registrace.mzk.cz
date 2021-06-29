@@ -107,13 +107,13 @@ ul.error {
 
 .card-mojeid {
   background-color: #404040;
-  color: #9e9e9e;
+  color: #e6e6e6;
 }
 .card-mojeid .h6 {
   color: #ffffff;
 }
 .card-mojeid .btn-link {
-  color: #9e9e9e;
+  color: #bfbfbf;
 }
 .card-mojeid .btn-link:hover {
   color: #ffffff;
@@ -135,7 +135,7 @@ ul.error {
 
 .card-eduid {
   background-color: #e60000;
-  color: #ffffff;
+  color: #e4e4e4;
 }
 .card-eduid .h6 {
   color: #ffffff;
@@ -149,7 +149,7 @@ ul.error {
 
 .card-mzk {
   background-color: #ffffff;
-  color: #a1a1a1;
+  color: #4d4d4d;
 }
 .card-mzk .h6 {
   color: #504b55;
