@@ -24,7 +24,7 @@ class EduId implements IdentityProviderInterface
                 'lastName' => $this->get($request, 'lastName'),
                 'email' => $this->get($request, 'mail'),
                 'phone' => $this->get($request, 'phone'),
-                'birth' => $this->get($request, 'birth'),
+                'birth' => $this->parseDate($this->get($request, 'schacDateOfBirth')),
             ],
             'permanentAddress' => [
                 'street' => $this->get($request, 'street'),
@@ -35,6 +35,13 @@ class EduId implements IdentityProviderInterface
         ];
         $result['verified'] = $this->hasAllRequiredAttributes($request);
         return $result;
+    }
+
+    protected function parseDate($date)
+    {
+        return substr($date, 0, 4)
+            . '-' .substr($date, 4, 2)
+            . '-' .substr($date, 6, 2);
     }
 
     protected function get(Request $request, string $variable)
