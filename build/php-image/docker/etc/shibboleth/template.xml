@@ -56,7 +56,6 @@
       <md:RequestedAttribute FriendlyName="mojeIdValid" Name="http://specs.nic.cz/attr/contact/valid" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/>
       <md:RequestedAttribute FriendlyName="mojeIdStatus" Name="http://specs.nic.cz/attr/contact/status" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/>
       <md:RequestedAttribute FriendlyName="mojeIdStudent" Name="http://specs.nic.cz/attr/contact/student" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/>
-      <md:RequestedAttribute FriendlyName="mojeIdContactVerified" Name="http://specs.nic.cz/attr/addr/mail/verified" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/>
 
       <!-- MojeId attributes - contact (correspondence) address -->
       <md:RequestedAttribute FriendlyName="mojeIdContactStreet" Name="http://specs.nic.cz/attr/addr/mail/street" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
