@@ -35,12 +35,12 @@ Build PHP image:
     changes:
       - build/php-image/*
       - build/php-image/**/*
-      #- .gitlab-ci.yml
+      - .gitlab-ci.yml
 
-  cache:
-    key: build # all shared
-    paths:
-      - .buildah
+  #cache:
+  #  key: build # all shared
+  #  paths:
+  #    - .buildah
 
   before_script:
     # try to load image from cache registry
