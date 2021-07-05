@@ -35,7 +35,7 @@ Build PHP image:
     changes:
       - build/php-image/*
       - build/php-image/**/*
-      - .gitlab-ci.yml
+      #- .gitlab-ci.yml
 
   cache:
     key: build # all shared
