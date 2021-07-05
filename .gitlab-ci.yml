@@ -78,10 +78,10 @@ Build app image:
       dotenv:
         - .artifacts/image_deploy.env
 
-  cache:
-    key: build # all shared
-    paths:
-      - .buildah
+  #cache:  # cache is slow at the moment
+  #  key: build # all shared
+  #  paths:
+  #    - .buildah
 
   before_script:
     - mkdir -p .artifacts
