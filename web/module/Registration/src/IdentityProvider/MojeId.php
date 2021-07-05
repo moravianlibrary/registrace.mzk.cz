@@ -12,10 +12,10 @@ class MojeId implements IdentityProviderInterface
         'lastName',
         'birth',
         'mojeIdIdentityCardNumber',
-        'mojeIdStreet',
-        'mojeIdCity',
-        'mojeIdPostcode',
-        'mojeIdCountry',
+        'street',
+        'city',
+        'postcode',
+        'country',
     ];
 
     /** @var array */
@@ -47,10 +47,10 @@ class MojeId implements IdentityProviderInterface
                 'identification' => $this->get($request, 'mojeIdIdentityCardNumber'),
             ],
             'permanentAddress' => [
-                'street' => $this->get($request, 'mojeIdStreet'),
-                'city' => $this->get($request, 'mojeIdCity'),
-                'postcode' => $this->get($request, 'mojeIdPostcode'),
-                'country' => $this->get($request, 'mojeIdCountry'),
+                'street' => $this->get($request, 'street'),
+                'city' => $this->get($request, 'city'),
+                'postcode' => $this->get($request, 'postcode'),
+                'country' => $this->get($request, 'country'),
             ],
         ];
         $verified = strtolower($this->get($request, 'mojeIdValid')) == 'true';

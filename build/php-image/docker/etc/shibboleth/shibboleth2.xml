@@ -132,18 +132,13 @@
                 Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP"/>
 
             <!-- Extension service that generates "approximate" metadata based on SP configuration. -->
-            <Handler type="MetadataGenerator" Location="/Metadata" signing="false"/>
+            <Handler type="MetadataGenerator" Location="/Metadata" signing="false" template="/etc/shibboleth/template.xml"/>
 
             <!-- Status reporting service. -->
             <Handler type="Status" Location="/Status" acl="127.0.0.1"/>
 
             <!-- Session diagnostic service. -->
             <Handler type="Session" Location="/Session" showAttributeValues="true"/>
-
-            <!-- Metadata -->
-            <Handler type="MetadataGenerator" Location="/EduIDMetadata" signing="false" template="/etc/shibboleth/template-eduid.xml"/>
-
-            <Handler type="MetadataGenerator" Location="/MojeIDMetadata" signing="false" template="/etc/shibboleth/template-mojeid.xml"/>
 
         </Sessions>
 
