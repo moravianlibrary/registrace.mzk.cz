@@ -188,7 +188,7 @@ Deploy devel image:
 Deploy production image:
   extends: .deploy_image
   variables: 
-    DEPLOY_REPO_BRANCH: main
+    DEPLOY_REPO_BRANCH: master
     DEPLOY_REPO_DIR: production
   stage: deploy
   environment:
