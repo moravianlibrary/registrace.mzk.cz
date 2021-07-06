@@ -51,7 +51,6 @@ Build PHP image:
     - buildah build-using-dockerfile
           -t ${PHP_IMAGE_NAME}:build
           -f build/php-image/Dockerfile
-          --squash
           --label cz.knihovny.commit_id=${CI_COMMIT_SHORT_SHA}
           build/php-image
     # if on merge request, store the image
