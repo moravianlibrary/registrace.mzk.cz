@@ -37,10 +37,10 @@ Build PHP image:
       - build/php-image/**/*
       - .gitlab-ci.yml
 
-  cache:
-    key: build # all shared
-    paths:
-      - .buildah
+  #cache:
+  #  key: build # all shared
+  #  paths:
+  #    - .buildah
 
   before_script:
     # try to load image from cache registry
@@ -51,7 +51,6 @@ Build PHP image:
     - buildah build-using-dockerfile
           -t ${PHP_IMAGE_NAME}:build
           -f build/php-image/Dockerfile
-          --squash
           --label cz.knihovny.commit_id=${CI_COMMIT_SHORT_SHA}
           build/php-image
     # if on merge request, store the image
@@ -78,10 +77,10 @@ Build app image:
       dotenv:
         - .artifacts/image_deploy.env
 
-  cache:
-    key: build # all shared
-    paths:
-      - .buildah
+  #cache:  # cache is slow at the moment
+  #  key: build # all shared
+  #  paths:
+  #    - .buildah
 
   before_script:
     - mkdir -p .artifacts
@@ -139,7 +138,7 @@ Build app image:
           echo "APP_IMAGE_TAG=${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}" >> .artifacts/image_deploy.env;
        fi
 
-Deploy devel image:
+.deploy_image:
   stage: deploy
   image: "${DEPLOY_JOB_IMAGE}"
   only:
@@ -148,8 +147,6 @@ Deploy devel image:
   needs:
     - Build app image
 
-  environment:
-    name: devel
   variables:
     APP_IMAGE_NAME: docker.app.knihovny.cz/${IMAGE_NAME}
     APP_IMAGE_TAG: build
@@ -159,7 +156,8 @@ Deploy devel image:
     - mkdir ${HOME}/.ssh; install -m 0600 ${K8S_DEPLOY_KEY} ${HOME}/.ssh/id_rsa
     - ssh-keyscan gitlab.mzk.cz >> ${HOME}/.ssh/known_hosts
     - git clone git@gitlab.mzk.cz:knihovny.cz/deploy/registration.git registration
-    - cd registration/devel;
+    - cd registration/${DEPLOY_REPO_DIR};
+    - git checkout ${DEPLOY_REPO_BRANCH}
     - kustomize edit set image registration=${APP_IMAGE_NAME}:${APP_IMAGE_TAG}
     - git config user.name "${GITLAB_USER_NAME} by Gitlab Robot"
     - git config user.email "${GITLAB_USER_EMAIL}"
@@ -175,14 +173,26 @@ Deploy devel image:
         git commit --file ${TMP_DIR}/commit-message
     - git push
 
-Deploy master image:
+Deploy devel image:
+  extends: .deploy_image
+  only:
+    refs:
+      - /^devel/
+  environment:
+    name: devel
+  variables: 
+    DEPLOY_REPO_BRANCH: devel
+    DEPLOY_REPO_DIR: devel
+
+Deploy production image:
+  extends: .deploy_image
+  variables: 
+    DEPLOY_REPO_BRANCH: master
+    DEPLOY_REPO_DIR: production
   stage: deploy
+  environment:
+    name: production
   only:
     refs:
       - master
       - main
-  environment:
-    name: production
-  script:
-    - |
-      echo "TODO: Add some deploy code here"
