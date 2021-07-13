@@ -1,8 +1,10 @@
 <?php
+$verified = $this->verified;
+$finished = $this->finished;
 $discount = $this->discount;
 $online = $discount['online'];
 $price = $discount['price'];
-$paymentLink = ($online && $price > 0);
+$paymentLink = ($verified && $online && $price > 0);
 ?>
 
 <?=$this->render('steps.phtml', ['step' => 2]) ?>
@@ -40,7 +42,7 @@ $paymentLink = ($online && $price > 0);
     </div>
 </section>
 
-<?php if (!$this->finished): ?>
+<?php if (!$finished): ?>
     <section class="bg-info-light">
         <div class="container text-center">
             <p>Na základě vámi vyplněných údajů činí roční registrační poplatek:</p>
