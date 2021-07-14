@@ -47,6 +47,8 @@ class DiscountService
     public function getAvailable(?UserForm $user)
     {
         $age = ($user != null)? $user->getAge() : self::DEFAULT_AGE;
+        $student = ($user != null)? $user->get('discountEntitlement')
+                ->getValue() == 'student' : false;
         if ($age < self::MIN_AGE) {
             return [];
         }
@@ -64,7 +66,11 @@ class DiscountService
                 ($preferred == null
                     || $preferred['price'] > $discount['price']
                     || $preferred == $discount)) {
-                $discount['online'] = $verified && $discount['online'];
+                if ($discount['student'] ?? false) {
+                    $discount['online'] = $student && $verified;
+                } else {
+                    $discount['online'] = $verified && $discount['online'];
+                }
                 $discounts[$code] = $discount;
             }
         }

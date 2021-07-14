@@ -70,6 +70,8 @@ class RegistrationController extends AbstractController
             $this->getLogger()->info("Data from post:\n" . print_r($request->getPost()->toArray(), true));
             $data = $request->getPost()->toArray();
         }
+        $data['verified'] = 'false';
+        $data['discountEntitlement'] = 'none';
         $verified = false;
         $auth = $request->getQuery('idp');
         if ($auth != null) {
@@ -93,7 +95,6 @@ class RegistrationController extends AbstractController
                 $data = array_replace_recursive($data, $identity);
             }
         }
-        $data['verified'] = $verified ? 'true' : 'false';
         $this->getLogger()->info("Data after merge:\n" . print_r($data, true));
         $this->form->setData($data);
         if ($request->isPost() && $this->form->isValid()) {

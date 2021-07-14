@@ -84,6 +84,10 @@ class UserForm extends Form implements InputFilterProviderInterface
             'type' => Hidden::class,
         ]);
         $this->add([
+            'name' => 'discountEntitlement',
+            'type' => Hidden::class,
+        ]);
+        $this->add([
             'name' => 'submit',
             'type' => 'Submit',
             'attributes' => [
