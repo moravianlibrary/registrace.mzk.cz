@@ -93,6 +93,7 @@ class RegistrationController extends AbstractController
                 $data = array_replace_recursive($data, $identity);
             }
         }
+        $data['verified'] = $verified ? 'true' : 'false';
         $this->getLogger()->info("Data after merge:\n" . print_r($data, true));
         $this->form->setData($data);
         if ($request->isPost() && $this->form->isValid()) {
