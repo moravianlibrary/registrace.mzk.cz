@@ -18,12 +18,12 @@ class EduId implements IdentityProviderInterface
 
     public function identify(Request $request)
     {
+        // required attributes
         $result = [
             'user' => [
                 'firstName' => $this->get($request, 'firstName'),
                 'lastName' => $this->get($request, 'lastName'),
                 'email' => $this->get($request, 'mail'),
-                'phone' => $this->get($request, 'phone'),
                 'birth' => $this->parseDate($this->get($request, 'schacDateOfBirth')),
             ],
             'permanentAddress' => [
@@ -33,6 +33,12 @@ class EduId implements IdentityProviderInterface
                 'country' => $this->get($request, 'country'),
             ],
         ];
+        // optional attributes
+        $phone = $this->get($request, 'phone');
+        if ($phone != null) {
+            $result['user']['phone'] = $phone;
+        }
+        // verification
         $result['verified'] = $this->hasAllRequiredAttributes($request);
         return $result;
     }
@@ -46,7 +52,7 @@ class EduId implements IdentityProviderInterface
 
     protected function get(Request $request, string $variable)
     {
-        return $request->getServer($variable);
+        return $request->getServer($variable, null);
     }
 
     protected function hasAllRequiredAttributes(Request $request)

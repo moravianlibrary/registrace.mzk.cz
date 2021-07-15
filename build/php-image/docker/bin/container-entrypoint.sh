@@ -2,7 +2,12 @@
 
 # read shibboleth private key from secrets
 if [ ! -f "/etc/shibboleth/sp-key.pem" ] && [ -f "/etc/secrets/sp-key.pem" ]; then
-  ln -s  "/etc/secrets/sp-key.pem" "/etc/shibboleth/sp-key.pem"
+  ln -s "/etc/secrets/sp-key.pem" "/etc/shibboleth/sp-key.pem"
+fi
+
+# create symlink to shibboleth public key from configuration
+if [ ! -f "/etc/shibboleth/sp-cert.pem" ] && [ -f "/var/www/data/registration/config/sp-cert.pem" ]; then
+  ln -s "/var/www/data/registration/config/sp-cert.pem" "/etc/shibboleth/sp-cert.pem"
 fi
 
 # configure shibboleth and apache

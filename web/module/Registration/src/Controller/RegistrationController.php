@@ -70,6 +70,8 @@ class RegistrationController extends AbstractController
             $this->getLogger()->info("Data from post:\n" . print_r($request->getPost()->toArray(), true));
             $data = $request->getPost()->toArray();
         }
+        $data['verified'] = 'false';
+        $data['discountEntitlement'] = 'none';
         $verified = false;
         $auth = $request->getQuery('idp');
         if ($auth != null) {

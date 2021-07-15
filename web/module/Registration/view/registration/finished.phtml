@@ -1,8 +1,10 @@
 <?php
+$verified = $this->verified;
+$finished = $this->finished;
 $discount = $this->discount;
 $online = $discount['online'];
 $price = $discount['price'];
-$paymentLink = ($online && $price > 0);
+$paymentLink = ($verified && $online && $price > 0);
 ?>
 
 <?=$this->render('steps.phtml', ['step' => 2]) ?>
@@ -18,9 +20,11 @@ $paymentLink = ($online && $price > 0);
             </div>
             <div class="col-md-7 align-self-center">
                 <h1>Gratulujeme!</h1>
-                <p>
-                    <strong>Vaše platba proběhla úspěšně.</strong>
-                </p>
+                <?php if ($price > 0 && $this->finished): ?>
+                    <p>
+                        <strong>Vaše platba proběhla úspěšně.</strong>
+                    </p>
+                <?php endif; ?>
                 <p>
                     <?php if (!$this->verified): ?>
                         <?=$this->translate('preregistration_finished')?>
@@ -38,14 +42,14 @@ $paymentLink = ($online && $price > 0);
     </div>
 </section>
 
-<section class="bg-info-light">
-    <div class="container text-center">
-        <p>Na základě vámi vyplněných údajů činí roční registrační poplatek:</p>
-        <p class="price">
-            <strong><?=$this->escapeHtml($price)?><?=$this->translate('payment_amount_currency')?></strong>
-        </p>
+<?php if (!$finished): ?>
+    <section class="bg-info-light">
+        <div class="container text-center">
+            <p>Na základě vámi vyplněných údajů činí roční registrační poplatek:</p>
+            <p class="price">
+                <strong><?=$this->escapeHtml($price)?><?=$this->translate('payment_amount_currency')?></strong>
+            </p>
 
-        <?php if (!$this->finished): ?>
             <div class="row my-4">
                 <?php if ($paymentLink): ?>
                     <div class="col-md-6">
@@ -61,14 +65,23 @@ $paymentLink = ($online && $price > 0);
                         </a>
                     </div>
                 <?php else: ?>
-                    <div class="col-md-12">
-                        <a class="btn btn-dark" href="/Payment/finishedCash" title="Platba v hotovosti">
-                            <i class="fa fa-money mr-1" aria-hidden="true"></i>
-                            Zaplatím v hotovosti v knihovně
-                        </a>
-                    </div>
+                    <?php if ($price > 0): ?>
+                        <div class="col-md-12">
+                            <a class="btn btn-dark" href="/Payment/finishedCash" title="Platba v hotovosti">
+                                <i class="fa fa-money mr-1" aria-hidden="true"></i>
+                                Zaplatím v hotovosti v knihovně
+                            </a>
+                        </div>
+                    <?php else: ?>
+                        <div class="col-md-12">
+                            <a class="btn btn-dark" href="/Payment/finishedOnlineVerifiedNot" title="Dokončení registrace">
+                                <i class="fa fa-money mr-1" aria-hidden="true"></i>
+                                Dokončím registraci v knihovně
+                            </a>
+                        </div>
+                    <?php endif; ?>
                 <?php endif; ?>
             </div>
-        <?php endif; ?>
-    </div>
-</section>
+        </div>
+    </section>
+<?php endif; ?>
