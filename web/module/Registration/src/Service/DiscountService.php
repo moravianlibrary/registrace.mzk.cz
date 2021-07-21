@@ -54,10 +54,8 @@ class DiscountService
         }
         // try to find discount by age
         $preferred = $this->findDiscountByAge($user);
-        $verified = false;
-        if ($user != null) {
-            $verified = ($user->get('verified')->getValue() == '1');
-        }
+        $verified = ($user == null) ? false : $user->get('verified')
+            ->getValue() == '1';
         // only add cheaper discounts
         $discounts = [];
         $idsJmk = $user->get('user')->get('idsJmk')->getValue();
@@ -67,9 +65,10 @@ class DiscountService
                     || $preferred['price'] > $discount['price']
                     || $preferred == $discount)) {
                 if ($discount['student'] ?? false) {
+                    $online = $student && $verified;
                     $discount['online'] = $student && $verified;
                 } else {
-                    $discount['online'] = $verified && $discount['online'];
+                    $discount['online'] = $discount['online'] && $verified;
                 }
                 $discounts[$code] = $discount;
             }
@@ -101,6 +100,7 @@ class DiscountService
                 'label'          => $this->translator->translate('discount_none'),
                 'price'          => 200,
                 'online'         => true,
+                'proof'          => false,
                 'ids_jmk'        => self::IDS_JMK_NO_DISCOUNT,
                 'group'          => 'NONE',
                 'payment_number' => '0902',
@@ -110,6 +110,7 @@ class DiscountService
                 'label'          => $this->translator->translate('discount_none_ids_jmk'),
                 'price'          => 180,
                 'online'         => false,
+                'proof'          => true,
                 'ids_jmk'        => self::IDS_JMK_DISCOUNT,
                 'group'          => 'NONE',
                 'payment_number' => '0902',
@@ -120,6 +121,7 @@ class DiscountService
                 'label'          => $this->translator->translate('discount_teenager'),
                 'price'          => 0,
                 'online'         => false,
+                'proof'          => true,
                 'min_age'        => self::MIN_AGE,
                 'max_age'        => 19,
                 'only_age'       => true,
@@ -132,6 +134,7 @@ class DiscountService
                 'label'          => $this->translator->translate('discount_university_student'),
                 'price'          => 100,
                 'online'         => false,
+                'proof'          => true,
                 'student'        => true,
                 'min_age'        => 19,
                 'max_age'        => 25,
@@ -144,6 +147,7 @@ class DiscountService
                 'label'          => $this->translator->translate('discount_university_student_ids_jmk'),
                 'price'          => 90,
                 'online'         => false,
+                'proof'          => true,
                 'student'        => true,
                 'min_age'        => 19,
                 'max_age'        => 25,
@@ -156,6 +160,7 @@ class DiscountService
                 'label'          => $this->translator->translate('discount_senior'),
                 'price'          => 100,
                 'online'         => false,
+                'proof'          => true,
                 'min_age'        => 65,
                 'max_age'        => 69,
                 'only_age'       => true,
@@ -168,6 +173,7 @@ class DiscountService
                 'label'          => $this->translator->translate('discount_old_senior'),
                 'price'          => 0,
                 'online'         => false,
+                'proof'          => true,
                 'min_age'        => 70,
                 'max_age'        => self::MAX_AGE,
                 'only_age'       => true,
@@ -181,6 +187,7 @@ class DiscountService
                 'label'          => $this->translator->translate('discount_unob'),
                 'price'          => 0,
                 'online'         => false,
+                'proof'          => true,
                 'min_age'        => 19,
                 'ids_jmk'        => self::IDS_JMK_NOT_APPLICABLE,
                 'group'          => 'UNOB',
@@ -189,6 +196,7 @@ class DiscountService
                 'label'          => $this->translator->translate('discount_ztp'),
                 'price'          => 0,
                 'online'         => false,
+                'proof'          => true,
                 'min_age'        => 19,
                 'ids_jmk'        => self::IDS_JMK_NOT_APPLICABLE,
                 'group'          => 'ZTP',
