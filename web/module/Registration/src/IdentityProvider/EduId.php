@@ -30,7 +30,6 @@ class EduId implements IdentityProviderInterface
                 'firstName' => $this->get($request, 'firstName'),
                 'lastName' => $this->get($request, 'lastName'),
                 'email' => $this->get($request, 'mail'),
-                'birth' => $this->parseDate($this->get($request, 'schacDateOfBirth')),
             ],
             'permanentAddress' => [
                 'street' => $this->get($request, 'street'),
@@ -43,6 +42,10 @@ class EduId implements IdentityProviderInterface
         $phone = $this->get($request, 'phone');
         if ($phone != null) {
             $result['user']['phone'] = $phone;
+        }
+        $birth = $this->get($request, 'schacDateOfBirth');
+        if ($birth != null) {
+            $result['user']['birth'] = $this->parseDate($birth);
         }
         // verification
         $result['verified'] = $this->hasAllRequiredAttributes($request);
