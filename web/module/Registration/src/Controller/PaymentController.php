@@ -118,4 +118,20 @@ class PaymentController extends AbstractController
         return $view;
     }
 
+    public function demoGatewayFinishAction()
+    {
+        if (!$this->demo) {
+            $this->flashMessenger()->addMessage('Demo gateway is disabled.');
+            return $this->redirect()->toRoute('registration-index');
+        }
+        $registration = &$this->session->registration;
+        if ($registration == null) {
+            $this->flashMessenger()->addMessage('You are not registered.');
+            return $this->redirect()->toRoute('registration-index');
+        }
+        $registration['payment'] = true;
+        $registration['finished'] = true;
+        return $this->redirect()->toRoute('payment-finished');
+    }
+
 }

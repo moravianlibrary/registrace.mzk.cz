@@ -16,6 +16,12 @@ class EduId implements IdentityProviderInterface
         'country',
     ];
 
+    const REQUIRED_AFFILIATION = [
+        'employee',
+        'faculty',
+        'student',
+    ];
+
     public function identify(Request $request)
     {
         // required attributes
@@ -24,7 +30,6 @@ class EduId implements IdentityProviderInterface
                 'firstName' => $this->get($request, 'firstName'),
                 'lastName' => $this->get($request, 'lastName'),
                 'email' => $this->get($request, 'mail'),
-                'birth' => $this->parseDate($this->get($request, 'schacDateOfBirth')),
             ],
             'permanentAddress' => [
                 'street' => $this->get($request, 'street'),
@@ -37,6 +42,10 @@ class EduId implements IdentityProviderInterface
         $phone = $this->get($request, 'phone');
         if ($phone != null) {
             $result['user']['phone'] = $phone;
+        }
+        $birth = $this->get($request, 'schacDateOfBirth');
+        if ($birth != null) {
+            $result['user']['birth'] = $this->parseDate($birth);
         }
         // verification
         $result['verified'] = $this->hasAllRequiredAttributes($request);
@@ -57,6 +66,22 @@ class EduId implements IdentityProviderInterface
 
     protected function hasAllRequiredAttributes(Request $request)
     {
+        $affiliations = $this->get($request, 'eduPersonScopedAffiliation');
+        if ($affiliations == null || empty($affiliations)) {
+            return false;
+        }
+        $affiliations = explode(',', $affiliations);
+        $valid = false;
+        foreach ($affiliations as $affiliation) {
+            [$relation, $inst] = explode('@', $affiliation);
+            if (in_array($relation, self::REQUIRED_AFFILIATION)) {
+                $valid = true;
+                break;
+            }
+        }
+        if (!$valid) {
+            return false;
+        }
         foreach (self::REQUIRED_ATTRIBUTES as $attr) {
             if (empty($this->get($request, $attr))) {
                 return false;

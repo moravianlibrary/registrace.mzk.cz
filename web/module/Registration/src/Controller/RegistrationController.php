@@ -123,7 +123,8 @@ class RegistrationController extends AbstractController
             'translations' => [
                 'userForm_passwordConfirmNoMatch' => $this->translator->translate('userForm_passwordConfirmNoMatch'),
             ],
-            'form' => $this->form
+            'form' => $this->form,
+            'unverified' => ($auth != null) && !$verified,
         ]);
         $view->setTemplate('registration/userForm');
         return $view;
@@ -135,6 +136,9 @@ class RegistrationController extends AbstractController
         if ($registration == null) {
             $this->flashMessenger()->addMessage('You are not registered.');
             return $this->redirect()->toRoute('registration-index');
+        }
+        if ($registration['payment']) {
+            return $this->redirect()->toRoute('payment-finished');
         }
         $view = new ViewModel([
             'login'    => $registration['id'],

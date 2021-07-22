@@ -206,6 +206,11 @@ $(document).ready(function() {
     <div class="container">
         <div class="row">
             <div class="col-xl-10 offset-xl-1">
+                <?php if ($this->unverified): ?>
+                    <div class="alert alert-danger">
+                        <?= $this->translate('unverified_account') ?>
+                    </div>
+                <?php endif; ?>
                 <?php
                 $form->prepare();
                 ?>
