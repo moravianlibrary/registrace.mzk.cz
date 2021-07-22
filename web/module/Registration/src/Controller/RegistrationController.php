@@ -123,7 +123,8 @@ class RegistrationController extends AbstractController
             'translations' => [
                 'userForm_passwordConfirmNoMatch' => $this->translator->translate('userForm_passwordConfirmNoMatch'),
             ],
-            'form' => $this->form
+            'form' => $this->form,
+            'unverified' => ($auth != null) && !$verified,
         ]);
         $view->setTemplate('registration/userForm');
         return $view;

@@ -16,6 +16,12 @@ class EduId implements IdentityProviderInterface
         'country',
     ];
 
+    const REQUIRED_AFFILIATION = [
+        'employee',
+        'faculty',
+        'student',
+    ];
+
     public function identify(Request $request)
     {
         // required attributes
@@ -57,6 +63,22 @@ class EduId implements IdentityProviderInterface
 
     protected function hasAllRequiredAttributes(Request $request)
     {
+        $affiliations = $this->get($request, 'eduPersonScopedAffiliation');
+        if ($affiliations == null || empty($affiliations)) {
+            return false;
+        }
+        $affiliations = explode(',', $affiliations);
+        $valid = false;
+        foreach ($affiliations as $affiliation) {
+            [$relation, $inst] = explode('@', $affiliation);
+            if (in_array($relation, self::REQUIRED_AFFILIATION)) {
+                $valid = true;
+                break;
+            }
+        }
+        if (!$valid) {
+            return false;
+        }
         foreach (self::REQUIRED_ATTRIBUTES as $attr) {
             if (empty($this->get($request, $attr))) {
                 return false;
