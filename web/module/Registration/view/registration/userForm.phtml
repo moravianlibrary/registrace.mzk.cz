@@ -12,11 +12,12 @@ $(document).ready(function() {
   const discountSelect = $('select[name="user[discount]"]');
     discountSelect.change(function() {
     const university = $("#groupUniversity");
-    if ($(this).val() == 'UNIVERSITY_STUDENT') {
+    if ($(this).val() == 'UNIVERSITY_STUDENT' || $(this).val() == 'UNOB') {
       university.show();
     } else {
       university.hide();
     }
+    $('#online_muni').hide();
   });
   discountSelect.change();
 
@@ -67,6 +68,16 @@ $(document).ready(function() {
     }
   });
   $('select[name="permanentAddress[country]"]').change();
+
+  $('select[name="user[university]"]').change(function() {
+    $('#online_muni').hide();
+    group = $("option:selected", this).parent()[0].id;
+    verified = $("input[name='verified'").val();
+    if (group == 'muni' && verified == 'false') {
+      $('#online_muni').show();
+    }
+  });
+  $('select[name="user[university]"]').change();
 
   $('input[name="password[password]"]').focusout(function() {
     password = $(this).val();
@@ -276,6 +287,13 @@ $(document).ready(function() {
                         <div class="row">
                             <div class="col-md-12" id="groupUniversity">
                                 <?=$this->render('element.phtml', ['element' => $form->get('user')->get('university')])?>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div id="online_muni" class="alert alert-warning" style="display: none;">
+                                    <?=$this->translate('online_muni_registration')?>
+                                </div>
                             </div>
                         </div>
                     </div>

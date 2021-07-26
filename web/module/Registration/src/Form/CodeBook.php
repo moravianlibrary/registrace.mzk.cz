@@ -67,6 +67,7 @@ class CodeBook
             }
             $result[$category] = [
                 'label' => $elements['category'],
+                'id' => $category,
                 'options' => $options,
             ];
         }
