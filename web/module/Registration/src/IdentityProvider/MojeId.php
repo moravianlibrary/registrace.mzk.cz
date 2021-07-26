@@ -53,8 +53,12 @@ class MojeId implements IdentityProviderInterface
                 'country' => $this->get($request, 'country'),
             ],
         ];
+        // verification
         $verified = strtolower($this->get($request, 'mojeIdValid')) == 'true';
         $result['verified'] = $verified && $this->hasAllRequiredAttributes($request);
+        // student
+        $student = strtolower($this->get($request, 'mojeIdStudent')) == 'true';
+        $result['discountEntitlement'] = ($student) ? 'student' : 'none';
         return $result;
     }
 
