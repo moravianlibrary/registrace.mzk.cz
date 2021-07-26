@@ -17,6 +17,7 @@ $(document).ready(function() {
     } else {
       university.hide();
     }
+    $('#online_muni').hide();
   });
   discountSelect.change();
 
@@ -288,9 +289,11 @@ $(document).ready(function() {
                                 <?=$this->render('element.phtml', ['element' => $form->get('user')->get('university')])?>
                             </div>
                         </div>
-                        <div class="col-md-12">
-                            <div id="online_muni" class="alert alert-warning" style="display: none;">
-                                <?=$this->translate('online_muni_registration')?>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div id="online_muni" class="alert alert-warning" style="display: none;">
+                                    <?=$this->translate('online_muni_registration')?>
+                                </div>
                             </div>
                         </div>
                     </div>
