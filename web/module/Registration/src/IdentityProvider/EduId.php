@@ -16,11 +16,13 @@ class EduId implements IdentityProviderInterface
         'country',
     ];
 
-    const REQUIRED_AFFILIATION = [
+    const REQUIRED_AFFILIATIONS = [
         'employee',
         'faculty',
         'student',
     ];
+
+    const STUDENT_AFFILIATION = 'student';
 
     public function identify(Request $request)
     {
@@ -49,6 +51,10 @@ class EduId implements IdentityProviderInterface
         }
         // verification
         $result['verified'] = $this->hasAllRequiredAttributes($request);
+        // student
+        $student = in_array(self::STUDENT_AFFILIATION,
+            $this->getAffiliations($request));
+        $result['discountEntitlement'] = ($student) ? 'student' : 'none';
         return $result;
     }
 
@@ -66,15 +72,9 @@ class EduId implements IdentityProviderInterface
 
     protected function hasAllRequiredAttributes(Request $request)
     {
-        $affiliations = $this->get($request, 'eduPersonScopedAffiliation');
-        if ($affiliations == null || empty($affiliations)) {
-            return false;
-        }
-        $affiliations = explode(',', $affiliations);
         $valid = false;
-        foreach ($affiliations as $affiliation) {
-            [$relation, $inst] = explode('@', $affiliation);
-            if (in_array($relation, self::REQUIRED_AFFILIATION)) {
+        foreach ($this->getAffiliations($request) as $affiliation) {
+            if (in_array($affiliation, self::REQUIRED_AFFILIATIONS)) {
                 $valid = true;
                 break;
             }
@@ -88,6 +88,21 @@ class EduId implements IdentityProviderInterface
             }
         }
         return true;
+    }
+
+    protected function getAffiliations($request)
+    {
+        $affiliations = $this->get($request, 'eduPersonScopedAffiliation');
+        if ($affiliations == null || empty($affiliations)) {
+            return [];
+        }
+        $result = [];
+        $affiliations = explode(',', $affiliations);
+        foreach ($affiliations as $affiliation) {
+            [$relation, $inst] = explode('@', $affiliation);
+            $result[] = $relation;
+        }
+        return $result;
     }
 
 }
