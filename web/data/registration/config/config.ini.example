@@ -44,8 +44,8 @@ EU[] = SE
 
 [aleph]
 library = MZK50
-demo = true
 test = true
+testBlock = false
 
 [payment]
 create_url = http://aleph.mzk.cz/cgi-bin/poplatek_vlozit.pl

@@ -18,7 +18,7 @@ class Test implements IdentityProviderInterface
                 'email' => 'tester@mzk.cz',
                 'phone' => '+420 800 123 456',
                 'birth' => '1986-04-21',
-                'identificationType' => 'IC',
+                'identificationType' => 'OP',
                 'identification' => '123456789',
                 'eduPersonPrincipalName' => 'tester@mzk.cz'
             ],
