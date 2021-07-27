@@ -50,7 +50,7 @@ class EduId implements IdentityProviderInterface
             $result['user']['birth'] = $this->parseDate($birth);
         }
         // verification
-        $result['verified'] = $this->hasAllRequiredAttributes($request);
+        $result['verified'] = $this->hasAllRequiredAttributes($request) ? 1 : 0;
         // student
         $student = in_array(self::STUDENT_AFFILIATION,
             $this->getAffiliations($request));

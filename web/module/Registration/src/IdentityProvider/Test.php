@@ -28,7 +28,7 @@ class Test implements IdentityProviderInterface
                 'postcode' => '602 00',
                 'country' => 'CZ',
             ],
-            'verified' => true,
+            'verified' => 1,
         ];
     }
 
