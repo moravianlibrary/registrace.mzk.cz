@@ -55,7 +55,8 @@ class MojeId implements IdentityProviderInterface
         ];
         // verification
         $verified = strtolower($this->get($request, 'mojeIdValid')) == 'true';
-        $result['verified'] = $verified && $this->hasAllRequiredAttributes($request);
+        $result['verified'] = $verified &&
+            $this->hasAllRequiredAttributes($request) ? 1 : 0;
         // student
         $student = strtolower($this->get($request, 'mojeIdStudent')) == 'true';
         $result['discountEntitlement'] = ($student) ? 'student' : 'none';
