@@ -13,6 +13,7 @@ use Laminas\Mvc\I18n\Translator;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Validator;
 use Registration\Form\Validator\IdentityCardNumberValidator;
+use Registration\Form\Validator\UniqueDocumentNumberValidator;
 use Registration\Service\DiscountService;
 
 class UserFieldset extends Fieldset implements InputFilterProviderInterface
@@ -113,7 +114,7 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
             'options' => [
                 'label' => 'label_identificationType',
                 'value_options' => [
-                    'IC' => $this->translator->translate('option_identificationType_ic'),
+                    'OP' => $this->translator->translate('option_identificationType_ic'),
                     'PAS' => $this->translator->translate('option_identificationType_pas'),
                 ],
             ],
@@ -248,11 +249,23 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
                             'callback' => function($value, $context=[]) {
                                 $type = $context['identificationType'];
                                 $country = $this->getCountry();
-                                if (!($type == 'IC' && $country == 'CZ')) {
+                                if (!($type == 'OP' && $country == 'CZ')) {
                                     return true;
                                 }
                                 $validator = new IdentityCardNumberValidator();
                                 return $validator->isValid($value);
+                            },
+                        ]
+                    ],
+                    [
+                        'name' => Validator\Callback::class,
+                        'options' => [
+                            'message' => UniqueDocumentNumberValidator::IDENTITY_CARD_NOT_UNIQUE,
+                            'callback' => function($value, $context=[]) {
+                                $type = $context['identificationType'];
+                                $number = $type . ' ' . $value;
+                                $validator = new UniqueDocumentNumberValidator();
+                                return $validator->isValid($number);
                             },
                         ]
                     ],

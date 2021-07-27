@@ -54,7 +54,7 @@ $(document).ready(function() {
 
   $('select[name="permanentAddress[country]"]').change(function() {
     country = $(this).val();
-    icOption = $("select[name='user[identificationType]'] option[value='IC']");
+    icOption = $("select[name='user[identificationType]'] option[value='OP']");
     passportOption = $("select[name='user[identificationType]'] option[value='PAS']");
     if (country == 'CZ') {
       icOption.show().prop('selected', true);

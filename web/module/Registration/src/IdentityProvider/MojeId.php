@@ -43,7 +43,7 @@ class MojeId implements IdentityProviderInterface
                 'email' => $this->get($request, 'mail'),
                 'phone' => str_replace('.', ' ', $this->get($request, 'phone')),
                 'birth' => $this->get($request, 'birth'),
-                'identificationType' => 'IC',
+                'identificationType' => 'OP',
                 'identification' => $this->get($request, 'mojeIdIdentityCardNumber'),
             ],
             'permanentAddress' => [
