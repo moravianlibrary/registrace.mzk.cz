@@ -37,6 +37,9 @@ class RegistrationService implements RegistrationServiceInterface
     /** @var boolean */
     protected $test;
 
+    /** @var boolean */
+    protected $testBlock;
+
     /** @var CodeBook */
     protected $codeBook;
 
@@ -50,6 +53,8 @@ class RegistrationService implements RegistrationServiceInterface
         $this->xServerPassword = $config['alephXServer']['password'] ?? null;
         $this->library = $config['aleph']['library'] ?? 'MZK50';
         $this->test = $config['aleph']['test'] ?? false;
+        $this->testBlock = $config['aleph']['testBlock']
+            ?? $config['aleph']['test'] ?? false;
         $this->codeBook = $codeBook;
         $this->translator = $translator;
     }
@@ -76,7 +81,7 @@ class RegistrationService implements RegistrationServiceInterface
         $z303->{'z303-delinq-n-1'} = 'Online předregistrace';
         $z303->{'z303-delinq-1-update-date'} = $now;
         // test
-        if ($this->test) {
+        if ($this->testBlock) {
             $z303->{'z303-delinq-2'} = '88';
             $z303->{'z303-delinq-n-2'} = 'Testovací registrace';
             $z303->{'z303-delinq-2-update-date'} = $now;
