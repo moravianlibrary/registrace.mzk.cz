@@ -71,7 +71,7 @@ class RegistrationService implements RegistrationServiceInterface
         $z303 = $patron->{'z303'};
         $z303->{'match-id'} = $id;
         $z303->{'z303-id'} = $id;
-        $cn = $user->getFirstName() . ' ' . $user->getLastName();
+        $cn = $user->getLastName() . ', ' . $user->getFirstName();
         $z303->{'z303-name'} = $cn;
         $z303->{'z303-open-date'} = $now;
         $z303->{'z303-title'} = $user->getDegree();
@@ -268,7 +268,7 @@ class RegistrationService implements RegistrationServiceInterface
             for ($i = 1; $i <= 4; $i++) {
                 $suffix .= self::CHARACTERS[mt_rand(0, $count - 1)];
             }
-            $userId = $user->getBirth()->format("Ymd") . $suffix;
+            $userId = $user->getBirth()->format("ymd") . $suffix;
             try {
                 $this->findUser($userId);
             } catch (\Exception $ex) {
