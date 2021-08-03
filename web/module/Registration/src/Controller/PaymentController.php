@@ -48,8 +48,8 @@ class PaymentController extends AbstractController
             return $this->redirect()->toRoute('payment-finished');
         }
         // create payment
-        $paymentUrl = $this->paymentService->prepareAndReturnPaymentUrl($registration);
-        $registration['payment'] = true;
+        $paymentUrl = $this->paymentService
+            ->prepareAndReturnPaymentUrl($registration);
         // and prolong registration
         $login = $registration['id'];
         $expiry = $registration['expiry'];
@@ -140,7 +140,6 @@ class PaymentController extends AbstractController
             $this->flashMessenger()->addMessage('You are not registered.');
             return $this->redirect()->toRoute('registration-index');
         }
-        $registration['payment'] = true;
         return $this->redirect()->toRoute('payment-finished');
     }
 
