@@ -22,6 +22,9 @@ class IdentityCardNumberValidator extends AbstractValidator
     public function isValid($value)
     {
         $this->lastMessages = [];
+        if (empty(trim($value))) {
+            return true;
+        }
         $client = new Client(self::BASE_URL, [ 'timeout' => self::TIMEOUT ]);
         $client->setMethod('GET');
         $client->setParameterGet([
