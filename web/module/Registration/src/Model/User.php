@@ -6,6 +6,9 @@ class User
 {
 
     /** @var string */
+    protected $login = null;
+
+    /** @var string */
     protected $firstName = null;
 
     /** @var string */
@@ -61,7 +64,7 @@ class User
         $day = $user['birth']['day'];
         $this->birth = new \DateTime("$year-$month-$day");
         $this->university = $user['university'];
-        $this->email = $user['mail'];
+        $this->email = $user['email'];
         $this->phone = $user['phone'];
         $this->identificationType = $user['identificationType'];
         $this->identification = $user['identification'];
@@ -73,6 +76,22 @@ class User
         }
         $this->sendNewsLetter = $data['isSendNews'] == 'true';
         $this->verified = $data['$verified'] ?? false;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLogin()
+    {
+        return $this->login;
+    }
+
+    /**
+     * @param string $login
+     */
+    public function setLogin($login)
+    {
+        $this->login = $login;
     }
 
     /**

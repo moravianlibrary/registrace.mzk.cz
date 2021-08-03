@@ -16,6 +16,7 @@ use Registration\Service\DiscountService;
 use Registration\IdentityProvider\IdentityProviderFactory;
 use Registration\Model\User;
 use Registration\Service\RegistrationServiceInterface;
+use Registration\Service\MailServiceInterface;
 
 class RegistrationController extends AbstractController
 {
@@ -32,17 +33,22 @@ class RegistrationController extends AbstractController
     /** @var RegistrationServiceInterface */
     private $registrationService;
 
+    /** @var MailServiceInterface */
+    private $mailService;
+
     /** @var Translator */
     private $translator;
 
     public function __construct(UserForm $form, $config, IdentityProviderFactory $identityProviderFactory,
-                                RegistrationServiceInterface $registrationService, Translator $translator)
+                                RegistrationServiceInterface $registrationService,
+                                MailServiceInterface $mailService, Translator $translator)
     {
         parent::__construct();
         $this->form = $form;
         $this->config = $config;
         $this->identityProviderFactory = $identityProviderFactory;
         $this->registrationService = $registrationService;
+        $this->mailService = $mailService;
         $this->translator = $translator;
     }
 
@@ -98,7 +104,10 @@ class RegistrationController extends AbstractController
         $this->getLogger()->info("Data after merge:\n" . print_r($data, true));
         $this->form->setData($data);
         if ($request->isPost() && $this->form->isValid()) {
-            $id = $this->registrationService->register(new User($data));
+            $user = new User($data);
+            $id = $this->registrationService->register($user);
+            $user->setLogin($id);
+            $this->mailService->sendRegistrationInfo($user);
             $discount = $this->form->get('user')->getDiscount();
             $expiry = strtotime("+1 year, + 10 days");
             $finished = false;
@@ -107,12 +116,13 @@ class RegistrationController extends AbstractController
                 $finished = true;
             }
             $this->session->registration = [
-                'id'       => $id,
-                'verified' => $verified,
-                'discount' => $discount,
-                'expiry'   => $expiry,
-                'finished' => $finished,
-                'payment'  => false,
+                'id'        => $id,
+                'user'      => $user,
+                'verified'  => $verified,
+                'discount'  => $discount,
+                'expiry'    => $expiry,
+                'finished'  => $finished,
+                'payment'   => false,
             ];
             return $this->redirect()->toRoute('registration-finished');
         }

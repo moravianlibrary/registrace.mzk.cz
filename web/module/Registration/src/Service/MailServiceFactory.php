@@ -4,18 +4,18 @@ namespace Registration\Service;
 
 use Interop\Container\ContainerInterface;
 
-class PaymentServiceFactory
+class MailServiceFactory
 {
 
     public function __invoke(ContainerInterface $container, $name, array $options = null)
     {
         $configReader = $container->get(\Registration\Config\ConfigReader::class);
         $config = $configReader->getConfig('config/config.ini');
-        $demo = $config['payment']['demo'] ?? false;
+        $demo = $config['demo']['enabled'] ?? false;
         if ($demo) {
-            return new PaymentServiceDemo();
+            return new MailServiceDemo();
         }
-        return new PaymentService($config);
+        return new MailServiceAleph();
     }
 
 }

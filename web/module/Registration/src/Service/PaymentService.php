@@ -25,12 +25,14 @@ class PaymentService implements PaymentServiceInterface
         $this->redirectPaymentUrl = $config['payment']['redirect_url'];
     }
 
-    public function prepareAndReturnPaymentUrl($registration)
+    public function prepareAndReturnPaymentUrl(&$registration)
     {
         $login = $registration['id'];
         $discount = $registration['discount'];
-        if (!$this->hasRegistrationPayment($login)) {
+        if (!$this->hasRegistrationPayment($login)
+            && !$registration['payment']) {
             $this->createPayment($login, $discount);
+            $registration['payment'] = true;
         }
         return $this->getPaymentUrl($login, $discount);
     }
