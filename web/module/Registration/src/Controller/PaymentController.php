@@ -39,11 +39,11 @@ class PaymentController extends AbstractController
 
     public function initAction()
     {
-        $registration = &$this->session->registration;
-        if ($registration == null) {
-            $this->flashMessenger()->addMessage('You are not registered.');
-            return $this->redirect()->toRoute('registration-index');
+        $redirect = $this->checkRegistration();
+        if ($redirect) {
+            return $redirect;
         }
+        $registration = &$this->session->registration;
         if ($registration['finished']) {
             return $this->redirect()->toRoute('payment-finished');
         }
@@ -59,10 +59,17 @@ class PaymentController extends AbstractController
 
     public function finishedAction()
     {
+        $redirect = $this->checkRegistration();
+        if ($redirect) {
+            return $redirect;
+        }
         $registration = &$this->session->registration;
         if ($registration == null) {
             $this->flashMessenger()->addMessage('You are not registered.');
             return $this->redirect()->toRoute('registration-index');
+        }
+        if (!$registration['verified']) {
+            return $this->redirect()->toRoute('registration-finished');
         }
         $this->getLogger()->info($registration);
         $login = $registration['id'];
@@ -106,6 +113,10 @@ class PaymentController extends AbstractController
 
     public function errorAction()
     {
+        $redirect = $this->checkRegistration();
+        if ($redirect) {
+            return $redirect;
+        }
         $view = new ViewModel();
         $view->setTemplate('payment/error');
         return $view;
@@ -113,6 +124,10 @@ class PaymentController extends AbstractController
 
     public function refusedAction()
     {
+        $redirect = $this->checkRegistration();
+        if ($redirect) {
+            return $redirect;
+        }
         $view = new ViewModel();
         $view->setTemplate('payment/refused');
         return $view;
@@ -141,6 +156,19 @@ class PaymentController extends AbstractController
             return $this->redirect()->toRoute('registration-index');
         }
         return $this->redirect()->toRoute('payment-finished');
+    }
+
+    protected function checkRegistration()
+    {
+        $registration = &$this->session->registration;
+        if ($registration == null) {
+            $this->flashMessenger()->addMessage('You are not registered.');
+            return $this->redirect()->toRoute('registration-index');
+        }
+        if (!$registration['verified']) {
+            return $this->redirect()->toRoute('registration-finished');
+        }
+        return false;
     }
 
 }
