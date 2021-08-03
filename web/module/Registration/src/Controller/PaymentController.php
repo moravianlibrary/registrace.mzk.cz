@@ -64,13 +64,6 @@ class PaymentController extends AbstractController
             return $redirect;
         }
         $registration = &$this->session->registration;
-        if ($registration == null) {
-            $this->flashMessenger()->addMessage('You are not registered.');
-            return $this->redirect()->toRoute('registration-index');
-        }
-        if (!$registration['verified']) {
-            return $this->redirect()->toRoute('registration-finished');
-        }
         $this->getLogger()->info($registration);
         $login = $registration['id'];
         $expiry = $registration['expiry'];
