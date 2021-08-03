@@ -12,7 +12,7 @@ class PaymentServiceDemo implements PaymentServiceInterface
 
     public function hasRegistrationPayment($login)
     {
-        return true;
+        return false;
     }
 
 }

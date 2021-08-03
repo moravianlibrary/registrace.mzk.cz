@@ -77,6 +77,7 @@ $config = [
             \Registration\Service\RegistrationServiceInterface::class => \Registration\Service\RegistrationServiceFactory::class,
             \Registration\Service\PaymentServiceInterface::class => \Registration\Service\PaymentServiceFactory::class,
             \Registration\Form\Validator\PasswordValidator::class => \Registration\Form\Validator\PasswordValidatorFactory::class,
+            \Registration\Service\MailServiceInterface::class => \Registration\Service\MailServiceFactory::class,
         ],
     ],
     'form_elements' => [

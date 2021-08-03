@@ -6,6 +6,7 @@ use Laminas\View\Model\ViewModel;
 use Registration\Log\LoggerAwareTrait;
 use Registration\Service\PaymentServiceInterface;
 use Registration\Service\RegistrationServiceInterface;
+use Registration\Service\MailServiceInterface;
 
 class PaymentController extends AbstractController
 {
@@ -22,14 +23,18 @@ class PaymentController extends AbstractController
     /** @var RegistrationServiceInterface */
     private $registrationService;
 
+    /** @var @var MailServiceInterface */
+    private $mailService;
+
     public function __construct(array $config, PaymentServiceInterface $paymentService,
-        RegistrationServiceInterface $registrationService)
+        RegistrationServiceInterface $registrationService, MailServiceInterface $mailService)
     {
         parent::__construct();
         $this->url = $config['payment']['url'];
+        $this->demo = $config['payment']['demo'] ?? false;
         $this->paymentService = $paymentService;
         $this->registrationService = $registrationService;
-        $this->demo = $config['demo']['enabled'] ?? false;
+        $this->mailService = $mailService;
     }
 
     public function initAction()
@@ -63,10 +68,16 @@ class PaymentController extends AbstractController
         $login = $registration['id'];
         $expiry = $registration['expiry'];
         $finished = $registration['finished'];
-        if (!$finished && !$this->paymentService->hasRegistrationPayment($login)) {
+        if (!$finished) {
+            if ($this->paymentService->hasRegistrationPayment($login)) {
+                return $this->redirect()->toRoute('registration-finished');
+            }
+            $registration['finished'] = true;
+            $user = $registration['user'];
+            $discount = $registration['discount'];
+            $this->mailService->sendPaymentInfo($user, $discount['price']);
             // TODO: update user's blocks or wait for background job in Aleph?
         }
-        $registration['finished'] = true;
         $view = new ViewModel();
         $view->setTemplate('payment/finished');
         return $view;
@@ -130,7 +141,6 @@ class PaymentController extends AbstractController
             return $this->redirect()->toRoute('registration-index');
         }
         $registration['payment'] = true;
-        $registration['finished'] = true;
         return $this->redirect()->toRoute('payment-finished');
     }
 

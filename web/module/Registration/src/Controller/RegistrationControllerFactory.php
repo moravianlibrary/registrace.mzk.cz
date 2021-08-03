@@ -20,7 +20,9 @@ class RegistrationControllerFactory
         $identityProvider = new IdentityProviderFactory($config);
         $registrationService = $container->get(\Registration\Service\RegistrationServiceInterface::class);
         $translator = $container->get(Translator::class);
-        return new RegistrationController($form, $config, $identityProvider, $registrationService, $translator);
+        $mailService = $container->get(\Registration\Service\MailServiceInterface::class);
+        return new RegistrationController($form, $config, $identityProvider,
+            $registrationService, $mailService, $translator);
     }
 
 }
