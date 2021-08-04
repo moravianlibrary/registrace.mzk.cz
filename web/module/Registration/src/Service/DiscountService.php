@@ -183,14 +183,23 @@ class DiscountService
                 'payment_name'   => 'B Online registrace roční - zdarma (nad 70 let)'
             ],
             // free
-            'UNOB' => [
-                'label'          => $this->translator->translate('discount_unob'),
+            'UNOB_EMPLOYEE' => [
+                'label'          => $this->translator->translate('discount_unob_employee'),
                 'price'          => 0,
                 'online'         => false,
                 'proof'          => true,
                 'min_age'        => 19,
                 'ids_jmk'        => self::IDS_JMK_NOT_APPLICABLE,
-                'group'          => 'UNOB',
+                'group'          => 'UNOB_EMPLOYEE',
+            ],
+            'UNOB_STUDENT' => [
+                'label'          => $this->translator->translate('discount_unob_student'),
+                'price'          => 0,
+                'online'         => false,
+                'proof'          => true,
+                'min_age'        => 19,
+                'ids_jmk'        => self::IDS_JMK_NOT_APPLICABLE,
+                'group'          => 'UNOB_STUDENT',
             ],
             'ZTP' => [
                 'label'          => $this->translator->translate('discount_ztp'),
