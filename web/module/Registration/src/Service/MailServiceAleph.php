@@ -16,6 +16,9 @@ class MailServiceAleph implements MailServiceInterface
 
     public function sendRegistrationInfo(User $user)
     {
+        if ($user->getEmail() == null || empty($user->getEmail())) {
+            return;
+        }
         $client = new Client(self::REGISTRATION_URL);
         $client->setMethod('GET');
         $client->setParameterGet([
@@ -32,6 +35,9 @@ class MailServiceAleph implements MailServiceInterface
 
     public function sendPaymentInfo(User $user, $amount)
     {
+        if ($user->getEmail() == null || empty($user->getEmail())) {
+            return;
+        }
         $client = new Client(self::PAYMENT_URL);
         $client->setMethod('GET');
         $client->setParameterGet([
