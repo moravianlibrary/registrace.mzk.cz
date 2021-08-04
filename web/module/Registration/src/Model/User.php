@@ -75,7 +75,7 @@ class User
             $this->contactAddress = new Address($data['contactAddress']);
         }
         $this->sendNewsLetter = $data['isSendNews'] == 'true';
-        $this->verified = $data['$verified'] ?? false;
+        $this->verified = (bool) $data['verified'] ?? false;
     }
 
     /**
@@ -316,6 +316,22 @@ class User
     public function setSendNewsLetter(bool $sendNewsLetter): void
     {
         $this->sendNewsLetter = $sendNewsLetter;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isVerified(): bool
+    {
+        return $this->verified;
+    }
+
+    /**
+     * @param bool $verified
+     */
+    public function setVerified(bool $verified)
+    {
+        $this->verified = $verified;
     }
 
 }

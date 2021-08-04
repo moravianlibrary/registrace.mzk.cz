@@ -249,6 +249,7 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
                             'callback' => function($value, $context=[]) {
                                 $type = $context['identificationType'];
                                 $country = $this->getCountry();
+                                // validate only identity cards from Czech Republic
                                 if (!($type == 'OP' && $country == 'CZ')) {
                                     return true;
                                 }
@@ -263,6 +264,11 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
                             'message' => UniqueDocumentNumberValidator::IDENTITY_CARD_NOT_UNIQUE,
                             'callback' => function($value, $context=[]) {
                                 $type = $context['identificationType'];
+                                $country = $this->getCountry();
+                                // ignore identity cards from other countries than Czech Republic
+                                if ($type == 'OP' && $country != 'CZ') {
+                                    return true;
+                                }
                                 $number = $type . ' ' . $value;
                                 $validator = new UniqueDocumentNumberValidator();
                                 return $validator->isValid($number);
