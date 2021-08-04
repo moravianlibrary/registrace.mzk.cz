@@ -77,8 +77,13 @@ class RegistrationService implements RegistrationServiceInterface
         $z303->{'z303-title'} = $user->getDegree();
         $z303->{'z303-birth-date'} = $user->getBirth()->format("Ymd");
         // online registration
-        $z303->{'z303-delinq-1'} = '50';
-        $z303->{'z303-delinq-n-1'} = 'Online předregistrace';
+        if ($user->isVerified()) {
+            $z303->{'z303-delinq-1'} = '52';
+            $z303->{'z303-delinq-n-1'} = 'Nový čtenář registrovaný přes mojeID';
+        } else {
+            $z303->{'z303-delinq-1'} = '50';
+            $z303->{'z303-delinq-n-1'} = 'Online předregistrace';
+        }
         $z303->{'z303-delinq-1-update-date'} = $now;
         // test
         if ($this->testBlock) {
@@ -115,7 +120,7 @@ class RegistrationService implements RegistrationServiceInterface
             }
             $z304->{'z304-address-3'} = $city;
             $z304->{'z304-telephone-2'} = $user->getIdentificationType()
-                . ' ' . $user->getIdentification();
+                . ' ' . trim($user->getIdentification());
             $z304->{'z304-telephone-3'} = $user->isSendNewsLetter() ? '' : 'NE';
             $index++;
         }
