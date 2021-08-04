@@ -71,7 +71,7 @@ class RegistrationService implements RegistrationServiceInterface
         $z303 = $patron->{'z303'};
         $z303->{'match-id'} = $id;
         $z303->{'z303-id'} = $id;
-        $cn = $user->getLastName() . ', ' . $user->getFirstName();
+        $cn = trim($user->getLastName()) . ', ' . trim($user->getFirstName());
         $z303->{'z303-name'} = $cn;
         $z303->{'z303-open-date'} = $now;
         $z303->{'z303-title'} = $user->getDegree();
@@ -104,11 +104,14 @@ class RegistrationService implements RegistrationServiceInterface
             $z304->{'z304-address-1'} = $cn;
             $z304->{'z304-address-2'} = $address->getStreet();
             $city = $address->getPostcode() . ' ' . $address->getCity();
-            $countryCode = $address->getCountry();
             // permanent address not in Czech Republic
-            if ($index == 0 && $countryCode != 'CZ') {
-                $countryDescription = $this->codeBook->getCountryByCode($countryCode);
-                $city .=  ', ' . $this->translator->translate($countryDescription, 'country');
+            if ($index == 0) {
+                $countryCode = $address->getCountry();
+                if ($countryCode != 'CZ') {
+                    $countryDescription = $this->codeBook->getCountryByCode($countryCode);
+                    $city .= ', ' . $this->translator->translate($countryDescription,
+                            'country');
+                }
             }
             $z304->{'z304-address-3'} = $city;
             $z304->{'z304-telephone-2'} = $user->getIdentificationType()

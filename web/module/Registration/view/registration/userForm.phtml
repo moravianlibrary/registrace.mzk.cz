@@ -12,7 +12,7 @@ $(document).ready(function() {
   const discountSelect = $('select[name="user[discount]"]');
     discountSelect.change(function() {
     const university = $("#groupUniversity");
-    if ($(this).val() == 'UNIVERSITY_STUDENT' || $(this).val() == 'UNOB') {
+    if ($(this).val() == 'UNIVERSITY_STUDENT' || $(this).val() == 'UNOB_STUDENT') {
       university.show();
     } else {
       university.hide();
