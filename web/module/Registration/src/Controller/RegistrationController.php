@@ -147,7 +147,7 @@ class RegistrationController extends AbstractController
             $this->flashMessenger()->addMessage('You are not registered.');
             return $this->redirect()->toRoute('registration-index');
         }
-        if ($registration['payment']) {
+        if ($registration['verified'] && $registration['finished']) {
             return $this->redirect()->toRoute('payment-finished');
         }
         $view = new ViewModel([
