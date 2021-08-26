@@ -1,4 +1,5 @@
-FROM docker.io/php:7.3-apache
+#FROM docker.io/php:7.3-apache
+FROM docker.io/php:7.3-apache-buster
 
 LABEL maintainer="getlaminas.org" \
     org.label-schema.docker.dockerfile="/Dockerfile" \
