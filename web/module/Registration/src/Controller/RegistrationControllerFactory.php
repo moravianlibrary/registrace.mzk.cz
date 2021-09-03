@@ -21,8 +21,9 @@ class RegistrationControllerFactory
         $registrationService = $container->get(\Registration\Service\RegistrationServiceInterface::class);
         $translator = $container->get(Translator::class);
         $mailService = $container->get(\Registration\Service\MailServiceInterface::class);
+        $discountService = $container->get(\Registration\Service\DiscountService::class);
         return new RegistrationController($form, $config, $identityProvider,
-            $registrationService, $mailService, $translator);
+            $registrationService, $mailService, $discountService, $translator);
     }
 
 }
