@@ -95,6 +95,32 @@ class DiscountService
     protected function init()
     {
         $this->discounts = [
+            'UNIVERSITY_STUDENT' => [
+                'label'          => $this->translator->translate('discount_university_student'),
+                'price'          => 100,
+                'online'         => false,
+                'proof'          => true,
+                'student'        => true,
+                'min_age'        => 19,
+                'max_age'        => 25,
+                'ids_jmk'        => self::IDS_JMK_NO_DISCOUNT,
+                'group'          => 'UNIVERSITY_STUDENT',
+                'payment_number' => '0901',
+                'payment_name'   => 'B Online registrace roční - student',
+            ],
+            'UNIVERSITY_STUDENT_IDS_JMK' => [
+                'label'          => $this->translator->translate('discount_university_student_ids_jmk'),
+                'price'          => 90,
+                'online'         => false,
+                'proof'          => true,
+                'student'        => true,
+                'min_age'        => 19,
+                'max_age'        => 25,
+                'ids_jmk'        => self::IDS_JMK_DISCOUNT,
+                'group'          => 'UNIVERSITY_STUDENT',
+                'payment_number' => '0901',
+                'payment_name'   => 'B Online registrace roční - student'
+            ],
             // default - no discount
             'NONE' => [
                 'label'          => $this->translator->translate('discount_none'),
@@ -129,32 +155,6 @@ class DiscountService
                 'group'          => 'TEENAGER',
                 'payment_number' => '0906',
                 'payment_name'   => 'B Online registrace roční - zdarma (12-19 let)'
-            ],
-            'UNIVERSITY_STUDENT' => [
-                'label'          => $this->translator->translate('discount_university_student'),
-                'price'          => 100,
-                'online'         => false,
-                'proof'          => true,
-                'student'        => true,
-                'min_age'        => 19,
-                'max_age'        => 25,
-                'ids_jmk'        => self::IDS_JMK_NO_DISCOUNT,
-                'group'          => 'UNIVERSITY_STUDENT',
-                'payment_number' => '0901',
-                'payment_name'   => 'B Online registrace roční - student',
-            ],
-            'UNIVERSITY_STUDENT_IDS_JMK' => [
-                'label'          => $this->translator->translate('discount_university_student_ids_jmk'),
-                'price'          => 90,
-                'online'         => false,
-                'proof'          => true,
-                'student'        => true,
-                'min_age'        => 19,
-                'max_age'        => 25,
-                'ids_jmk'        => self::IDS_JMK_DISCOUNT,
-                'group'          => 'UNIVERSITY_STUDENT',
-                'payment_number' => '0901',
-                'payment_name'   => 'B Online registrace roční - student'
             ],
             'SENIOR' => [
                 'label'          => $this->translator->translate('discount_senior'),
