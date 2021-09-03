@@ -41,7 +41,8 @@ class RegistrationController extends AbstractController
 
     public function __construct(UserForm $form, $config, IdentityProviderFactory $identityProviderFactory,
                                 RegistrationServiceInterface $registrationService,
-                                MailServiceInterface $mailService, Translator $translator)
+                                MailServiceInterface $mailService, DiscountService $discountService,
+                                Translator $translator)
     {
         parent::__construct();
         $this->form = $form;
@@ -49,6 +50,7 @@ class RegistrationController extends AbstractController
         $this->identityProviderFactory = $identityProviderFactory;
         $this->registrationService = $registrationService;
         $this->mailService = $mailService;
+        $this->discountService = $discountService;
         $this->translator = $translator;
     }
 
@@ -73,7 +75,6 @@ class RegistrationController extends AbstractController
         $request = $this->getRequest();
         $data = [];
         if ($request->isPost()) {
-            $this->getLogger()->info("Data from post:\n" . print_r($request->getPost()->toArray(), true));
             $data = $request->getPost()->toArray();
         }
         $data['verified'] = 0;
@@ -103,12 +104,14 @@ class RegistrationController extends AbstractController
         }
         $this->getLogger()->info("Data after merge:\n" . print_r($data, true));
         $this->form->setData($data);
-        if ($request->isPost() && $this->form->isValid()) {
+        $discounts = $this->discountService->getAvailable($this->form);
+        $discount = $discounts[$this->form->get('user')->get('discount')->getValue()];
+        if ($request->isPost() && $discount && $this->form->isValid()) {
             $user = new User($data);
             $id = $this->registrationService->register($user);
             $user->setLogin($id);
             $this->mailService->sendRegistrationInfo($user);
-            $discount = $this->form->get('user')->getDiscount();
+
             $expiry = strtotime("+1 year, + 10 days");
             $finished = false;
             if ($verified && $discount['online'] && $discount['price'] == 0) {
