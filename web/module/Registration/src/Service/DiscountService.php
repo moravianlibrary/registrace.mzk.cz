@@ -146,15 +146,13 @@ class DiscountService
             'TEENAGER' => [
                 'label'          => $this->translator->translate('discount_teenager'),
                 'price'          => 0,
-                'online'         => false,
+                'online'         => true,
                 'proof'          => true,
                 'min_age'        => self::MIN_AGE,
-                'max_age'        => 19,
+                'max_age'        => 20,
                 'only_age'       => true,
                 'ids_jmk'        => self::IDS_JMK_NOT_APPLICABLE,
                 'group'          => 'TEENAGER',
-                'payment_number' => '0906',
-                'payment_name'   => 'B Online registrace roční - zdarma (12-19 let)'
             ],
             'SENIOR' => [
                 'label'          => $this->translator->translate('discount_senior'),
