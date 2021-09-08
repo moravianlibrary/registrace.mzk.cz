@@ -78,7 +78,9 @@ class PaymentController extends AbstractController
             $this->mailService->sendPaymentInfo($user, $discount['price']);
             // TODO: update user's blocks or wait for background job in Aleph?
         }
-        $view = new ViewModel();
+        $view = new ViewModel([
+            'login' => $login
+        ]);
         $view->setTemplate('payment/finished');
         return $view;
     }

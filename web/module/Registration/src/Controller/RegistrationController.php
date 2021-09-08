@@ -102,7 +102,6 @@ class RegistrationController extends AbstractController
                 $data = array_replace_recursive($data, $identity);
             }
         }
-        $this->getLogger()->info("Data after merge:\n" . print_r($data, true));
         $this->form->setData($data);
         $discounts = $this->discountService->getAvailable($this->form);
         $discount = $discounts[$this->form->get('user')->get('discount')->getValue()];
