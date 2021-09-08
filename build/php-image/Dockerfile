@@ -26,8 +26,15 @@ RUN apt-get install --yes git zlib1g-dev libzip-dev libapache2-mod-shib2 libicu-
     && docker-php-ext-install intl \
     && docker-php-ext-install mbstring
 
+RUN \
+    apt install libmemcached-dev -y && \
+    pecl install memcached && \
+    docker-php-ext-enable memcached
+
 ADD docker/etc /etc
 ADD docker/bin/container-entrypoint.sh /container-entrypoint.sh
 RUN chmod ugo+x /container-entrypoint.sh
+
+ADD docker/php-sessions.ini /usr/local/etc/php/conf.d/memcached-sessions.ini
 
 ENTRYPOINT [ "/container-entrypoint.sh" ]
