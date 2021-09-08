@@ -16,31 +16,35 @@ variables:
 
 Test the code:
   stage: test
-  only:
-    refs:
-      - master
-      - /^devel/
-      - merge_requests
+  rules:
+    - if:
+        ( $CI_PIPELINE_SOURCE == "push" )  &&
+        ( ( $CI_COMMIT_BRANCH == "master" ) ||
+        ( $CI_COMMIT_BRANCH == "main" ) ||
+        ( $CI_COMMIT_BRANCH =~ /^devel/ )
+        )
+    - if:
+        ( $CI_PIPELINE_SOURCE == "merge_request_event" )
   script:
-    - echo "OK"
+    - echo "Add your tests here"
 
 Build PHP image:
   stage: build_base
   image: "${BUILD_JOB_IMAGE}"
-  only:
-    refs:
-      - master
-      - /^devel/
-      - merge_requests
-    changes:
-      - build/php-image/*
-      - build/php-image/**/*
-      - .gitlab-ci.yml
-
-  #cache:
-  #  key: build # all shared
-  #  paths:
-  #    - .buildah
+  rules:
+    - if:
+        ( $CI_PIPELINE_SOURCE == "push" )  &&
+          ( ( $CI_COMMIT_BRANCH == "master" ) ||
+            ( $CI_COMMIT_BRANCH == "main" ) ||
+            ( $CI_COMMIT_BRANCH =~ /^devel/ )
+          )
+      changes: &php_files
+        - build/php-image/*
+        - build/php-image/**/*
+        - .gitlab-ci.yml
+    - if:
+        ( $CI_PIPELINE_SOURCE == "merge_request_event" )
+      changes: *php_files
 
   before_script:
     # try to load image from cache registry
@@ -67,11 +71,14 @@ Build PHP image:
 Build app image:
   stage: build_app
   image: "${BUILD_JOB_IMAGE}"
-  only:
-    refs:
-      - master
-      - /^devel/
-      - merge_requests
+  rules:
+    - if:
+          ( $CI_PIPELINE_SOURCE == "push" )  &&
+          ( ( $CI_COMMIT_BRANCH == "master" ) ||
+            ( $CI_COMMIT_BRANCH == "main" ) ||
+            ( $CI_COMMIT_BRANCH == "devel" ))
+    - if:
+          ( $CI_PIPELINE_SOURCE == "merge_request_event" )
   artifacts:
     reports:
       dotenv:
@@ -130,20 +137,34 @@ Build app image:
             buildah push --format v2s2 ${IMAGE_NAME}:build docker://${TARGET_REGISTRY}/${IMAGE_NAME}:env-${CI_COMMIT_REF_SLUG} ;
             buildah push --format v2s2 ${IMAGE_NAME}:build docker://${TARGET_REGISTRY}/${IMAGE_NAME}:${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA} ;
        fi
+    - |
+      if [ "$CI_PIPELINE_SOURCE" == "merge_request_event" ] ; then
+           buildah push --format v2s2 ${IMAGE_NAME}:build docker://${TARGET_REGISTRY}/${IMAGE_NAME}:mr-${CI_MERGE_REQUEST_IID} ;
+           buildah push --format v2s2 ${IMAGE_NAME}:build docker://${TARGET_REGISTRY}/${IMAGE_NAME}:mr-${CI_MERGE_REQUEST_IID}-${CI_COMMIT_SHORT_SHA} ;
+      fi
     - echo "Create deploy.env";
     - cd ${CI_PROJECT_DIR}; mkdir -p .artifacts; touch .artifacts/image_deploy.env
     - |
        if [ "$CI_PIPELINE_SOURCE" == 'push' ]; then
           echo "APP_IMAGE_NAME=${CACHE_REGISTRY}/${IMAGE_NAME}" >> .artifacts/image_deploy.env;
           echo "APP_IMAGE_TAG=${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}" >> .artifacts/image_deploy.env;
+          echo "APP_IMAGE_NAME=${CACHE_REGISTRY}/${IMAGE_NAME}"
+          echo "APP_IMAGE_TAG=${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA}"
        fi
+    - |
+      if [ "$CI_PIPELINE_SOURCE" == 'merge_request_event' ]; then
+         echo "APP_IMAGE_NAME=${CACHE_REGISTRY}/${IMAGE_NAME}" >> .artifacts/image_deploy.env;
+         echo "APP_IMAGE_TAG=mr-${CI_MERGE_REQUEST_IID}-${CI_COMMIT_SHORT_SHA}" >> .artifacts/image_deploy.env;
+         echo "APP_IMAGE_NAME=${CACHE_REGISTRY}/${IMAGE_NAME}"
+         echo "APP_IMAGE_TAG=mr-${CI_MERGE_REQUEST_IID}-${CI_COMMIT_SHORT_SHA}" ;
+      fi
 
 .deploy_image:
   stage: deploy
   image: "${DEPLOY_JOB_IMAGE}"
-  only:
-    refs:
-      - /^devel/
+  rules:
+    - if: ( $CI_PIPELINE_SOURCE != "push" )
+      when: never
   needs:
     - Build app image
 
@@ -175,14 +196,25 @@ Build app image:
 
 Deploy devel image:
   extends: .deploy_image
-  only:
-    refs:
-      - /^devel/
+  rules:
+    - if:
+          ( $CI_PIPELINE_SOURCE == "merge_request_event" ) &&
+          ( $CI_COMMIT_MESSAGE =~ /\#deploy/ )
+    - if:
+          ( $CI_PIPELINE_SOURCE == "push" ) &&
+          ( $CI_COMMIT_BRANCH =~ /^devel/ )
   environment:
     name: devel
   variables: 
     DEPLOY_REPO_BRANCH: devel
     DEPLOY_REPO_DIR: devel
+
+Debug CI:
+  stage: test
+  rules:
+    - if: $CI_COMMIT_MESSAGE =~ /\#cidebug/
+  script:
+    - export
 
 Deploy production image:
   extends: .deploy_image
@@ -192,7 +224,10 @@ Deploy production image:
   stage: deploy
   environment:
     name: production
-  only:
-    refs:
-      - master
-      - main
+  rules:
+    - if:
+          ( $CI_PIPELINE_SOURCE == "push" )  &&
+          ( $CI_COMMIT_BRANCH == "master" )
+    - if:
+          ( $CI_PIPELINE_SOURCE == "push" )  &&
+          ( $CI_COMMIT_BRANCH == "main" )
