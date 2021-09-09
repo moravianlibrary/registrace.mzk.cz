@@ -24,6 +24,9 @@ class AddressFieldset extends Fieldset implements InputFilterProviderInterface
             'options' => [
                 'label' => 'label_street',
             ],
+            'attributes' => [
+                'fake_required' => true,
+            ]
         ]);
         // City
         $this->add([
@@ -32,6 +35,9 @@ class AddressFieldset extends Fieldset implements InputFilterProviderInterface
             'options' => [
                 'label' => 'label_city',
             ],
+            'attributes' => [
+                'fake_required' => true,
+            ]
         ]);
         // Postcode
         $this->add([
@@ -40,6 +46,9 @@ class AddressFieldset extends Fieldset implements InputFilterProviderInterface
             'options' => [
                 'label' => 'label_postcode',
             ],
+            'attributes' => [
+                'fake_required' => true,
+            ]
         ]);
     }
 

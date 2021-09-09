@@ -105,6 +105,7 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
            'attributes' => [
                'data-toggle' => 'collapse',
                'data-target' => '#collapseisContactAddress',
+               'data-help' => 'help_isContactAddress',
            ],
         ]);
         // Proof of identity
