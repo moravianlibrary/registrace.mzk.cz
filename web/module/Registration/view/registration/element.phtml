@@ -77,7 +77,7 @@
         <?php
         $options = $element->getOptions();
         $labelClass = 'form-label';
-        $required = isset($options['required']) && $options['required'];
+        $required = (isset($options['required']) && $options['required']) || ($element->getAttribute('fake_required') ?? false);
         $element->setLabelAttributes(['class' => $labelClass]);
         $class = 'form-control';
         if ($element->getAttribute('readonly')) {
