@@ -100,6 +100,9 @@
                 </span>
             <?php endif ?>
             <?= $this->formElement($element) ?>
+            <?php if($element->hasAttribute('data-help')): ?>
+                <small class="form-text text-muted"><?= $this->translate($element->getAttribute('data-help'))?></small>
+            <?php endif; ?>
             <?=$this->formElementErrors()->render($element, ['class' => 'form-text error']) ?>
         </div>
     <? endif; ?>
