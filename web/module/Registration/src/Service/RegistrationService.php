@@ -79,7 +79,7 @@ class RegistrationService implements RegistrationServiceInterface
         // online registration
         if ($user->isVerified()) {
             $z303->{'z303-delinq-1'} = '52';
-            $z303->{'z303-delinq-n-1'} = 'Nový čtenář registrovaný přes mojeID';
+            $z303->{'z303-delinq-n-1'} = 'Nový čtenář registrovaný přes mojeID nebo MUNI';
         } else {
             $z303->{'z303-delinq-1'} = '50';
             $z303->{'z303-delinq-n-1'} = 'Online předregistrace';
