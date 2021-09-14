@@ -106,7 +106,7 @@ class RegistrationController extends AbstractController
         $discounts = $this->discountService->getAvailable($this->form);
         $discount = $discounts[$this->form->get('user')->get('discount')->getValue()];
         if ($request->isPost() && $discount && $this->form->isValid()) {
-            $user = new User($data);
+            $user = new User($data, $discount);
             $id = $this->registrationService->register($user);
             $user->setLogin($id);
             $this->mailService->sendRegistrationInfo($user);

@@ -107,6 +107,7 @@ class DiscountService
                 'group'          => 'UNIVERSITY_STUDENT',
                 'payment_number' => '0901',
                 'payment_name'   => 'B Online registrace roční - student',
+                'bor-status'     => '04',
             ],
             'UNIVERSITY_STUDENT_IDS_JMK' => [
                 'label'          => $this->translator->translate('discount_university_student_ids_jmk'),
@@ -119,7 +120,8 @@ class DiscountService
                 'ids_jmk'        => self::IDS_JMK_DISCOUNT,
                 'group'          => 'UNIVERSITY_STUDENT',
                 'payment_number' => '0901',
-                'payment_name'   => 'B Online registrace roční - student'
+                'payment_name'   => 'B Online registrace roční - student',
+                'bor-status'     => '04',
             ],
             // default - no discount
             'NONE' => [
@@ -130,7 +132,8 @@ class DiscountService
                 'ids_jmk'        => self::IDS_JMK_NO_DISCOUNT,
                 'group'          => 'NONE',
                 'payment_number' => '0902',
-                'payment_name'   => 'B Online registrace roční'
+                'payment_name'   => 'B Online registrace roční',
+                'bor-status'     => '03',
             ],
             'NONE_IDS_JMK' => [
                 'label'          => $this->translator->translate('discount_none_ids_jmk'),
@@ -140,7 +143,8 @@ class DiscountService
                 'ids_jmk'        => self::IDS_JMK_DISCOUNT,
                 'group'          => 'NONE',
                 'payment_number' => '0902',
-                'payment_name'   => 'B Online registrace roční'
+                'payment_name'   => 'B Online registrace roční',
+                'bor-status'     => '03',
             ],
             // by age limits
             'TEENAGER' => [
@@ -153,6 +157,7 @@ class DiscountService
                 'only_age'       => true,
                 'ids_jmk'        => self::IDS_JMK_NOT_APPLICABLE,
                 'group'          => 'TEENAGER',
+                'bor-status'     => '04',
             ],
             'SENIOR' => [
                 'label'          => $this->translator->translate('discount_senior'),
@@ -165,7 +170,8 @@ class DiscountService
                 'ids_jmk'        => self::IDS_JMK_NOT_APPLICABLE,
                 'group'          => 'SENIOR',
                 'payment_number' => '0904',
-                'payment_name'   => 'B Online registrace roční - senior'
+                'payment_name'   => 'B Online registrace roční - senior',
+                'bor-status'     => '03',
             ],
             'OLD_SENIOR' => [
                 'label'          => $this->translator->translate('discount_old_senior'),
@@ -178,7 +184,8 @@ class DiscountService
                 'ids_jmk'        => self::IDS_JMK_NOT_APPLICABLE,
                 'group'          => 'OLD_SENIOR',
                 'payment_number' => '0907',
-                'payment_name'   => 'B Online registrace roční - zdarma (nad 70 let)'
+                'payment_name'   => 'B Online registrace roční - zdarma (nad 70 let)',
+                'bor-status'     => '03',
             ],
             // free
             'UNOB_EMPLOYEE' => [
@@ -189,6 +196,7 @@ class DiscountService
                 'min_age'        => 19,
                 'ids_jmk'        => self::IDS_JMK_NOT_APPLICABLE,
                 'group'          => 'UNOB_EMPLOYEE',
+                'bor-status'     => '03',
             ],
             'UNOB_STUDENT' => [
                 'label'          => $this->translator->translate('discount_unob_student'),
@@ -198,6 +206,7 @@ class DiscountService
                 'min_age'        => 19,
                 'ids_jmk'        => self::IDS_JMK_NOT_APPLICABLE,
                 'group'          => 'UNOB_STUDENT',
+                'bor-status'     => '04',
             ],
             'ZTP' => [
                 'label'          => $this->translator->translate('discount_ztp'),
@@ -207,6 +216,7 @@ class DiscountService
                 'min_age'        => 19,
                 'ids_jmk'        => self::IDS_JMK_NOT_APPLICABLE,
                 'group'          => 'ZTP',
+                'bor-status'     => '03',
             ],
         ];
     }

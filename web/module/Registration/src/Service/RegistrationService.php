@@ -79,7 +79,7 @@ class RegistrationService implements RegistrationServiceInterface
         // online registration
         if ($user->isVerified()) {
             $z303->{'z303-delinq-1'} = '52';
-            $z303->{'z303-delinq-n-1'} = 'Nový čtenář registrovaný přes mojeID';
+            $z303->{'z303-delinq-n-1'} = 'Nový čtenář registrovaný přes mojeID nebo MUNI';
         } else {
             $z303->{'z303-delinq-1'} = '50';
             $z303->{'z303-delinq-n-1'} = 'Online předregistrace';
@@ -132,12 +132,13 @@ class RegistrationService implements RegistrationServiceInterface
         $z305->{'z305-expiry-date'} = $expiry;
         $z305->{'z305-last-activity-date'} = $now;
         $university = $user->getUniversity();
+        $discount = $user->getDiscount();
         if (!empty($university)) {
             $z305->{'z305-bor-status'} = '04';
             $z305->{'z305-bor-type'} = $university;
         } else {
-            $z305->{'z305-bor-status'} = '03';
-            $z305->{'z305-bor-type'} = '';
+            $z305->{'z305-bor-status'} = $discount['bor-status'] ?? '03';
+            $z305->{'z305-bor-type'} = $discount['bor-type'] ?? '';
         }
         $z305->{'z305-field-3'} = $user->getEduPersonPrincipalName();
         // z308
