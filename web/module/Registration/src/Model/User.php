@@ -53,7 +53,10 @@ class User
     // @var bool
     protected $verified = false;
 
-    public function __construct($data)
+    // @var array
+    protected $discount;
+
+    public function __construct($data, $discount)
     {
         $user = $data['user'];
         $this->firstName = $user['firstName'];
@@ -76,6 +79,7 @@ class User
         }
         $this->sendNewsLetter = $data['isSendNews'] == 'true';
         $this->verified = (bool) $data['verified'] ?? false;
+        $this->discount = $discount;
     }
 
     /**
@@ -332,6 +336,22 @@ class User
     public function setVerified(bool $verified)
     {
         $this->verified = $verified;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDiscount()
+    {
+        return $this->discount;
+    }
+
+    /**
+     * @param mixed $discount
+     */
+    public function setDiscount($discount)
+    {
+        $this->discount = $discount;
     }
 
 }
