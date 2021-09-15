@@ -157,7 +157,7 @@ class DiscountService
                 'only_age'       => true,
                 'ids_jmk'        => self::IDS_JMK_NOT_APPLICABLE,
                 'group'          => 'TEENAGER',
-                'bor-status'     => '04',
+                'bor-status'     => '03',
             ],
             'SENIOR' => [
                 'label'          => $this->translator->translate('discount_senior'),
