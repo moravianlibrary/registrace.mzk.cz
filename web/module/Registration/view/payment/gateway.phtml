@@ -1,18 +1,18 @@
 <section>
     <div class="container">
         <div>
-            <h1>Simulace platební brány</h1>
+            <h1><?=$this->translate('text_gateway_h1')?></h1>
             <ul>
                 <li>
-                    <a href="/payment/demoGatewayFinish">Platba proběhla v pořádku</a>
+                    <a href="/payment/demoGatewayFinish"><?=$this->translate('text_gateway_success')?></a>
                 </li>
                 <li>
-                    <a href="/payment/refused">Platba byla zamítnuta</a>
+                    <a href="/payment/refused"><?=$this->translate('text_gateway_denied')?></a>
                 </li>
                 <li>
-                    <a href="/payment/error">Platba proběhla s chybou</a>
+                    <a href="/payment/error"><?=$this->translate('text_gateway_fail')?></a>
                 </li>
-                <ul>
+            <ul>
         </div>
     </div>
 </section>

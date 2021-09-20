@@ -10,14 +10,11 @@
                 </div>
             </div>
             <div class="col-md-7 align-self-center">
-                <h1>Těší nás, že jste se stal/a čtenářem/čtenářkou Moravské zemské knihovny!</h1>
+                <h1><?=$this->translate('text_finished_head')?></h1>
 
-                <p>Dočasný login pro vaše přihlášení do účtu je <strong><?=$this->escapeHtml($this->login);?></strong>.</p>
-
-                <p>Pro vystavení čtenářské průkazky nutné pro fyzické výpůjčky navštivte půjčovnu v přízemí knihovny.</p>
-
-                <p>Těšíme se na vaši návštěvu!</p>
-
+                <p><?=sprintf($this->translate('text_temporary_login'), $this->login)?></p>
+                <p><?=$this->translate('text_payment_finished')?></p>
+                <p><?=$this->translate('text_looking_forward')?></p>
             </div>
         </div>
 
@@ -26,7 +23,7 @@
 
 <section class="py-5">
     <div class="container">
-        <h2 class="text-center mb-4">Již nyní můžete z pohodlí domova využívat následující služby:</h2>
+        <h2 class="text-center mb-4"><?=$this->translate('text_available_services')?></h2>
 
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-5">
             <!-- database -->
@@ -37,11 +34,11 @@
                             <img class="img-fluid" src="<?=$this->basePath('img/database.png')?>" alt="Elektronické informační zdroje">
                         </p>
                         <p class="my-4">
-                            Vzdálený přístup do vybraných elektronických informačních zdrojů
+                            <?=$this->translate('text_remote_access_books')?>
                         </p>
                     </div>
                     <div class="card-footer">
-                        <a class="btn btn-purple" href="https://www.mzk.cz/katalogy-databaze/databaze#tab1" title="">Prozkoumat</a>
+                        <a class="btn btn-purple" href="https://www.mzk.cz/katalogy-databaze/databaze#tab1" title=""><?=$this->translate('btn_explore')?></a>
                     </div>
                 </div>
             </div>
@@ -54,11 +51,11 @@
                             <img class="img-fluid" src="<?=$this->basePath('img/digitallibrary.png')?>" alt="Vzdálený přístup">
                         </p>
                         <p class="my-4">
-                            Vzdálený přístup do databáze digitalizovaných děl nedostupných na trhu (včetně autorsky chráněných děl)
+                            <?=$this->translate('text_remote_access_db')?>
                         </p>
                     </div>
                     <div class="card-footer">
-                        <a class="btn btn-blue" href="https://dnnt.mzk.cz/" title="">Prozkoumat</a>
+                        <a class="btn btn-blue" href="https://dnnt.mzk.cz/" title=""><?=$this->translate('btn_explore')?></a>
                     </div>
                 </div>
             </div>
@@ -71,11 +68,11 @@
                             <img class="img-fluid" src="<?=$this->basePath('img/catalog.png')?>" alt="Katalog MZK">
                         </p>
                         <p class="my-4">
-                            Současně si již také můžete vybírat a objednávat knihy z našeho katalogu.
+                            <?=$this->translate('text_remote_catalog')?>
                         </p>
                     </div>
                     <div class="card-footer">
-                        <a class="btn btn-cyan" href="https://vufind.mzk.cz/" title="">Prozkoumat</a>
+                        <a class="btn btn-cyan" href="https://vufind.mzk.cz/" title=""><?=$this->translate('btn_explore')?></a>
                     </div>
                 </div>
             </div>

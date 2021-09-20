@@ -4,32 +4,32 @@
         <div class="container">
             <?=$this->flashMessenger()->render();?>
 
-            <h2 class="supertitle">Co získám registrací do <img src="<?=$this->basePath('img/logo-mzk-sign.svg')?>" alt="MZK">?</h2>
+            <h2 class="supertitle"><?=$this->translate('homepage_h1')?> <img src="<?=$this->basePath('img/logo-mzk-sign.svg')?>" alt="<?=$this->translate('homepage_h1_img_alt')?>">?</h2>
             <div class="row">
                 <div class="col-sm-12 col-md-6 pt-4">
 
                     <ul class="list-tips">
                         <li>
                             <i class="fa fa-2x fa-check-circle text-success"></i>
-                            <span>4,5 milionu knihovních jednotek</span>
+                            <span><?=$this->translate('info_item_1')?></span>
                         </li>
                         <li>
                             <i class="fa fa-2x fa-check-circle text-success"></i>
-                            <span>Statisíce digitalizovaných knih, novin, časopisů, starých tisků, map…</span>
+                            <span><?=$this->translate('info_item_2')?></span>
                         </li>
                         <li>
                             <i class="fa fa-2x fa-check-circle text-success"></i>
-                            <span>Miliony dalších odborných studií a článků z&nbsp;licencovaných databází</span>
+                            <span><?=$this->translate('info_item_3')?></span>
                         </li>
                         <li>
                             <i class="fa fa-2x fa-check-circle text-success"></i>
-                            <span>Od roku 1935 kompletní česká knižní produkce</span>
+                            <span><?=$this->translate('info_item_4')?></span>
                         </li>
                     </ul>
 
                     <div>
                         <a class="btn btn-success text-uppercase" href="#registration">
-                            Zvolit způsob registrace
+                            <?=$this->translate('btn_goto_registration')?>
                         </a>
                     </div>
 
@@ -46,27 +46,27 @@
             <ul class="list-tips-small">
                 <li>
                     <i class="fa fa-book"></i>
-                    <span>Mohu si&nbsp;půjčit knihy do&nbsp;studovny i&nbsp;domů, z&nbsp;MZK i&nbsp;z&nbsp;jiných knihoven, českých i&nbsp;zahraničních.</span>
+                    <span><?=$this->translate('benefit_item_1')?></span>
                 </li>
                 <li>
                     <i class="fa fa-couch"></i>
-                    <span>Získám příjemné místo ke&nbsp;studiu (i&nbsp;setkávání) od&nbsp;rána do&nbsp;večera, šest dní v&nbsp;týdnu</span>
+                    <span><?=$this->translate('benefit_item_2')?></span>
                 </li>
                 <li>
                     <i class="fa fa-laptop"></i>
-                    <span>Mohu&nbsp;si z&nbsp;křesla v&nbsp;obýváku prohlížet autorsky chráněné digitalizované dokumenty</span>
+                    <span><?=$this->translate('benefit_item_3')?></span>
                 </li>
                 <li>
                     <i class="fa fa-users"></i>
-                    <span>Rady odborníků při&nbsp;hledání jakéhokoliv zdroje pro&nbsp;studium, psaní diplomky i&nbsp;jen tak pro&nbsp;zábavu</span>
+                    <span><?=$this->translate('benefit_item_4')?></span>
                 </li>
                 <li>
                     <i class="fa fa-newspaper"></i>
-                    <span>Přístup k&nbsp;aktuálním vydáním novin a časopisů z&nbsp;celého světa, online i offline, ve studovně i z&nbsp;pohodlí domova</span>
+                    <span><?=$this->translate('benefit_item_5')?></span>
                 </li>
                 <li>
                     <i class="fa fa-wifi"></i>
-                    <span>WIFI v&nbsp;budově zdarma</span>
+                    <span><?=$this->translate('benefit_item_6')?></span>
                 </li>
             </ul>
         </div>
@@ -80,19 +80,13 @@
                 <div class="col text-center mb-3">
                     <div class="card h-100 border-0 rounded-pill card-mojeid">
                         <div class="card-body">
-                            <p class="h6">Registrace přes</p>
-                            <h2 class="heading-logo"><img src="<?=$this->basePath('img/logo-mojeid.svg')?>" alt="mojeID" title="mojeID"></h2>
-                            <p><small>Mám validovaný účet mojeID (tj.&nbsp;s&nbsp;ověřenou totožností), s&nbsp;nímž je registrace rychlejší a&nbsp;k&nbsp;dokončení není třeba navštívit knihovnu.</small></p>
-                            <p><small>Po zaplacení registračního poplatku kartou online mohu hned využívat vzdálený přístup do licencovaných databází či do digitálních zdrojů.</small></p>
-                            <p class="mb-0">
-                                <a class="btn btn-sm btn-link" href="https://www.mzk.cz/mojeid-v-moravske-zemske-knihovne" title=""><small>Co je účet mojeID?</small></a>
-                                <br>
-                                <a class="btn btn-sm btn-link" href="https://mojeid.cz/registration/" title=""><small>Chci si založit účet mojeID</small></a>
-                            </p>
+                            <p class="h6"><?=$this->translate('box_mojeid_head')?></p>
+                            <h2 class="heading-logo"><img src="<?=$this->basePath('img/logo-mojeid.svg')?>" alt="<?=$this->translate('box_mojeid_title')?>" title="<?=$this->translate('box_mojeid_title')?>"></h2>
+                            <?=$this->translate('box_mojeid_text')?>
                         </div>
                         <div class="card-footer">
                             <p class="mb-0">
-                                <a class="btn btn-success text-uppercase" href="<?=$this->escapeHtmlAttr($this->baseUrl)?>/Shibboleth.sso/DS?entityID=<?=urlencode($this->mojeid)?>&target=<?=urlencode($this->baseUrl)?>/registration/userForm%3Fidp%3Dmojeid" title="">Registrovat</a>
+                                <a class="btn btn-success text-uppercase" href="<?=$this->escapeHtmlAttr($this->baseUrl)?>/Shibboleth.sso/DS?entityID=<?=urlencode($this->mojeid)?>&target=<?=urlencode($this->baseUrl)?>/registration/userForm%3Fidp%3Dmojeid" title="<?=$this->translate('btn_register_title')?>"><?=$this->translate('btn_register')?></a>
                             </p>
                         </div>
                     </div>
@@ -104,19 +98,13 @@
                     <div class="col text-center mb-3">
                         <div class="card h-100 border-0 rounded-pill card-brnoid">
                             <div class="card-body">
-                                <p class="h6">Registrace přes</p>
-                                <h2 class="heading-logo"><img src="<?=$this->basePath('img/logo-brnoid.svg')?>" alt="Brno iD" title="Brno iD"></h2>
-                                <p><small>Mám validovaný účet Brno ID full (tj.&nbsp;s&nbsp;ověřenou totožností), s&nbsp;nímž je registrace rychlejší a&nbsp;k&nbsp;dokončení není třeba navštívit knihovnu.</small></p>
-                                <p><small>Po zaplacení registračního poplatku kartou online mohu hned využívat vzdálený přístup do licencovaných databází či do digitálních zdrojů.</small></p>
+                                <p class="h6"><?=$this->translate('box_brnoid_head')?></p>
+                                <h2 class="heading-logo"><img src="<?=$this->basePath('img/logo-brnoid.svg')?>" alt="<?=$this->translate('box_brnoid_title')?>" title="<?=$this->translate('box_brnoid_title')?>"></h2>
+                                <?=$this->translate('box_brnoid_text')?>
                             </div>
                             <div class="card-footer">
                                 <p>
-                                    <a class="btn btn-success text-uppercase" href="/registration/userForm" title="">Registrovat</a>
-                                </p>
-                                <p class="mb-0">
-                                    <a class="btn btn-sm btn-link" href="" title=""><small>Co je účet Brno iD?</small></a>
-                                    <br>
-                                    <a class="btn btn-sm btn-link" href="" title=""><small>Chci si založit účet Brno iD</small></a>
+                                    <a class="btn btn-success text-uppercase" href="/registration/userForm" title=""><?=$this->translate('btn_register')?></a>
                                 </p>
                             </div>
                         </div>
@@ -131,18 +119,17 @@
                             <div class="card h-100 border-0 rounded-pill card-eduid">
                                 <div class="card-body">
                                     <input type="hidden" name="target" value="<?=$this->escapeHtmlAttr($this->baseUrl)?>/registration/userForm?idp=eduid"/>
-                                    <p class="h6">Registrace přes univerzitní účet</p>
+                                    <p class="h6"><?=$this->translate('box_eduid_head')?></p>
                                     <p class="select-university">
                                         <select class="selectpicker" data-width="100%" data-style="btn-light" name="entityID">
-                                            <option data-content='<img class="selectpicker-img" src="https://cdn.muni.cz/Css/_Shared/Favicons/000000.ico"> Masarykova univerzita' value="https://idp2.ics.muni.cz/idp/shibboleth" selected></option>
+                                            <option data-content='<img class="selectpicker-img" src="https://cdn.muni.cz/Css/_Shared/Favicons/000000.ico"> <?=$this->translate('Masaryk University')?>' value="https://idp2.ics.muni.cz/idp/shibboleth" selected></option>
                                         </select>
                                     </p>
-                                    <p><small>Jsem studentem či pedagogem některé z uvedených univerzit.</small></p>
-                                    <p><small>Po zaplacení registračního poplatku kartou online mohu hned využívat vzdálený přístup do licencovaných databází či do digitálních zdrojů.</small></p>
+                                    <?=$this->translate('box_eduid_text')?>
                                 </div>
                                 <div class="card-footer">
                                     <p class="mb-0">
-                                        <input class="btn btn-success text-uppercase" type="submit" value="Registrovat"/>
+                                        <input class="btn btn-success text-uppercase" type="submit" value="<?=$this->translate('btn_register')?>"/>
                                     </p>
                                 </div>
                             </div>
@@ -155,15 +142,13 @@
                 <div class="col text-center mb-3">
                     <div class="card h-100 border-0 rounded-pill card-mzk">
                         <div class="card-body">
-                            <p class="h6">Předregistrace</p>
-                            <h2 class="heading-logo"><img src="<?=$this->basePath('img/logo-mzk.svg')?>" alt="Moravská zemská knihovna" title="Moravská zemská knihovna"></h2>
-                            <p><small>Nemám validovaný účet mojeID ani aktivní univerzitní účet na&nbsp;některé z&nbsp;uvedených univerzit.</small></p>
-                            <p><small>K&nbsp;dokončení registrace bude nutné navštívit knihovnu kvůli ověření totožnosti.</small></p>
-                            <p><small>Poplatek nelze zaplatit online kartou.</small></p>
+                            <p class="h6"><?=$this->translate('box_mzk_head')?></p>
+                            <h2 class="heading-logo"><img src="<?=$this->basePath('img/logo-mzk.svg')?>" alt="<?=$this->translate('box_mzk_title')?>" title="<?=$this->translate('box_mzk_title')?>"></h2>
+                            <?=$this->translate('box_mzk_text')?>
                         </div>
                         <div class="card-footer">
                             <p class="mb-0">
-                                <a class="btn btn-success text-uppercase" href="/registration/userForm" title="">Registrovat</a>
+                                <a class="btn btn-success text-uppercase" href="/registration/userForm" title="<?=$this->translate('btn_register_title')?>"><?=$this->translate('btn_register')?></a>
                             </p>
                         </div>
                     </div>

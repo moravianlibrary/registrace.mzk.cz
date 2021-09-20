@@ -26,7 +26,7 @@ switch ($this->step) {
                 <div class="step-icon-wrap">
                     <div class="step-icon">1</div>
                 </div>
-                <h4>Vyplnění formuláře</h4>
+                <h4><?=$this->translate('step_1_text')?></h4>
             </div>
             <div class="step<?php
             if ($step2): ?> completed<?php
@@ -34,7 +34,7 @@ switch ($this->step) {
                 <div class="step-icon-wrap">
                     <div class="step-icon">2</div>
                 </div>
-                <h4>Založení účtu</h4>
+                <h4><?=$this->translate('step_2_text')?></h4>
             </div>
             <div class="step<?php
             if ($step3): ?> completed<?php
@@ -42,7 +42,7 @@ switch ($this->step) {
                 <div class="step-icon-wrap">
                     <div class="step-icon">3</div>
                 </div>
-                <h4>Dokončení</h4>
+                <h4><?=$this->translate('step_3_text')?></h4>
             </div>
         </div>
     </div>

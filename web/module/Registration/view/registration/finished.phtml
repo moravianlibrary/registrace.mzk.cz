@@ -19,9 +19,9 @@ $paymentLink = ($verified && $online && $price > 0);
                 </div>
             </div>
             <div class="col-md-7 align-self-center">
-                <h1>Gratulujeme!</h1>
+                <h1><?=$this->translate('text_registration_title')?></h1>
                 <?php if ($price > 0 && $this->finished): ?>
-                    <p><strong>Právě jste si založil/a čtenářský účet v Moravské zemské knihovně.</strong></p>
+                    <p><strong><?=$this->translate('text_account_created')?></strong></p>
                 <?php endif; ?>
                 <p>
                     <?php if (!$this->verified): ?>
@@ -30,9 +30,9 @@ $paymentLink = ($verified && $online && $price > 0);
                     <?php endif; ?>
                 </p>
                 <p>
-                    Dočasný login pro vaše přihlášení do účtu je <strong><?=$this->escapeHtml($this->login);?></strong>.
+                    <?=sprintf($this->translate('text_temporary_login'), $this->login)?>
                     <br>
-                    Po vystavení čtenářské průkazky nutné k fyzickým výpůjčkám bude vaším loginem číslo této průkazky.
+                    <?=$this->translate('text_temporary_card')?>
                 </p>
             </div>
         </div>
@@ -42,7 +42,7 @@ $paymentLink = ($verified && $online && $price > 0);
 <?php if (!$finished): ?>
     <section class="bg-info-light">
         <div class="container text-center">
-            <p>Na základě vámi vyplněných údajů činí roční registrační poplatek:</p>
+            <p><?=$this->translate('text_price_info')?></p>
             <p class="price">
                 <strong><?=$this->escapeHtml($price)?><?=$this->translate('payment_amount_currency')?></strong>
             </p>
@@ -50,30 +50,30 @@ $paymentLink = ($verified && $online && $price > 0);
             <div class="row my-4">
                 <?php if ($paymentLink): ?>
                     <div class="col-md-6">
-                        <a class="btn btn-success" href="/Payment/init" title="Platba kartou">
+                        <a class="btn btn-success" href="/Payment/init" title="<?=$this->translate('btn_pay_online_card_title')?>">
                             <i class="fa fa-credit-card mr-1" aria-hidden="true"></i>
-                            Zaplatím kartou online
+                            <?=$this->translate('btn_pay_online_card')?>
                         </a>
                     </div>
                     <div class="col-md-6">
-                        <a class="btn btn-dark" href="/Payment/finishedCash" title="Platba v hotovosti">
+                        <a class="btn btn-dark" href="/Payment/finishedCash" title="<?=$this->translate('btn_pay_in_library_title')?>">
                             <i class="fa fa-money mr-1" aria-hidden="true"></i>
-                            Zaplatím v knihovně
+                            <?=$this->translate('btn_pay_in_library')?>
                         </a>
                     </div>
                 <?php else: ?>
                     <?php if ($price > 0): ?>
                         <div class="col-md-12">
-                            <a class="btn btn-dark" href="/Payment/finishedCash" title="Platba v hotovosti">
+                            <a class="btn btn-dark" href="/Payment/finishedCash" title="<?=$this->translate('btn_finish_registration_title')?>">
                                 <i class="fa fa-money mr-1" aria-hidden="true"></i>
-                                Dokončit registraci
+                                <?=$this->translate('btn_finish_registration')?>
                             </a>
                         </div>
                     <?php else: ?>
                         <div class="col-md-12">
-                            <a class="btn btn-dark" href="/Payment/finishedOnlineVerifiedNot" title="Dokončení registrace">
+                            <a class="btn btn-dark" href="/Payment/finishedOnlineVerifiedNot" title="<?=$this->translate('text_finish_registration_library_title')?>">
                                 <i class="fa fa-money mr-1" aria-hidden="true"></i>
-                                Dokončím registraci v knihovně
+                                <?=$this->translate('text_finish_registration_library')?>
                             </a>
                         </div>
                     <?php endif; ?>
