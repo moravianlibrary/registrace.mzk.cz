@@ -224,7 +224,7 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
                     [
                         'name' => Validator\EmailAddress::class,
                         'options' => [
-                            'message' => 'userForm_missing_lastName',
+                            'message' => 'userForm_missing_email',
                             'type' => 'string',
                         ],
                     ],
