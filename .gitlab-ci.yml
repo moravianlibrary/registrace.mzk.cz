@@ -13,6 +13,10 @@ variables:
   IMAGE_NAME: moravianlibrary/registrace/app
   DEPLOY_JOB_IMAGE: "docker.app.knihovny.cz/ci-builds/kustomize:latest"
   BUILDAH_LAYERS: 'true'
+  HTTP_PROXY: http://195.113.155.141:3128
+  HTTPS_PROXY: http://195.113.155.141:3128
+  NO_PROXY: .app.knihovny.cz,.mzk.cz
+
 
 Test the code:
   image: docker.app.knihovny.cz/mirrors/alpine:latest
