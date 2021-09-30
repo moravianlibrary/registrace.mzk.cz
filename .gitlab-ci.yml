@@ -66,7 +66,7 @@ Build PHP image:
     - |
       if [ "$CI_MERGE_REQUEST_IID" != "" ]; then
         #buildah push --format v2s2 ${PHP_IMAGE_NAME}:build docker://${TARGET_REGISTRY}/${PHP_IMAGE_NAME}:mr-${CI_MERGE_REQUEST_IID};
-        docker tag ${PHP_IMAGE_NAME}:build ${TARGET_REGISTRY}/${PHP_IMAGE_NAME}:mr-${CI_MERGE_REQUEST_IID}
+        docker tag ${PHP_IMAGE_NAME}:build ${TARGET_REGISTRY}/${PHP_IMAGE_NAME}:mr-${CI_MERGE_REQUEST_IID};
         docker push -q ${TARGET_REGISTRY}/${PHP_IMAGE_NAME}:mr-${CI_MERGE_REQUEST_IID}
        fi
     # push image to Target Registry (on push)
