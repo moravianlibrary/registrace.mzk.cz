@@ -8,7 +8,8 @@ stages:
 variables:
   CACHE_REGISTRY: docker.app.knihovny.cz
   TARGET_REGISTRY: registry.app.knihovny.cz
-  BUILD_JOB_IMAGE: "docker.app.knihovny.cz/ci-builds/buildah"
+  #BUILD_JOB_IMAGE: "docker.app.knihovny.cz/ci-builds/buildah"
+  BUILD_JOB_IMAGE: "docker.app.knihovny.cz/mirrors/docker:20.10-git"
   PHP_IMAGE_NAME: moravianlibrary/registrace/php
   IMAGE_NAME: moravianlibrary/registrace/app
   DEPLOY_JOB_IMAGE: "docker.app.knihovny.cz/ci-builds/kustomize:latest"
@@ -36,6 +37,8 @@ Test the code:
 Build PHP image:
   stage: build_base
   image: "${BUILD_JOB_IMAGE}"
+  services:
+    - ${CACHE_REGISTRY}/mirrors/docker:20.10-dind
   rules:
     - if:
         ( $CI_PIPELINE_SOURCE == "push" )  &&
@@ -82,6 +85,8 @@ Build PHP image:
 Build app image:
   stage: build_app
   image: "${BUILD_JOB_IMAGE}"
+  services:
+    - ${CACHE_REGISTRY}/mirrors/docker:20.10-dind
   rules:
     - if:
           ( $CI_PIPELINE_SOURCE == "push" )  &&
