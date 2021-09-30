@@ -15,6 +15,7 @@ variables:
   BUILDAH_LAYERS: 'true'
 
 Test the code:
+  image: docker.app.knihovny.cz/mirrors/alpine:latest
   stage: test
   rules:
     - if:
