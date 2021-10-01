@@ -151,7 +151,7 @@ Build app image:
     # push image to Target Registry for future reuse
     - docker tag ${IMAGE_NAME}:build ${TARGET_REGISTRY}/${IMAGE_NAME}:build
     - docker push -q ${TARGET_REGISTRY}/${IMAGE_NAME}:build
-    - echo ${TARGET_REGISTRY}/${IMAGE_NAME}:build
+    - echo Pushed ${TARGET_REGISTRY}/${IMAGE_NAME}:build
     # push image to Target Registry (on git push or merge)
     - echo "Push to repository when required"
     - |
@@ -162,9 +162,9 @@ Build app image:
             docker push -q ${TARGET_REGISTRY}/${IMAGE_NAME}:env-${CI_COMMIT_REF_SLUG} ;
             docker tag ${IMAGE_NAME}:build ${TARGET_REGISTRY}/${IMAGE_NAME}:${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA} ;
             docker push -q ${TARGET_REGISTRY}/${IMAGE_NAME}:env-${CI_COMMIT_REF_SLUG};
-            echo ${TARGET_REGISTRY}/${IMAGE_NAME}:env-${CI_COMMIT_REF_SLUG}
+            echo Pushed ${TARGET_REGISTRY}/${IMAGE_NAME}:env-${CI_COMMIT_REF_SLUG}
        else
-          echo "No push";
+          echo "No push" 1>&2;
        fi
     - |
       if [ "$CI_PIPELINE_SOURCE" == "merge_request_event" ] ; then
@@ -175,9 +175,9 @@ Build app image:
            docker push ${TARGET_REGISTRY}/${IMAGE_NAME}:mr-${CI_MERGE_REQUEST_IID} ;
            echo ${TARGET_REGISTRY}/${IMAGE_NAME}:mr-${CI_MERGE_REQUEST_IID} ;
            docker push ${TARGET_REGISTRY}/${IMAGE_NAME}:mr-${CI_MERGE_REQUEST_IID}-${CI_COMMIT_SHORT_SHA} ;
-           echo ${TARGET_REGISTRY}/${IMAGE_NAME}:mr-${CI_MERGE_REQUEST_IID}-${CI_COMMIT_SHORT_SHA};
+           echo Pushed ${TARGET_REGISTRY}/${IMAGE_NAME}:mr-${CI_MERGE_REQUEST_IID}-${CI_COMMIT_SHORT_SHA};
       else
-          echo "No push";
+          echo "No push" 
       fi
     - echo "Create deploy.env";
     - cd ${CI_PROJECT_DIR}; mkdir -p .artifacts; touch .artifacts/image_deploy.env
