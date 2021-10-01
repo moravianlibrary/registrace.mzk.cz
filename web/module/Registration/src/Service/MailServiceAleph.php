@@ -14,6 +14,16 @@ class MailServiceAleph implements MailServiceInterface
 
     const PAYMENT_URL = "https://aleph.mzk.cz/cgi-bin/mail-platba.pl";
 
+    /**
+     * @var Container
+     */
+    protected $session;
+
+    public function __construct()
+    {
+        $this->session = new Container('registration');
+    }
+
     public function sendRegistrationInfo(User $user)
     {
         if ($user->getEmail() == null || empty($user->getEmail())) {
@@ -24,7 +34,7 @@ class MailServiceAleph implements MailServiceInterface
         $client->setParameterGet([
             'id'   => $user->getLogin(),
             'mail' => $user->getEmail(),
-            'lang' => 'cs',
+            'lang' => $this->session->language ?? 'cs',
         ]);
         try {
             $response = $client->send();
@@ -45,7 +55,7 @@ class MailServiceAleph implements MailServiceInterface
             'mail'   => $user->getEmail(),
             'jmeno'  => $user->getFirstName() . ' ' . $user->getLastName(),
             'castka' => $amount,
-            'lang'  => 'cs',
+            'lang' => $this->session->language ?? 'cs',
         ]);
         try {
             $response = $client->send();
