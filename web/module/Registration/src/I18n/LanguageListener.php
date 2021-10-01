@@ -45,12 +45,12 @@ class LanguageListener implements ListenerAggregateInterface
             $lang = $request->getQuery('lang')
                 ?? $this->session->language
                 ?? self::DEFAULT_LANGUAGE;
-            if (isset(LanguageListener::LANGUAGES[$lang])) {
-                $locale = LanguageListener::LANGUAGES[$lang];
-                $this->translator->setLocale($locale);
-            } else {
+            if (!isset(LanguageListener::LANGUAGES[$lang])) {
                 $lang = self::DEFAULT_LANGUAGE;
             }
+            $locale = LanguageListener::LANGUAGES[$lang];
+            $this->translator->setLocale($locale);
+            $this->translator->setFallbackLocale($locale . '.UTF-8');
             $this->session->language = $lang;
         });
     }
