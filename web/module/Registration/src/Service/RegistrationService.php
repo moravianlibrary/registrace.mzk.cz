@@ -101,6 +101,7 @@ class RegistrationService implements RegistrationServiceInterface
                 break;
             }
             $z304->{'record-action'} = $recordAction;
+            $z304->{'z304-sequence'} = ($index == 0) ? '01' : '02';
             $z304->{'z304-id'} = $id;
             $z304->{'z304-date-from'} = $now;
             $z304->{'email-address'} = $user->getEmail();
