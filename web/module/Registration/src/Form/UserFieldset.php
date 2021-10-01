@@ -136,7 +136,6 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
             'name'    => 'birth',
             'type'    => DateSelect::class,
             'attributes' => [
-                'value' => (date("Y") - 26) . '-01-01',
                 'data-help-icon' => 'help_birth',
             ],
             'options' => [
@@ -145,6 +144,7 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
                 'min_year'  => '1900',
                 'max_year'  => date("Y") - 15,
                 'protected' => true,
+                'create_empty_option' => true,
             ],
         ]);
         // Discount

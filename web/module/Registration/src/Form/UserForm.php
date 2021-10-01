@@ -132,7 +132,11 @@ class UserForm extends Form implements InputFilterProviderInterface
     public function getAge()
     {
         $birth = $this->get('user')->get('birth')->getValue();
-        return DateTime::createFromFormat('Y-m-d', $birth)->diff(new DateTime('now'))->y;
+        $date = DateTime::createFromFormat('Y-m-d', $birth);
+        if (!$date) {
+            return 0;
+        }
+        return $date->diff(new DateTime('now'))->y;
     }
 
     public function setProtectedData($data)
