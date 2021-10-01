@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Registration\Controller;
 
+use Laminas\Form\FormElementManager;
 use Laminas\Form\FormInterface;
 use Laminas\InputFilter\InputFilter;
 use Laminas\Mvc\Controller\AbstractActionController;
@@ -22,8 +23,11 @@ class RegistrationController extends AbstractController
 {
     use LoggerAwareTrait;
 
-    /** @var UserForm */
-    private $form;
+    /** @var \Laminas\Form\FormElementManager */
+    private $formElementManager;
+
+    /** @var  UserForm */
+    private $userForm;
 
     private $config;
 
@@ -39,13 +43,13 @@ class RegistrationController extends AbstractController
     /** @var Translator */
     private $translator;
 
-    public function __construct(UserForm $form, $config, IdentityProviderFactory $identityProviderFactory,
+    public function __construct(FormElementManager $formElementManager, $config, IdentityProviderFactory $identityProviderFactory,
                                 RegistrationServiceInterface $registrationService,
                                 MailServiceInterface $mailService, DiscountService $discountService,
                                 Translator $translator)
     {
         parent::__construct();
-        $this->form = $form;
+        $this->formElementManager = $formElementManager;
         $this->config = $config;
         $this->identityProviderFactory = $identityProviderFactory;
         $this->registrationService = $registrationService;
@@ -97,15 +101,15 @@ class RegistrationController extends AbstractController
                 $this->getLogger()->info("Data from IdP:\n" . print_r($identity, true));
                 if ($identity['verified']) {
                     $verified = true;
-                    $this->form->setProtectedData($identity);
+                    $this->getUserForm()->setProtectedData($identity);
                 }
                 $data = array_replace_recursive($data, $identity);
             }
         }
-        $this->form->setData($data);
-        $discounts = $this->discountService->getAvailable($this->form);
-        $discount = $discounts[$this->form->get('user')->get('discount')->getValue()];
-        if ($request->isPost() && $discount && $this->form->isValid()) {
+        $this->getUserForm()->setData($data);
+        $discounts = $this->discountService->getAvailable($this->getUserForm());
+        $discount = $discounts[$this->getUserForm()->get('user')->get('discount')->getValue()];
+        if ($request->isPost() && $discount && $this->getUserForm()->isValid()) {
             $user = new User($data, $discount);
             $id = $this->registrationService->register($user);
             $user->setLogin($id);
@@ -133,9 +137,10 @@ class RegistrationController extends AbstractController
                 'countries' => $this->config['countries']
             ],
             'translations' => [
-                'userForm_passwordConfirmNoMatch' => $this->translator->translate('userForm_passwordConfirmNoMatch'),
+                'userForm_passwordConfirmNoMatch' => $this->translator
+                    ->translate('userForm_passwordConfirmNoMatch'),
             ],
-            'form' => $this->form,
+            'form' => $this->getUserForm(),
             'unverified' => ($auth != null) && !$verified,
         ]);
         $view->setTemplate('registration/userForm');
@@ -160,6 +165,15 @@ class RegistrationController extends AbstractController
         ]);
         $view->setTemplate('registration/finished');
         return $view;
+    }
+
+    protected function getUserForm()
+    {
+        if ($this->userForm == null) {
+            $this->userForm = $this->formElementManager
+                ->get(UserForm::class);
+        }
+        return $this->userForm;
     }
 
 }

@@ -13,6 +13,7 @@ class RegistrationControllerFactory
     {
         /** @var PluginManagerInterface $formElementManager */
         $formElementManager = $container->get('FormElementManager');
+        //echo get_class($formElementManager);
         /** @var UserForm */
         $form = $formElementManager->get(UserForm::class);
         $configReader = $container->get(\Registration\Config\ConfigReader::class);
@@ -22,7 +23,7 @@ class RegistrationControllerFactory
         $translator = $container->get(Translator::class);
         $mailService = $container->get(\Registration\Service\MailServiceInterface::class);
         $discountService = $container->get(\Registration\Service\DiscountService::class);
-        return new RegistrationController($form, $config, $identityProvider,
+        return new RegistrationController($formElementManager, $config, $identityProvider,
             $registrationService, $mailService, $discountService, $translator);
     }
 

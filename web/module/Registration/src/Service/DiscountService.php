@@ -23,18 +23,18 @@ class DiscountService
 
     protected $translator;
 
-    protected $discounts;
+    protected $discounts = null;
 
     protected $validators;
 
     public function __construct(Translator $translator)
     {
         $this->translator = $translator;
-        $this->init();
     }
 
     public function getAll()
     {
+        $this->init();
         $discounts = [];
         foreach ($this->discounts as $code => $discount) {
             $discount['label'] = str_replace('$price',
@@ -46,6 +46,7 @@ class DiscountService
 
     public function getAvailable(?UserForm $user)
     {
+        $this->init();
         $age = ($user != null)? $user->getAge() : self::DEFAULT_AGE;
         $student = ($user != null)? $user->get('discountEntitlement')
                 ->getValue() == 'student' : false;
@@ -78,11 +79,13 @@ class DiscountService
 
     public function getByCode($code)
     {
+        $this->init();
         return $this->discounts[$code];
     }
 
     protected function findDiscountByAge(?UserForm $user)
     {
+        $this->init();
         foreach ($this->discounts as $code => $discount) {
             $onlyAge = $discount['only_age'] || false;
             if ($onlyAge && $this->validate($discount, $user)) {
@@ -94,6 +97,9 @@ class DiscountService
 
     protected function init()
     {
+        if ($this->discounts != null) {
+            return;
+        }
         $this->discounts = [
             'UNIVERSITY_STUDENT' => [
                 'label'          => $this->translator->translate('discount_university_student'),
