@@ -161,7 +161,7 @@ Build app image:
             docker tag ${IMAGE_NAME}:build ${TARGET_REGISTRY}/${IMAGE_NAME}:env-${CI_COMMIT_REF_SLUG} ;
             docker push -q ${TARGET_REGISTRY}/${IMAGE_NAME}:env-${CI_COMMIT_REF_SLUG} ;
             docker tag ${IMAGE_NAME}:build ${TARGET_REGISTRY}/${IMAGE_NAME}:${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA} ;
-            docker push -q ${TARGET_REGISTRY}/${IMAGE_NAME}:env-${CI_COMMIT_REF_SLUG}
+            docker push -q ${TARGET_REGISTRY}/${IMAGE_NAME}:${CI_COMMIT_REF_SLUG}-${CI_COMMIT_SHORT_SHA} ;
        fi
     - |
       if [ "$CI_PIPELINE_SOURCE" == "merge_request_event" ] ; then
