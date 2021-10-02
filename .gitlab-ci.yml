@@ -57,6 +57,9 @@ Build PHP image:
   before_script:
     # try to load image from cache registry
     - if docker pull --quiet ${CACHE_REGISTRY}/${PHP_IMAGE_NAME}:build ; then echo Cache loaded 1>&2 ; fi
+    #  add docker auth
+    - mkdir -p $HOME/.docker
+    - cp ${REGISTRY_AUTH_FILE} $HOME/.docker/config.json
   script:
     - cd ${CI_PROJECT_DIR}
     # build the image
@@ -106,6 +109,9 @@ Build app image:
   #    - .buildah
 
   before_script:
+    #  add docker auth
+    - mkdir -p $HOME/.docker
+    - cp ${REGISTRY_AUTH_FILE} $HOME/.docker/config.json
     - mkdir -p .artifacts
     # try to load image from cache registry
     # try to load image build in some merge-reqeest
