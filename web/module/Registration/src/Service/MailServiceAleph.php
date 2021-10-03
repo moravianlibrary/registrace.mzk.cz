@@ -2,6 +2,7 @@
 namespace Registration\Service;
 
 use Laminas\Http\Client;
+use \Laminas\Session\Container;
 use Registration\Log\LoggerAwareTrait;
 use Registration\Model\User;
 
