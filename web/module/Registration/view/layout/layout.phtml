@@ -29,6 +29,7 @@
         <!-- Le styles -->
         <?= $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/x-icon', 'href' => $this->basePath() . '/img/favicon.ico'])
             ->prependStylesheet($this->basePath('css/style.css'))
+            ->prependStylesheet($this->basePath('css/flag-icon.css'))
             ->prependStylesheet($this->basePath('css/font-awesome.min.css'))
             ->prependStylesheet($this->basePath('css/bootstrap-select.css'))
             ->prependStylesheet($this->basePath('css/bootstrap.css'))
@@ -58,6 +59,14 @@
                     <img src="<?=$this->basePath('img/logo-mzk-white.svg')?>" alt="<?=$this->translate('logo_title')?>">
                 </a>
                 <div class="h1 d-inline-block align-middle"><?=$this->translate('head_text')?></div>
+                <div class="d-inline-block">
+                    <a href="/?lang=cs" title="Česky">
+                        <span class="flag-icon flag-icon-cs"></span>
+                    </a>
+                    <a href="/?lang=en" title="English">
+                        <span class="flag-icon flag-icon-en"></span>
+                    </a>
+                </div>
             </div>
         </header>
         <div class="content">
