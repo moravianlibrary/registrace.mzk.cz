@@ -46,6 +46,11 @@ class RegistrationService implements RegistrationServiceInterface
     /** @var Translator */
     protected $translator;
 
+    /**
+     * @var Container
+     */
+    protected $session;
+
     public function __construct(array $config, CodeBook $codeBook, Translator $translator)
     {
         $this->xServerUrl = $config['alephXServer']['url'];
@@ -57,6 +62,7 @@ class RegistrationService implements RegistrationServiceInterface
             ?? $config['aleph']['test'] ?? false;
         $this->codeBook = $codeBook;
         $this->translator = $translator;
+        $this->session = new Container('registration');
     }
 
     public function register(User $user)
@@ -76,6 +82,7 @@ class RegistrationService implements RegistrationServiceInterface
         $z303->{'z303-open-date'} = $now;
         $z303->{'z303-title'} = $user->getDegree();
         $z303->{'z303-birth-date'} = $user->getBirth()->format("Ymd");
+        $z303->{'z303-con-lng'} = $this->session->language_aleph_code ?? 'CZE';
         // online registration
         if ($user->isVerified()) {
             $z303->{'z303-delinq-1'} = '52';

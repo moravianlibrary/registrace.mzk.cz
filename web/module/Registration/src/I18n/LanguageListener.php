@@ -11,7 +11,18 @@ class LanguageListener implements ListenerAggregateInterface
 {
 
     protected const LANGUAGES = [
-        'cs' => 'cs_CZ',
+        'cs' => [
+            'locale' => 'cs_CZ',
+            'aleph_code' => 'CZE',
+        ],
+        'en' => [
+            'locale' => 'en_GB',
+            'aleph_code' => 'ENG',
+        ],
+    ];
+
+    protected const LANGUAGE_ALEPH_CODES = [
+        'cs' => 'CZE',
         'en' => 'en_GB',
     ];
 
@@ -48,10 +59,12 @@ class LanguageListener implements ListenerAggregateInterface
             if (!isset(LanguageListener::LANGUAGES[$lang])) {
                 $lang = self::DEFAULT_LANGUAGE;
             }
-            $locale = LanguageListener::LANGUAGES[$lang];
+            $language = LanguageListener::LANGUAGES[$lang];
+            $locale = $language['locale'];
             $this->translator->setLocale($locale);
             $this->translator->setFallbackLocale($locale . '.UTF-8');
             $this->session->language = $lang;
+            $this->session->language_aleph_code = $language['aleph_code'];
         });
     }
 

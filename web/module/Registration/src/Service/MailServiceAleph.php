@@ -35,7 +35,7 @@ class MailServiceAleph implements MailServiceInterface
         $client->setParameterGet([
             'id'   => $user->getLogin(),
             'mail' => $user->getEmail(),
-            'lang' => $this->session->language ?? 'cs',
+            'lang' => $this->session->language_aleph_code ?? 'CZE',
         ]);
         try {
             $response = $client->send();
