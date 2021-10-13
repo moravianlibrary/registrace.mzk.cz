@@ -2,7 +2,7 @@
 namespace Registration\Service;
 
 use Laminas\Http\Client;
-use \Laminas\Session\Container;
+use Laminas\Session\Container;
 use Registration\Log\LoggerAwareTrait;
 use Registration\Model\User;
 
@@ -35,7 +35,7 @@ class MailServiceAleph implements MailServiceInterface
         $client->setParameterGet([
             'id'   => $user->getLogin(),
             'mail' => $user->getEmail(),
-            'lang' => $this->session->language ?? 'cs',
+            'lang' => $this->session->language_aleph_code ?? 'CZE',
         ]);
         try {
             $response = $client->send();
