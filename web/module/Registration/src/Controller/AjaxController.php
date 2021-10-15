@@ -56,9 +56,9 @@ class AjaxController extends AbstractActionController
         $errors = [];
         // errors in elements
         foreach ($this->getUserForm()->getElements() as $name => $element) {
-            $elementErrors = $this->form->getMessages($name);
+            $elementErrors = $this->getUserForm()->getMessages($name);
             if (!empty($elementErrors)) {
-                $errors[$name] = $this->form->getMessages($name);
+                $errors[$name] = $this->getUserForm()->getMessages($name);
             }
         }
         // errors in field sets
