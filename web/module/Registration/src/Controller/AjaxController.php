@@ -42,6 +42,10 @@ class AjaxController extends AbstractActionController
     {
         $this->getUserForm()->setData($this->params()->fromPost());
         $discounts = $this->discountService->getAvailable($this->getUserForm());
+        foreach ($discounts as $code => &$discount) {
+            $discount['label'] = $this->translator
+                ->translate($discount['label']);
+        }
         return $this->getAjaxResponse($discounts);
     }
 

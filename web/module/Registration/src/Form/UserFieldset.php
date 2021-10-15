@@ -115,8 +115,8 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
             'options' => [
                 'label' => 'label_identificationType',
                 'value_options' => [
-                    'OP' => $this->translator->translate('option_identificationType_ic'),
-                    'PAS' => $this->translator->translate('option_identificationType_pas'),
+                    'OP' => 'option_identificationType_ic',
+                    'PAS' => 'option_identificationType_pas',
                 ],
             ],
             'attributes' => [
