@@ -10,9 +10,12 @@ use Laminas\Form\Element\DateSelect;
 use Laminas\Form\FormElementManager;
 use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Mvc\I18n\Translator;
+use Laminas\Mvc\MvcEvent;
+use Laminas\Session\Container;
 use Registration\Form\UserForm;
 use Registration\Form\Validator\PasswordValidator;
 use Registration\Service\DiscountService;
+use Registration\I18n\LanguageListener;
 
 class AjaxController extends AbstractActionController
 {
@@ -29,6 +32,11 @@ class AjaxController extends AbstractActionController
     /** @var PasswordValidator */
     protected $passwordValidator;
 
+    /**
+     * @var Container
+     */
+    protected $session;
+
     public function __construct(Translator $translator, FormElementManager $formElementManager,
                                 DiscountService $discountService, PasswordValidator $passwordValidator)
     {
@@ -36,6 +44,15 @@ class AjaxController extends AbstractActionController
         $this->formElementManager = $formElementManager;
         $this->discountService = $discountService;
         $this->passwordValidator = $passwordValidator;
+        $this->session = new Container('registration');
+    }
+
+    public function onDispatch(MvcEvent $event)
+    {
+        $locale = $this->session->locale ?? LanguageListener::DEFAULT_LOCALE;
+        $this->translator->setLocale($locale);
+        $this->translator->setFallbackLocale($locale . '.UTF-8');
+        return parent::onDispatch($event);
     }
 
     public function discountAction()

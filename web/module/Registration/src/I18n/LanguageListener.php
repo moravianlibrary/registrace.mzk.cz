@@ -10,6 +10,8 @@ use \Laminas\Session\Container;
 class LanguageListener implements ListenerAggregateInterface
 {
 
+    public const DEFAULT_LOCALE = 'cs_CZ';
+
     protected const LANGUAGES = [
         'cs' => [
             'locale' => 'cs_CZ',
@@ -63,6 +65,7 @@ class LanguageListener implements ListenerAggregateInterface
             $locale = $language['locale'];
             $this->translator->setLocale($locale);
             $this->translator->setFallbackLocale($locale . '.UTF-8');
+            $this->session->locale = $locale;
             $this->session->language = $lang;
             $this->session->language_aleph_code = $language['aleph_code'];
         });
