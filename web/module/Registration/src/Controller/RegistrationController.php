@@ -171,6 +171,12 @@ class RegistrationController extends AbstractController
         return $view;
     }
 
+    public function logoutAction()
+    {
+        unset($this->session->registration);
+        return $this->redirect()->toUrl('/Shibboleth.sso/Logout?return=/');
+    }
+
     protected function getUserForm()
     {
         if ($this->userForm == null) {
