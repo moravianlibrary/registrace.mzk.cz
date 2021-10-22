@@ -219,7 +219,7 @@ $(document).ready(function() {
             <div class="col-xl-10 offset-xl-1">
                 <?php if ($this->unverified): ?>
                     <div class="alert alert-danger">
-                        <?= $this->translate('unverified_account') ?>
+                        <?= $this->translate($this->auth . '_unverified_account') ?>
                     </div>
                 <?php endif; ?>
                 <?php
@@ -340,7 +340,7 @@ $(document).ready(function() {
                 </div>
 
                 <div class="card">
-                    <h2 class="card-header"><?=$this->translate('Doklad totožnosti')?></h2>
+                    <h2 class="card-header"><?=$this->translate('identification_type')?></h2>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6">
@@ -376,7 +376,7 @@ $(document).ready(function() {
                 <?=$this->formElement($form->get('discountEntitlement'))?>
 
                 <div class="alert alert-primary text-center">
-                    Cena registrace je <strong><span id="price">XXX</span>,- Kč</strong>
+                    <?=$this->translate('btn_registration_price')?>
                 </div>
                 <div class="text-center">
                     <input type="submit" name="submit" class="btn btn-primary" value="<?=$this->translate('btn_submit_registration') ?> &raquo;">

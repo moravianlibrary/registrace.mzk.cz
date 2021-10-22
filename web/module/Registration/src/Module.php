@@ -16,4 +16,17 @@ class Module
     {
         return include __DIR__ . '/../config/module.config.php';
     }
+
+    /**
+     * @param  \Laminas\Mvc\MvcEvent $event event
+     * @return void
+     */
+    public function onBootstrap($event)
+    {
+        $application = $event->getApplication();
+        $translator = $application->getServiceManager()->get('Laminas\I18n\Translator\TranslatorInterface');
+        $listener = new \Registration\I18n\LanguageListener($translator);
+        $listener->attach($application->getEventManager());
+    }
+
 }

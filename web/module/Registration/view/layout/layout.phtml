@@ -29,6 +29,7 @@
         <!-- Le styles -->
         <?= $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/x-icon', 'href' => $this->basePath() . '/img/favicon.ico'])
             ->prependStylesheet($this->basePath('css/style.css'))
+            ->prependStylesheet($this->basePath('css/flag-icon.css'))
             ->prependStylesheet($this->basePath('css/font-awesome.min.css'))
             ->prependStylesheet($this->basePath('css/bootstrap-select.css'))
             ->prependStylesheet($this->basePath('css/bootstrap.css'))
@@ -54,10 +55,18 @@
 
         <header>
             <div class="container">
-                <a href="/" title="(Moravská zemská knihovna - úvodní stránka)" rel="home" class="logo d-inline-block align-middle">
-                    <img src="<?=$this->basePath('img/logo-mzk-white.svg')?>" alt="Moravská zemská knihovna - úvodní stránka">
+                <a href="/" title="<?=$this->translate('logo_title')?>" rel="home" class="logo d-inline-block align-middle">
+                    <img src="<?=$this->basePath('img/logo-mzk-white.svg')?>" alt="<?=$this->translate('logo_title')?>">
                 </a>
-                <div class="h1 d-inline-block align-middle">Registrace čtenáře</div>
+                <div class="h1 d-inline-block align-middle"><?=$this->translate('head_text')?></div>
+                <div class="float-right">
+                    <a href="/?lang=cs" title="Česky">
+                        <span class="flag-icon flag-icon-cs"></span>
+                    </a>
+                    <a href="/?lang=en" title="English">
+                        <span class="flag-icon flag-icon-en"></span>
+                    </a>
+                </div>
             </div>
         </header>
         <div class="content">
@@ -68,15 +77,13 @@
 
                 <div class="media logo-footer">
                     <div class="media-header">
-                        <a href="/" title="(Moravská zemská knihovna - úvodní stránka)">
-                            <img style="max-width: 150px; min-width: 150px;" src="<?=$this->basePath('img/logo-mzk-white.svg')?>" alt="Moravská zemská knihovna - úvodní stránka">
+                        <a href="/" title="<?=$this->translate('logo_title')?>">
+                            <img style="max-width: 150px; min-width: 150px;" src="<?=$this->basePath('img/logo-mzk-white.svg')?>" alt="<?=$this->translate('logo_title')?>">
                         </a>
                     </div>
                     <div class="media-body">
                         <p class="small mb-0">
-                            Provozuje Moravská zemská knihovna<br>
-                            Kounicova 65a, Brno<br>
-                            Své dotazy a připomínky můžete zasílat mailem na <a href="mailto:pujcovna@mzk.cz">pujcovna@mzk.cz</a> nebo volejte na tel.: 541 646 206.
+                            <?=$this->translate('footer_text')?>
                         </p>
                     </div>
                 </div>

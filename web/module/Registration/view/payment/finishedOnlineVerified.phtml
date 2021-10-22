@@ -4,26 +4,30 @@
     <div class="container">
         <div>
             <p>
-                Těší nás, že jste se stal/a čtenářem/čtenářkou Moravské zemské knihovny!
+                <?=$this->translate('text_finished_head')?>
             </p>
             <p class="mb-0">
-                Již nyní můžete z pohodlí domova využívat následující služby:
+                <?=$this->translate('text_available_services')?>:
             </p>
             <ul>
                 <li>
-                    <a href="https://www.mzk.cz/databaze" target="_blank" title="MZK: Databáze">Vzdálený přístup do vybraných elektronických informačních zdrojů</a>
+                    <a href="https://www.mzk.cz/databaze" target="_blank" title="<?=$this->translate('text_remote_access_books')?>"><?=$this->translate('text_remote_access_books_title')?></a>
                 </li>
                 <li>
-                    <a href="https://dnnt.mzk.cz" target="_blank" title="Moravská zemská knihovna v Brně | Digitální knihovna Kramerius">Vzdálený přístup do databáze digitalizovaných děl nedostupných na trhu (včetně autorsky chráněných děl)</a>
+                    <a href="https://dnnt.mzk.cz" target="_blank" title="<?=$this->translate('text_remote_access_db_title')?>"><?=$this->translate('text_remote_access_db')?></a>
                 </li>
             </ul>
             <p>
-                Současně si již také můžete vybírat a objednávat knihy z našeho <a href="https://vufind.mzk.cz/" target="_blank" title="Vyhledávání v katalogu MZK">katalogu</a>.<br>
-                Pro vystavení čtenářské průkazky nutné pro fyzické výpůjčky navštivte půjčovnu v přízemí knihovny.
+                <?=$this->translate('text_remote_catalog')?>
             </p>
-
             <p>
-                Těšíme se na vaši návštěvu.
+                <?=$this->translate('text_payment_finished')?>
+            </p>
+            <p>
+                <?=$this->translate('text_looking_forward')?>
+            </p>
+            <p>
+                <strong><?=$this->translate('text_close_browser')?></strong>
             </p>
 
         </div>

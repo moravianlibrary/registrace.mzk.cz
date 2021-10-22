@@ -115,8 +115,8 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
             'options' => [
                 'label' => 'label_identificationType',
                 'value_options' => [
-                    'OP' => $this->translator->translate('option_identificationType_ic'),
-                    'PAS' => $this->translator->translate('option_identificationType_pas'),
+                    'OP' => 'option_identificationType_ic',
+                    'PAS' => 'option_identificationType_pas',
                 ],
             ],
             'attributes' => [
@@ -136,7 +136,6 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
             'name'    => 'birth',
             'type'    => DateSelect::class,
             'attributes' => [
-                'value' => (date("Y") - 26) . '-01-01',
                 'data-help-icon' => 'help_birth',
             ],
             'options' => [
@@ -145,6 +144,7 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
                 'min_year'  => '1900',
                 'max_year'  => date("Y") - 15,
                 'protected' => true,
+                'create_empty_option' => true,
             ],
         ]);
         // Discount
@@ -224,7 +224,7 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
                     [
                         'name' => Validator\EmailAddress::class,
                         'options' => [
-                            'message' => 'userForm_missing_lastName',
+                            'message' => 'userForm_missing_email',
                             'type' => 'string',
                         ],
                     ],

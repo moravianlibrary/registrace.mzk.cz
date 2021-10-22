@@ -23,18 +23,18 @@ class DiscountService
 
     protected $translator;
 
-    protected $discounts;
+    protected $discounts = null;
 
     protected $validators;
 
     public function __construct(Translator $translator)
     {
         $this->translator = $translator;
-        $this->init();
     }
 
     public function getAll()
     {
+        $this->init();
         $discounts = [];
         foreach ($this->discounts as $code => $discount) {
             $discount['label'] = str_replace('$price',
@@ -46,6 +46,7 @@ class DiscountService
 
     public function getAvailable(?UserForm $user)
     {
+        $this->init();
         $age = ($user != null)? $user->getAge() : self::DEFAULT_AGE;
         $student = ($user != null)? $user->get('discountEntitlement')
                 ->getValue() == 'student' : false;
@@ -78,11 +79,13 @@ class DiscountService
 
     public function getByCode($code)
     {
+        $this->init();
         return $this->discounts[$code];
     }
 
     protected function findDiscountByAge(?UserForm $user)
     {
+        $this->init();
         foreach ($this->discounts as $code => $discount) {
             $onlyAge = $discount['only_age'] || false;
             if ($onlyAge && $this->validate($discount, $user)) {
@@ -94,9 +97,12 @@ class DiscountService
 
     protected function init()
     {
+        if ($this->discounts != null) {
+            return;
+        }
         $this->discounts = [
             'UNIVERSITY_STUDENT' => [
-                'label'          => $this->translator->translate('discount_university_student'),
+                'label'          => 'discount_university_student',
                 'price'          => 100,
                 'online'         => false,
                 'proof'          => true,
@@ -110,7 +116,7 @@ class DiscountService
                 'bor-status'     => '04',
             ],
             'UNIVERSITY_STUDENT_IDS_JMK' => [
-                'label'          => $this->translator->translate('discount_university_student_ids_jmk'),
+                'label'          => 'discount_university_student_ids_jmk',
                 'price'          => 90,
                 'online'         => false,
                 'proof'          => true,
@@ -125,7 +131,7 @@ class DiscountService
             ],
             // default - no discount
             'NONE' => [
-                'label'          => $this->translator->translate('discount_none'),
+                'label'          => 'discount_none',
                 'price'          => 200,
                 'online'         => true,
                 'proof'          => false,
@@ -136,7 +142,7 @@ class DiscountService
                 'bor-status'     => '03',
             ],
             'NONE_IDS_JMK' => [
-                'label'          => $this->translator->translate('discount_none_ids_jmk'),
+                'label'          => 'discount_none_ids_jmk',
                 'price'          => 180,
                 'online'         => false,
                 'proof'          => true,
@@ -148,7 +154,7 @@ class DiscountService
             ],
             // by age limits
             'TEENAGER' => [
-                'label'          => $this->translator->translate('discount_teenager'),
+                'label'          => 'discount_teenager',
                 'price'          => 0,
                 'online'         => true,
                 'proof'          => true,
@@ -160,7 +166,7 @@ class DiscountService
                 'bor-status'     => '03',
             ],
             'SENIOR' => [
-                'label'          => $this->translator->translate('discount_senior'),
+                'label'          => 'discount_senior',
                 'price'          => 100,
                 'online'         => false,
                 'proof'          => true,
@@ -174,7 +180,7 @@ class DiscountService
                 'bor-status'     => '03',
             ],
             'OLD_SENIOR' => [
-                'label'          => $this->translator->translate('discount_old_senior'),
+                'label'          => 'discount_old_senior',
                 'price'          => 0,
                 'online'         => false,
                 'proof'          => true,
@@ -189,7 +195,7 @@ class DiscountService
             ],
             // free
             'UNOB_EMPLOYEE' => [
-                'label'          => $this->translator->translate('discount_unob_employee'),
+                'label'          => 'discount_unob_employee',
                 'price'          => 0,
                 'online'         => false,
                 'proof'          => true,
@@ -199,7 +205,7 @@ class DiscountService
                 'bor-status'     => '03',
             ],
             'UNOB_STUDENT' => [
-                'label'          => $this->translator->translate('discount_unob_student'),
+                'label'          => 'discount_unob_student',
                 'price'          => 0,
                 'online'         => false,
                 'proof'          => true,
@@ -209,7 +215,7 @@ class DiscountService
                 'bor-status'     => '04',
             ],
             'ZTP' => [
-                'label'          => $this->translator->translate('discount_ztp'),
+                'label'          => 'discount_ztp',
                 'price'          => 0,
                 'online'         => false,
                 'proof'          => true,
