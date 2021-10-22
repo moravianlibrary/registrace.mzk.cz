@@ -142,6 +142,7 @@ $routes = [
     'Registration/index',
     'Registration/userForm',
     'Registration/finished',
+    'Registration/logout',
     'Payment/init',
     'Payment/finished',
     'Payment/finishedCash',
