@@ -87,6 +87,9 @@ class RegistrationController extends AbstractController
         $auth = $request->getQuery('idp');
         if ($auth != null) {
             $idp = $this->identityProviderFactory->get($auth);
+            if ($idp == null) {
+                $auth == null;
+            }
             if ($idp != null && ($identity = $idp->identify($request)) != null) {
                 // convert birth date as expected by laminas forms
                 $birth = $identity['user']['birth'] ?? null;
@@ -141,6 +144,7 @@ class RegistrationController extends AbstractController
                     ->translate('userForm_passwordConfirmNoMatch'),
             ],
             'form' => $this->getUserForm(),
+            'auth' => $auth,
             'unverified' => ($auth != null) && !$verified,
         ]);
         $view->setTemplate('registration/userForm');

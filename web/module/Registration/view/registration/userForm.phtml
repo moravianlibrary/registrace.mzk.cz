@@ -219,7 +219,7 @@ $(document).ready(function() {
             <div class="col-xl-10 offset-xl-1">
                 <?php if ($this->unverified): ?>
                     <div class="alert alert-danger">
-                        <?= $this->translate('unverified_account') ?>
+                        <?= $this->translate($this->auth . '_unverified_account') ?>
                     </div>
                 <?php endif; ?>
                 <?php
