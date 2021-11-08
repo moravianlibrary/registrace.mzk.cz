@@ -56,7 +56,7 @@ class MailServiceAleph implements MailServiceInterface
             'mail'   => $user->getEmail(),
             'jmeno'  => $user->getFirstName() . ' ' . $user->getLastName(),
             'castka' => $amount,
-            'lang' => $this->session->language ?? 'cs',
+            'lang' => $this->session->language_aleph_code ?? 'CZE',
         ]);
         try {
             $response = $client->send();
