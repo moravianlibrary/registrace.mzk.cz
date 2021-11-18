@@ -58,7 +58,7 @@
             <email-address>{$email}</email-address>
             <z304-id>{$id}</z304-id>
             <z304-sequence>01</z304-sequence>
-            <z304-address-0>CARAK--</z304-address-0>
+            <z304-address-0>CARAK</z304-address-0>
             <z304-address-1>{$cn}</z304-address-1>
             <z304-address-2>{$home_street}</z304-address-2>
             <z304-address-3>{$home_postcode} {$home_city}</z304-address-3>
