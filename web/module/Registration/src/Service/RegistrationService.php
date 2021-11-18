@@ -116,6 +116,7 @@ class RegistrationService implements RegistrationServiceInterface
             $z304->{'z304-email-address'} = $user->getEmail();
             $z304->{'z304-telephone'} = $user->getPhone();
             $z304->{'z304-address-0'} = ($index == 0) ? 'CARAK--' : 'CARAK';
+            $z304->{'z304-address-type'} = ($index == 0) ? '01' : '02';
             $z304->{'z304-address-1'} = $cn;
             $z304->{'z304-address-2'} = $address->getStreet();
             $city = $address->getPostcode() . ' ' . $address->getCity();
