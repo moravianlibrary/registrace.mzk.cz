@@ -22,7 +22,17 @@ class EduId implements IdentityProviderInterface
         'student',
     ];
 
-    const STUDENT_AFFILIATION = 'student';
+    const EDU_PERSON_SCOPED_AFFILIATION_KEY = 'eduPersonScopedAffiliation';
+
+    const SHIB_IDP_KEY = 'Shib-Identity-Provider';
+
+    const EDU_PERSON_ENTITLEMENT_KEY = 'eduPersonEntitlement';
+
+    const STUDENT_AFFILIATION_VALUE = 'student';
+
+    const STUDENT_MUNI_FULL_TIME_VALUE = 'urn:geant:muni.cz:res:student:fulltime#idm.ics.muni.cz';
+
+    const MUNI_IDP_VALUE = 'https://idp2.ics.muni.cz/idp/shibboleth';
 
     public function identify(Request $request)
     {
@@ -52,10 +62,21 @@ class EduId implements IdentityProviderInterface
         // verification
         $result['verified'] = $this->hasAllRequiredAttributes($request) ? 1 : 0;
         // student
-        $student = in_array(self::STUDENT_AFFILIATION,
-            $this->getAffiliations($request));
+        $student = $this->isStudent($request);
         $result['discountEntitlement'] = ($student) ? 'student' : 'none';
         return $result;
+    }
+
+    protected function isStudent($request)
+    {
+        $student = in_array(self::STUDENT_AFFILIATION_VALUE,
+            $this->getAffiliations($request));
+        $entityId = $this->get($request, self::SHIB_IDP_KEY);
+        if ($entityId == self::MUNI_IDP_VALUE) {
+            $student = $student && in_array(self::STUDENT_MUNI_FULL_TIME_VALUE,
+                    $this->getEntitlements($request));
+        }
+        return $student;
     }
 
     protected function parseDate($date)
@@ -92,7 +113,7 @@ class EduId implements IdentityProviderInterface
 
     protected function getAffiliations($request)
     {
-        $affiliations = $this->get($request, 'eduPersonScopedAffiliation');
+        $affiliations = $this->get($request, self::EDU_PERSON_SCOPED_AFFILIATION_KEY);
         if ($affiliations == null || empty($affiliations)) {
             return [];
         }
@@ -103,6 +124,15 @@ class EduId implements IdentityProviderInterface
             $result[] = $relation;
         }
         return $result;
+    }
+
+    protected function getEntitlements($request)
+    {
+        $entitlements = $this->get($request, self::EDU_PERSON_ENTITLEMENT_KEY);
+        if ($entitlements == null || empty($entitlements)) {
+            return [];
+        }
+        return explode(',', $entitlements);
     }
 
 }
