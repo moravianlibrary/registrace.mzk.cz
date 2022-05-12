@@ -26,6 +26,8 @@ class IdentityProviderFactory
             return new MojeId($this->test);
         } else if ($type == 'eduid' && $this->eduid) {
             return new EduId();
+        } else if ($type == 'brnoid') {
+            return new BrnoId();
         }
         return null;
     }

@@ -193,6 +193,14 @@
                               backingFilePath="/etc/shibboleth/mojeid-production-metadata.xml"
                               reloadInterval="7200"/>
 
+            <MetadataProvider type="XML" uri="https://test.brnopas.cz/identity/saml2/idp/metadata.php"
+                              backingFilePath="/etc/shibboleth/brnoid-test-metadata.xml"
+                              reloadInterval="7200"/>
+
+            <MetadataProvider type="XML" uri="https://www.brnoid.cz/identity/saml2/idp/metadata.php"
+                              backingFilePath="/etc/shibboleth/brnoid-production-metadata.xml"
+                              reloadInterval="7200"/>
+
         </MetadataProvider>
 
         <!-- Chain the two built-in trust engines together. -->
