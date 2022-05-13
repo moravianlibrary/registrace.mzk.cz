@@ -28,9 +28,9 @@ class BrnoId implements IdentityProviderInterface
         if ($phone != null) {
             $result['user']['phone'] = $phone;
         }
-        $birth = $this->get($request, 'schacDateOfBirth');
+        $birth = $this->get($request, 'birth');
         if ($birth != null) {
-            $result['user']['birth'] = $this->parseDate($birth);
+            $result['user']['birth'] = $birth;
         }
         return $result;
     }

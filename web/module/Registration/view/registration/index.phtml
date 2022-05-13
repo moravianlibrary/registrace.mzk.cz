@@ -104,7 +104,7 @@
                             </div>
                             <div class="card-footer">
                                 <p>
-                                    <a class="btn btn-success text-uppercase" href="/registration/userForm" title=""><?=$this->translate('btn_register')?></a>
+                                    <a class="btn btn-success text-uppercase" href="<?=$this->escapeHtmlAttr($this->baseUrl)?>/Shibboleth.sso/DS?entityID=<?=urlencode($this->brnoid)?>&target=<?=urlencode($this->baseUrl)?>/registration/userForm%3Fidp%3Dbrnoid" title="<?=$this->translate('btn_register_title')?>"><?=$this->translate('btn_register')?></a>
                                 </p>
                             </div>
                         </div>

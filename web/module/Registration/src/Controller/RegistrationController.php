@@ -60,12 +60,14 @@ class RegistrationController extends AbstractController
 
     public function indexAction()
     {
-        $mojeid = $this->config['mojeid']['url'];
+        $mojeid = $this->config['mojeid']['url'] ?? null;
+        $brnoid = $this->config['brnoid']['url'] ?? null;
         $baseUrl = $this->config['application']['url'];
         $brnoIdEnabled = (bool) ($this->config['brnoid']['enabled'] ?? true);
         $eduIdEnabled = (bool) ($this->config['eduid']['enabled'] ?? true);
         $view = new ViewModel([
             'mojeid' => $mojeid,
+            'brnoid' => $brnoid,
             'baseUrl' => $baseUrl,
             'brnoIdEnabled' => $brnoIdEnabled,
             'eduIdEnabled'  => $eduIdEnabled,
