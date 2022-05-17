@@ -1,4 +1,4 @@
-FROM localhost/moravianlibrary/registrace/php:build
+FROM registry.app.knihovny.cz/moravianlibrary/registrace/php:build
 ADD web/ /var/www/
 
 RUN chown -R www-data /var/www/
