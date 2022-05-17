@@ -7,6 +7,16 @@ use Laminas\Http\PhpEnvironment\Request;
 class BrnoId implements IdentityProviderInterface
 {
 
+    const REQUIRED_ATTRIBUTES = [
+        'firstName',
+        'lastName',
+        'birth',
+        'street',
+        'city',
+        'postcode',
+        'country',
+    ];
+
     public function identify(Request $request)
     {
         // required attributes
@@ -32,12 +42,29 @@ class BrnoId implements IdentityProviderInterface
         if ($birth != null) {
             $result['user']['birth'] = $birth;
         }
+        // verification
+        $verified = strtolower($this->get($request, 'mojeIdValid')) == '1';
+        $result['verified'] = $verified &&
+        $this->hasAllRequiredAttributes($request) ? 1 : 0;
+        // student
+        $student = strtolower($this->get($request, 'mojeIdStudent')) == '1';
+        $result['discountEntitlement'] = ($student) ? 'student' : 'none';
         return $result;
     }
 
     protected function get(Request $request, string $variable)
     {
         return $request->getServer($variable, null);
+    }
+
+    public function hasAllRequiredAttributes(Request $request)
+    {
+        foreach (self::REQUIRED_ATTRIBUTES as $attr) {
+            if (empty($this->get($request, $attr))) {
+                return false;
+            }
+        }
+        return true;
     }
 
 }
