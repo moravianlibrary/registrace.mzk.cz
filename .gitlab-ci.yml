@@ -84,6 +84,7 @@ Build PHP image:
             docker tag ${PHP_IMAGE_NAME}:build ${TARGET_REGISTRY}/${PHP_IMAGE_NAME}:build
             docker tag ${PHP_IMAGE_NAME}:build ${TARGET_REGISTRY}/${PHP_IMAGE_NAME}:branch-${CI_COMMIT_REF_SLUG}
             docker push -q ${TARGET_REGISTRY}/${PHP_IMAGE_NAME}:build
+            docker push -q ${TARGET_REGISTRY}/${PHP_IMAGE_NAME}:branch-${CI_COMMIT_REF_SLUG}
         fi
 
 Build app image:
