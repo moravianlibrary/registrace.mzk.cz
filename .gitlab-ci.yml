@@ -82,6 +82,7 @@ Build PHP image:
             #buildah push --format v2s2 ${PHP_IMAGE_NAME}:build docker://${TARGET_REGISTRY}/${PHP_IMAGE_NAME}:branch-${CI_COMMIT_REF_SLUG};
             #buildah push --format v2s2 ${PHP_IMAGE_NAME}:build docker://${TARGET_REGISTRY}/${PHP_IMAGE_NAME}:r-${CI_COMMIT_SHORT_SHA};
             docker tag ${PHP_IMAGE_NAME}:build ${TARGET_REGISTRY}/${PHP_IMAGE_NAME}:build
+            docker tag ${PHP_IMAGE_NAME}:build ${TARGET_REGISTRY}/${PHP_IMAGE_NAME}:branch-${CI_COMMIT_REF_SLUG}
             docker push -q ${TARGET_REGISTRY}/${PHP_IMAGE_NAME}:build
         fi
 
@@ -218,7 +219,7 @@ Build app image:
         * Upgrade image version to ${APP_IMAGE_TAG}
         * commit: ${CI_PROJECT_URL}/-/commit/${CI_COMMIT_SHORT_SHA}
         * CI job: ${CI_JOB_URL}
-        EOF 
+        EOF
     - git add .
     - |
         git commit --file ${TMP_DIR}/commit-message
@@ -235,7 +236,7 @@ Deploy devel image:
           ( $CI_COMMIT_BRANCH =~ /^devel/ )
   environment:
     name: devel
-  variables: 
+  variables:
     DEPLOY_REPO_BRANCH: devel
     DEPLOY_REPO_DIR: devel
 
@@ -248,7 +249,7 @@ Debug CI:
 
 Deploy production image:
   extends: .deploy_image
-  variables: 
+  variables:
     DEPLOY_REPO_BRANCH: master
     DEPLOY_REPO_DIR: production
   stage: deploy
