@@ -144,7 +144,7 @@ class RegistrationService implements RegistrationServiceInterface
         $z305->{'z305-last-activity-date'} = $now;
         $university = $user->getUniversity();
         $discount = $user->getDiscount();
-        if (!empty($university)) {
+        if (!empty($university) && $university != 'NONE') {
             $z305->{'z305-bor-status'} = '04';
             $z305->{'z305-bor-type'} = $university;
         } else {

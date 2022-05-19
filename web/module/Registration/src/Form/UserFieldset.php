@@ -169,7 +169,7 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
         $universities = [
             'INV' => [
                 'label' => 'Select university',
-                'value' => 'OS'
+                'value' => 'NONE'
             ]
         ] + $this->codeBook->getUniversities();
         $this->add([
@@ -317,7 +317,7 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
                                 if (!$student) {
                                     return true;
                                 }
-                                return $value != 'INV';
+                                return $value != 'NONE';
                             },
                         ]
                     ]
