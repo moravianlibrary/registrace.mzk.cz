@@ -122,7 +122,7 @@ Build app image:
     - |
       if [ "$CI_MERGE_REQUEST_IID" != "" ]; then
         if docker pull --quiet ${CACHE_REGISTRY}/${PHP_IMAGE_NAME}:mr-${CI_MERGE_REQUEST_IID}; then
-             docker tag tag ${CACHE_REGISTRY}/${PHP_IMAGE_NAME}:mr-${CI_MERGE_REQUEST_IID} localhost/${PHP_IMAGE_NAME}:build ;
+             docker tag ${CACHE_REGISTRY}/${PHP_IMAGE_NAME}:mr-${CI_MERGE_REQUEST_IID} localhost/${PHP_IMAGE_NAME}:build ;
              HAVE_CACHE_IMAGE=1
         fi
       fi
