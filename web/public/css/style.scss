@@ -24,8 +24,8 @@ $my-btn-blue-color: $my-white;
 $my-btn-cyan-bg: #00bdd7;
 $my-btn-cyan-color: $my-white;
 
-$my-eduid-bg: #e60000;
-$my-eduid-color: #e4e4e4;
+$my-eduid-bg: #0000dc;
+$my-eduid-color: #ffffff;
 
 // tags:
 html {
@@ -130,7 +130,7 @@ ul.error {
 
 /* sections */
 .select-registration {
-  background-image: linear-gradient(#d2faff, #32cce1);
+  background-image: linear-gradient(#dbfbff, #32cce1);
 }
 
 .select-registration .btn-link {
@@ -140,7 +140,7 @@ ul.error {
 
 .card-mojeid {
   background-color: #404040;
-  color: #e6e6e6;
+  color: #ffffff;
 
   .h6 {
     color: $my-white;
@@ -157,14 +157,14 @@ ul.error {
 
 .card-brnoid {
   background-color: #de2a32;
-  color: #f3c0c1;
+  color: #ffffff;
 
   .h6 {
     color: $my-white;
   }
 
   .btn-link {
-    color: #f3c0c1;
+    color: #ffffff;
   }
 
   .btn-link:hover {
@@ -513,4 +513,16 @@ h2.supertitle {
 
 p.select-university {
   margin: 0.85rem 0;
+}
+
+.section-title {
+  text-align: center;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.section-divider {
+  background: #00bed8;
 }

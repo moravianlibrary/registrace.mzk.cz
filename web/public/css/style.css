@@ -93,7 +93,7 @@ ul.error {
 
 /* sections */
 .select-registration {
-  background-image: linear-gradient(#d2faff, #32cce1);
+  background-image: linear-gradient(#dbfbff, #32cce1);
 }
 
 .select-registration .btn-link {
@@ -103,7 +103,7 @@ ul.error {
 
 .card-mojeid {
   background-color: #404040;
-  color: #e6e6e6;
+  color: #ffffff;
 }
 .card-mojeid .h6 {
   color: #ffffff;
@@ -117,21 +117,21 @@ ul.error {
 
 .card-brnoid {
   background-color: #de2a32;
-  color: #f3c0c1;
+  color: #ffffff;
 }
 .card-brnoid .h6 {
   color: #ffffff;
 }
 .card-brnoid .btn-link {
-  color: #f3c0c1;
+  color: #ffffff;
 }
 .card-brnoid .btn-link:hover {
   color: #ffffff;
 }
 
 .card-eduid {
-  background-color: #e60000;
-  color: #e4e4e4;
+  background-color: #0000dc;
+  color: #ffffff;
 }
 .card-eduid .h6 {
   color: #ffffff;
@@ -409,6 +409,18 @@ h2.supertitle img {
 
 p.select-university {
   margin: 0.85rem 0;
+}
+
+.section-title {
+  text-align: center;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.section-divider {
+  background: #00bed8;
 }
 
 /*# sourceMappingURL=style.css.map */

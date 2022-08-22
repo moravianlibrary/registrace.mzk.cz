@@ -6,7 +6,7 @@
 
             <h2 class="supertitle"><?=$this->translate('homepage_h1')?> <img src="<?=$this->basePath('img/logo-mzk-sign.svg')?>" alt="<?=$this->translate('homepage_h1_img_alt')?>">?</h2>
             <div class="row">
-                <div class="col-sm-12 col-md-6 pt-4">
+                <div class="col-sm-12 col-md-7 pt-4">
 
                     <ul class="list-tips">
                         <li>
@@ -31,10 +31,13 @@
                         <a class="btn btn-success text-uppercase" href="#registration">
                             <?=$this->translate('btn_goto_registration')?>
                         </a>
+                        <a class="btn btn-link" href="https://www.mzk.cz/">
+                            <?=$this->translate('btn_signin_existing')?>
+                        </a>
                     </div>
 
                 </div>
-                <div class="col-md-6 d-none d-md-block d-lg-block d-xl-block">
+                <div class="col-md-5 d-none d-md-block d-lg-block d-xl-block">
                     <img src="<?=$this->basePath('img/home.png')?>" alt="">
                 </div>
             </div>
@@ -74,24 +77,8 @@
 
     <section class="select-registration" id="registration">
         <div class="container">
+            <h3 class="section-title">Online registrace</h3>
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-5">
-
-                <!-- mojeID -->
-                <div class="col text-center mb-3">
-                    <div class="card h-100 border-0 rounded-pill card-mojeid">
-                        <div class="card-body">
-                            <p class="h6"><?=$this->translate('box_mojeid_head')?></p>
-                            <h2 class="heading-logo"><img src="<?=$this->basePath('img/logo-mojeid.svg')?>" alt="<?=$this->translate('box_mojeid_title')?>" title="<?=$this->translate('box_mojeid_title')?>"></h2>
-                            <?=$this->translate('box_mojeid_text')?>
-                        </div>
-                        <div class="card-footer">
-                            <p class="mb-0">
-                                <a class="btn btn-success text-uppercase" href="<?=$this->escapeHtmlAttr($this->baseUrl)?>/Shibboleth.sso/DS?entityID=<?=urlencode($this->mojeid)?>&target=<?=urlencode($this->baseUrl)?>/registration/userForm%3Fidp%3Dmojeid" title="<?=$this->translate('btn_register_title')?>"><?=$this->translate('btn_register')?></a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <!-- /mojeID -->
 
                 <!-- BrnoiD -->
                 <? if ($this->brnoIdEnabled) : ?>
@@ -103,7 +90,7 @@
                                 <?=$this->translate('box_brnoid_text')?>
                             </div>
                             <div class="card-footer">
-                                <p>
+                                <p class="mb-0">
                                     <a class="btn btn-success text-uppercase" href="<?=$this->escapeHtmlAttr($this->baseUrl)?>/Shibboleth.sso/DS?entityID=<?=urlencode($this->brnoid)?>&target=<?=urlencode($this->baseUrl)?>/registration/userForm%3Fidp%3Dbrnoid" title="<?=$this->translate('btn_register_title')?>"><?=$this->translate('btn_register')?></a>
                                 </p>
                             </div>
@@ -138,6 +125,32 @@
                 <? endif; ?>
                 <!-- /eduID -->
 
+                <!-- mojeID -->
+                <div class="col text-center mb-3">
+                    <div class="card h-100 border-0 rounded-pill card-mojeid">
+                        <div class="card-body">
+                            <p class="h6"><?=$this->translate('box_mojeid_head')?></p>
+                            <h2 class="heading-logo"><img src="<?=$this->basePath('img/logo-mojeid.svg')?>" alt="<?=$this->translate('box_mojeid_title')?>" title="<?=$this->translate('box_mojeid_title')?>"></h2>
+                            <?=$this->translate('box_mojeid_text')?>
+                        </div>
+                        <div class="card-footer">
+                            <p class="mb-0">
+                                <a class="btn btn-success text-uppercase" href="<?=$this->escapeHtmlAttr($this->baseUrl)?>/Shibboleth.sso/DS?entityID=<?=urlencode($this->mojeid)?>&target=<?=urlencode($this->baseUrl)?>/registration/userForm%3Fidp%3Dmojeid" title="<?=$this->translate('btn_register_title')?>"><?=$this->translate('btn_register')?></a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- /mojeID -->
+
+            </div>
+
+            <hr class="section-divider">
+
+            <h3 class="section-title">Předregistrace</h3>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-5">
+
+                <div class="col text-center mb-3 d-xs-none d-sm-none d-md-none d-lg-block"></div>
+
                 <!-- MZK -->
                 <div class="col text-center mb-3">
                     <div class="card h-100 border-0 rounded-pill card-mzk">
@@ -155,6 +168,7 @@
                 </div>
                 <!-- /MZK -->
 
+                <div class="col text-center mb-3 d-xs-none d-sm-none d-md-none d-lg-block"></div>
             </div>
         </div>
     </section>
