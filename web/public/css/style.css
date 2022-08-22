@@ -93,7 +93,7 @@ ul.error {
 
 /* sections */
 .select-registration {
-  background-image: linear-gradient(#d2faff, #32cce1);
+  background-image: linear-gradient(#dbfbff, #32cce1);
 }
 
 .select-registration .btn-link {
@@ -130,7 +130,7 @@ ul.error {
 }
 
 .card-eduid {
-  background-color: #e60000;
+  background-color: #0000dc;
   color: #e4e4e4;
 }
 .card-eduid .h6 {
