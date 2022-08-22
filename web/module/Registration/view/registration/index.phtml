@@ -80,27 +80,6 @@
             <h3 class="section-title">Online registrace</h3>
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-5">
 
-                <div class="col text-center mb-3 d-xs-none d-sm-none d-md-none d-lg-block"></div>
-
-                <!-- MZK -->
-                <div class="col text-center mb-3">
-                    <div class="card h-100 border-0 rounded-pill card-mzk">
-                        <div class="card-body">
-                            <p class="h6"><?=$this->translate('box_mzk_head')?></p>
-                            <h2 class="heading-logo"><img src="<?=$this->basePath('img/logo-mzk.svg')?>" alt="<?=$this->translate('box_mzk_title')?>" title="<?=$this->translate('box_mzk_title')?>"></h2>
-                            <?=$this->translate('box_mzk_text')?>
-                        </div>
-                        <div class="card-footer">
-                            <p class="mb-0">
-                                <a class="btn btn-success text-uppercase" href="/registration/userForm" title="<?=$this->translate('btn_register_title')?>"><?=$this->translate('btn_register')?></a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <!-- /MZK -->
-
-                <div class="col text-center mb-3 d-xs-none d-sm-none d-md-none d-lg-block"></div>
-
                 <!-- BrnoiD -->
                 <? if ($this->brnoIdEnabled) : ?>
                     <div class="col text-center mb-3">
@@ -162,6 +141,31 @@
                     </div>
                 </div>
                 <!-- /mojeID -->
+
+            </div>
+            <hr class="bg-white">
+
+            <h3 class="section-title">Předregistrace</h3>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-5">
+
+                <div class="col text-center mb-3 d-xs-none d-sm-none d-md-none d-lg-block"></div>
+
+                <!-- MZK -->
+                <div class="col text-center mb-3">
+                    <div class="card h-100 border-0 rounded-pill card-mzk">
+                        <div class="card-body">
+                            <p class="h6"><?=$this->translate('box_mzk_head')?></p>
+                            <h2 class="heading-logo"><img src="<?=$this->basePath('img/logo-mzk.svg')?>" alt="<?=$this->translate('box_mzk_title')?>" title="<?=$this->translate('box_mzk_title')?>"></h2>
+                            <?=$this->translate('box_mzk_text')?>
+                        </div>
+                        <div class="card-footer">
+                            <p class="mb-0">
+                                <a class="btn btn-success text-uppercase" href="/registration/userForm" title="<?=$this->translate('btn_register_title')?>"><?=$this->translate('btn_register')?></a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- /MZK -->
 
                 <div class="col text-center mb-3 d-xs-none d-sm-none d-md-none d-lg-block"></div>
             </div>
