@@ -31,7 +31,15 @@ class IdentityCardNumberValidator extends AbstractValidator
             'dotaz' => $value,
             'doklad' => 0,
         ]);
-        $response = $client->send();
+        $response = null;
+        try {
+            $response = $client->send();
+        } catch (\Exception $ex) {
+            $this->getLogger()->err("Exception thrown when validating identity "
+                . "card number: " . $ex->getMessage(), $ex);
+            // Do not prevent user from registration when service is not available
+            return true;
+        }
         // Do not prevent user from registration when service is not available
         if ($response->getStatusCode() != '200') {
             return true;
