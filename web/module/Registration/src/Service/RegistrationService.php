@@ -157,12 +157,15 @@ class RegistrationService implements RegistrationServiceInterface
         foreach ($z308 as $entry) {
             $entry->{'z308-id'} = $id;
             $entry->{'z308-key-data'} = $id;
-            $entry->{'z308-verification'} = $user->getPassword();
+            $entry->{'z308-verification'} = '***';
         }
         $z303->{'record-action'} = $recordAction;
         $z305->{'record-action'} = $recordAction;
+        $this->getLogger()->info("XML for registration:\n" . $xml->asXML());
+        foreach ($z308 as $entry) {
+            $entry->{'z308-verification'} = $user->getPassword();
+        }
         $request = $xml->asXML();
-        $this->getLogger()->info("XML for registration:\n" . $request);
         $response = $this->updateUser($request);
         $patronId = (string) $response->{'patron-id'} ?? null;
         if ($patronId == null) {
