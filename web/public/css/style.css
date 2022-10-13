@@ -47,6 +47,9 @@ footer {
   color: #cccccc;
   padding: 10px 0;
 }
+footer a.text-muted {
+  color: #cccccc !important;
+}
 
 section,
 footer {

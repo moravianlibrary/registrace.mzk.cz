@@ -80,6 +80,10 @@ footer {
   background: #504b55;
   color: $my-footer-bg;
   padding: 10px 0;
+
+  a.text-muted {
+    color: #cccccc !important;
+  }
 }
 
 section,
@@ -526,3 +530,5 @@ p.select-university {
 .section-divider {
   background: #00bed8;
 }
+
+
