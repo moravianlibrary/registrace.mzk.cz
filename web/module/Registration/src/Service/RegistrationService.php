@@ -148,7 +148,7 @@ class RegistrationService implements RegistrationServiceInterface
             $z305->{'z305-bor-status'} = '04';
             $z305->{'z305-bor-type'} = $university;
         } else {
-            $z305->{'z305-bor-status'} = $discount['bor-status'] ?? '03';
+            $z305->{'z305-bor-status'} = $discount['bor-status'] ?? '05';
             $z305->{'z305-bor-type'} = $discount['bor-type'] ?? 'OS';
         }
         $z305->{'z305-field-3'} = $user->getEduPersonPrincipalName();
