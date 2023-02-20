@@ -6,6 +6,7 @@ use Laminas\Http\PhpEnvironment\Request;
 
 class EduId implements IdentityProviderInterface
 {
+    use IdentityProviderTrait;
 
     const REQUIRED_ATTRIBUTES = [
         'firstName',
@@ -86,13 +87,11 @@ class EduId implements IdentityProviderInterface
             . '-' .substr($date, 6, 2);
     }
 
-    protected function get(Request $request, string $variable)
-    {
-        return $request->getServer($variable, null);
-    }
-
     protected function hasAllRequiredAttributes(Request $request)
     {
+        if (!$this->checkNames($request)) {
+            return false;
+        }
         $valid = false;
         foreach ($this->getAffiliations($request) as $affiliation) {
             if (in_array($affiliation, self::REQUIRED_AFFILIATIONS)) {

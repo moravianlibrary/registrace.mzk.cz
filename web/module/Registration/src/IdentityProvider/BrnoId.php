@@ -6,6 +6,7 @@ use Laminas\Http\PhpEnvironment\Request;
 
 class BrnoId implements IdentityProviderInterface
 {
+    use IdentityProviderTrait;
 
     const REQUIRED_ATTRIBUTES = [
         'firstName',
@@ -52,13 +53,11 @@ class BrnoId implements IdentityProviderInterface
         return $result;
     }
 
-    protected function get(Request $request, string $variable)
-    {
-        return $request->getServer($variable, null);
-    }
-
     public function hasAllRequiredAttributes(Request $request)
     {
+        if (!$this->checkNames($request)) {
+            return false;
+        }
         foreach (self::REQUIRED_ATTRIBUTES as $attr) {
             if (empty($this->get($request, $attr))) {
                 return false;

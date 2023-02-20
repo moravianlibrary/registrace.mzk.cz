@@ -6,6 +6,7 @@ use Laminas\Http\PhpEnvironment\Request as Request;
 
 class MojeId implements IdentityProviderInterface
 {
+    use IdentityProviderTrait;
 
     const REQUIRED_ATTRIBUTES = [
         'firstName',
@@ -63,13 +64,11 @@ class MojeId implements IdentityProviderInterface
         return $result;
     }
 
-    public function get(Request $request, string $variable)
-    {
-        return $request->getServer($variable);
-    }
-
     public function hasAllRequiredAttributes(Request $request)
     {
+        if (!$this->checkNames($request)) {
+            return false;
+        }
         foreach (self::REQUIRED_ATTRIBUTES as $attr) {
             if (empty($this->get($request, $attr))) {
                 return false;
