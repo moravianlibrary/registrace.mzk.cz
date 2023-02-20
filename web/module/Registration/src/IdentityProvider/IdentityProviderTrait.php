@@ -6,7 +6,7 @@ use Laminas\Http\PhpEnvironment\Request as Request;
 trait IdentityProviderTrait
 {
 
-    protected function checkNames($request, $attribute)
+    protected function checkNames($request)
     {
         $firstName = $this->get($request, 'firstName');
         $lastName = $this->get($request, 'lastName');
