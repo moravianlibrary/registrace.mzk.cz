@@ -3,8 +3,8 @@
 * @var \Laminas\Form\Element|\Laminas\Form\Element\DateSelect $element
 */
 ?>
-<? if ($element instanceof \Laminas\Form\Element): ?>
-    <? if ($element instanceof \Laminas\Form\Element\DateSelect): ?>
+<?php if ($element instanceof \Laminas\Form\Element): ?>
+    <?php if ($element instanceof \Laminas\Form\Element\DateSelect): ?>
         <?php
         $options = $element->getOptions();
         $required = isset($options['required']) && $options['required'];
@@ -39,7 +39,7 @@
             <div class="form-inline">
                 <div class="form-group">
                     <div>
-                        <? $this->formElement($element) //@todo to fill elements with options ?>
+                        <?php $this->formElement($element) //@todo to fill elements with options ?>
                         <?=$this->formElement($dayElement) ?>
                         <?=$this->formElement($monthElement) ?>
                         <?=$this->formElement($yearElement) ?>
@@ -49,7 +49,7 @@
             </div>
         </div>
 
-    <? elseif ($element instanceof \Laminas\Form\Element\Checkbox): ?>
+    <?php elseif ($element instanceof \Laminas\Form\Element\Checkbox): ?>
         <?php
         $elementClass = 'form-check-input';
         if (!empty($element->getMessages())) {
@@ -73,7 +73,7 @@
             <?php endif; ?>
         </div>
 
-    <? else: ?>
+    <?php else: ?>
         <?php
         $options = $element->getOptions();
         $labelClass = 'form-label';
@@ -105,5 +105,5 @@
             <?php endif; ?>
             <?=$this->formElementErrors()->render($element, ['class' => 'form-text error']) ?>
         </div>
-    <? endif; ?>
-<? endif; ?>
+    <?php endif; ?>
+<?php endif; ?>

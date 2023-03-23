@@ -109,7 +109,7 @@
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-5">
 
                 <!-- BrnoiD -->
-                <? if ($this->brnoIdEnabled) : ?>
+                <?php if ($this->brnoIdEnabled) : ?>
                     <div class="col text-center mb-3">
                         <div class="card h-100 border-0 rounded-pill card-brnoid">
                             <div class="card-body">
@@ -124,11 +124,11 @@
                             </div>
                         </div>
                     </div>
-                <? endif; ?>
+                <?php endif; ?>
                 <!-- /BrnoiD -->
 
                 <!-- eduID -->
-                <? if ($this->eduIdEnabled) : ?>
+                <?php if ($this->eduIdEnabled) : ?>
                     <div class="col text-center mb-3">
                         <form class="h-100" method="get" action="/Shibboleth.sso/DS">
                             <div class="card h-100 border-0 rounded-pill card-eduid">
@@ -150,7 +150,7 @@
                             </div>
                         </form>
                     </div>
-                <? endif; ?>
+                <?php endif; ?>
                 <!-- /eduID -->
 
                 <!-- mojeID -->
