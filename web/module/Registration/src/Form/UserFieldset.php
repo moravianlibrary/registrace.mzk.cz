@@ -13,6 +13,7 @@ use Laminas\Mvc\I18n\Translator;
 use Laminas\InputFilter\InputFilterProviderInterface;
 use Laminas\Validator;
 use Registration\Form\Validator\IdentityCardNumberValidator;
+use Registration\Form\Validator\NameValidator;
 use Registration\Form\Validator\UniqueDocumentNumberValidator;
 use Registration\Service\DiscountService;
 
@@ -192,10 +193,9 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
                 ],
                 'validators' => [
                     [
-                        'name' => Validator\NotEmpty::class,
+                        'name' => NameValidator::class,
                         'options' => [
                             'message' => 'userForm_missing_firstName',
-                            'type' => 'string',
                         ],
                     ],
                 ],
@@ -207,7 +207,7 @@ class UserFieldset extends Fieldset implements InputFilterProviderInterface
                 ],
                 'validators' => [
                     [
-                        'name' => Validator\NotEmpty::class,
+                        'name' => NameValidator::class,
                         'options' => [
                             'message' => 'userForm_missing_lastName',
                             'type' => 'string',
